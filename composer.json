@@ -17,22 +17,37 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "kartik-v/yii2-widget-fileinput": "@dev",
+        "phpoffice/phpexcel": "dev-master",
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-mpdf": "dev-master",
+        "kartik-v/yii2-widget-datepicker": "*",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "execut/yii2-widget-bootstraptreeview": "dev-master",
+        "philippfrenzel/yii2fullcalendar": "*",
+        "softark/yii2-dual-listbox": "dev-master",
+        "kartik-v/yii2-widget-growl": "*",
+        "kartik-v/yii2-widget-alert": "*",
+        "open-ecommerce/yii2-backuprestore": "dev-master",
+        "ratacibernetica/yii2-node-socket": "^1.0",
+        "kartik-v/yii2-widget-typeahead": "*",
+        "toxor88/yii2-widget-switchery": "*"
     },
     "require-dev": {
-        "yiisoft/yii2-debug": "~2.0.0",
-        "yiisoft/yii2-gii": "~2.0.0",
-        "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*"
     },
     "config": {
         "process-timeout": 1800
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
         }
-    ]
+    }
 }
