@@ -33,8 +33,9 @@ class CarInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['brand', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['model', 'car_year'], 'string', 'max' => 255],
+        [['brand','model'],'required'],
+            [['brand', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','car_year'], 'integer'],
+            [['model'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,10 +46,10 @@ class CarInfo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'brand' => 'Brand',
-            'model' => 'Model',
-            'car_year' => 'Car Year',
-            'status' => 'Status',
+            'brand' => 'ยี่ห้อ',
+            'model' => 'รุ่น',
+            'car_year' => 'ปีรถ',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

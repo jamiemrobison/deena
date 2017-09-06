@@ -45,10 +45,10 @@ class CarBrand extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'logo' => 'Logo',
-            'status' => 'Status',
+            'name' => 'ยี่ห้อ',
+            'description' => 'รายละเอียด',
+            'logo' => 'โลโก้',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

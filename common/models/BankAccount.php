@@ -37,8 +37,8 @@ class BankAccount extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','account_no'],'required'],
-            [['bank_id', 'party_type_id', 'party_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name','account_no','bank_id'],'required'],
+            [['bank_id', 'party_type_id', 'party_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','account_type'], 'integer'],
             [['name', 'short_name', 'account_no', 'brance'], 'string', 'max' => 255],
         ];
     }
@@ -53,6 +53,7 @@ class BankAccount extends \yii\db\ActiveRecord
             'name' => 'ชื่อบัญชี',
             'short_name' => 'ชื่อย่อ',
             'account_no' => 'เลขที่บัญชี',
+            'account_type' => 'ประเภทบัญชี',
             'brance' => 'สาขา',
             'bank_id' => 'ธนาคาร',
             'party_type_id' => 'Party Type ID',

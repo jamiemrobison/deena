@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\EmployeeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="employee-index">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-<div class="row">
+    <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -36,7 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'employee_code',
             'first_name',
             'last_name',
-            'position_id',
+            [
+                'attribute'=>'position_id',
+                'value'=>function($data){
+                    return $data->position_id!=''?$data->positiondata($data->position_id):'';
+                }
+            ],
             'phone',
             // 'photo',
             // 'user_id',

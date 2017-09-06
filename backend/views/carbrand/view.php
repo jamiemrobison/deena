@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carbrand-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,15 +26,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
+        [
+            'attribute'=>'logo',
+            'format'=>'raw',
+            'value'=>function($data){
+                return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:20%;']):'';
+            }
+            ],
             'name',
             'description',
-            'logo',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            //'logo',
+            [
+               'attribute'=>'status',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+               }
+             ],
+            [
+               'attribute'=>'created_at',
+               'value'=>function($data){
+                 return date('d-m-Y',$data->created_at);
+               }
+             ],
         ],
     ]) ?>
 

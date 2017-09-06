@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
           <div class="panel-heading">
            <div>
-        <?= Html::a('<i class="fa fa-plus-circle"></i> Create User Group', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างกลุ่มผู้ใช้งาน', ['create'], ['class' => 'btn btn-success']) ?>
          <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>

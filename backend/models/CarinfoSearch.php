@@ -12,6 +12,7 @@ use backend\models\Carinfo;
  */
 class CarinfoSearch extends Carinfo
 {
+     public $globalSearch;
     /**
      * @inheritdoc
      */
@@ -20,6 +21,7 @@ class CarinfoSearch extends Carinfo
         return [
             [['id', 'brand', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['model', 'car_year'], 'safe'],
+            [['globalSearch'],'string']
         ];
     }
 
@@ -68,8 +70,11 @@ class CarinfoSearch extends Carinfo
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'model', $this->model])
-            ->andFilterWhere(['like', 'car_year', $this->car_year]);
+        if($this->globalSearch != ''){
+            $query->orFilterWhere(['like','brand',$this->globalSearch])
+                  ->orFilterWhere(['like','model',$this->globalSearch])
+                  ->orFilterWhere(['like','car_year',$this->globalSearch]);
+        }
 
         return $dataProvider;
     }

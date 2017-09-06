@@ -15,6 +15,8 @@ $this->title = '';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'model_bankdata' => $model_bankdata,
+        'model_bankaccount' => $model_bankaccount,
     ]) ?>
 
 </div>

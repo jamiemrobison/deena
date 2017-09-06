@@ -31,5 +31,9 @@ class Employee extends \common\models\Employee
         ],
     ];
  }
+ public function positiondata($id){
+    $model=Position::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 
 }

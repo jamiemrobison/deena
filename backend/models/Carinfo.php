@@ -31,4 +31,12 @@ class Carinfo extends \common\models\Carinfo
         ],
     ];
  }
+  public function findBrand($id){
+    $model = \backend\models\Carbrand::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name :'';
+    }
+     public function findCaryear($id){
+    $model = \backend\models\Caryear::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->year_text :'';
+    }
 }

@@ -55,26 +55,41 @@
                         'items' => [
                             ['label' => 'ตำแหน่ง', 'icon' => 'file-code-o', 'url' => ['/position'],],
                             ['label' => 'พนักงาน', 'icon' => 'user', 'url' => ['/employee'],],
-                            ['label' => 'สมาชิก', 'icon' => 'user', 'url' => ['/member'],],
+                            ['label' => 'ระดับสมาชิก', 'icon' => 'navicon', 'url' => ['/memberlevel'],],
+                            ['label' => 'สมาชิก', 'icon' => 'user-plus', 'url' => ['/member'],],
+                            ['label' => 'สายงาน', 'icon' => 'user-plus', 'url' => ['/line'],],
                            // ['label' => 'สิทธิ์การใช้งาน', 'icon' => 'registered', 'url' => ['/userrole'],],
                           //  ['label' => 'กำหนดสิทธิ์การใช้งาน', 'icon' => 'cube', 'url' => ['/assignrole'],],
                         ],
                     ],  
-                    ['label' => 'ธนาคาร', 'icon'=>'university' ,'url' => ['bank/index']],
+                    ['label' => 'ธนาคาร', 'icon'=>'money' ,'url' => ['bank/index']],
                     ['label' => 'บริษัทประกัน', 'icon'=>'university' ,'url' => ['insurancecompany/index']],
                    // ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                    
+                    [
+                        'label' => 'แฟ้มข้อมูลรถ',
+                        'icon' => 'car',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'ยี่ห้อรถ', 'icon' => 'bold', 'url' => ['/carbrand'],],
+                            ['label' => 'ปีรถ', 'icon' => 'yc', 'url' => ['/caryear'],],
+                            ['label' => 'รถ', 'icon' => 'car', 'url' => ['/carinfo'],],
+                            ['label' => 'รหัสรถ', 'icon' => 'retweet', 'url' => ['/car'],],
+                            //['label' => 'หน่วยนับ', 'icon' => 'magnet', 'url' => ['/unit'],],
+                        ],
+                    ],
                     [
                         'label' => 'ผลิตภัณฑ์',
                         'icon' => 'cubes',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'กลุ่มผลิตภัณฑ์', 'icon' => 'file-code-o', 'url' => ['/category'],],
+                            ['label' => 'กลุ่มผลิตภัณฑ์', 'icon' => 'folder-o', 'url' => ['/category'],],
                             ['label' => 'แฟ้มผลิตภัณฑ์', 'icon' => 'cube', 'url' => ['/product'],],
+                            ['label' => 'Package ผลิตภัณฑ์', 'icon' => 'get-pocket', 'url' => ['/package'],],
                             //['label' => 'หน่วยนับ', 'icon' => 'magnet', 'url' => ['/unit'],],
                         ],
                     ],
-            
+                     ['label' => 'เอกสารแนบ', 'icon'=>'files-o' ,'url' => ['docuref/index']],
                     
                     // [
                     //     'label' => 'บันทึกรายการประจำวัน',

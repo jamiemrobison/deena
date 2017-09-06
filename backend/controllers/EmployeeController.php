@@ -8,6 +8,7 @@ use backend\models\EmployeeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * EmployeeController implements the CRUD actions for Employee model.
@@ -65,8 +66,19 @@ class EmployeeController extends Controller
     {
         $model = new Employee();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'photo');
+            if(!empty($uploaded)){
+                  $upfiles = time() . "." . $uploaded->getExtension();
+
+                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                       $model->photo = $upfiles;
+                    }
+            }
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +96,19 @@ class EmployeeController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'photo');
+            if(!empty($uploaded)){
+                  $upfiles = time() . "." . $uploaded->getExtension();
+
+                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                       $model->photo = $upfiles;
+                    }
+            }
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

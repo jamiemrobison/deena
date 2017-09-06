@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -38,7 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             //'photo',
-             'category_id',
+              [
+               'attribute'=>'category_id',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->category_id !=='' ? $data->category->name:'';
+               }
+             ],
             // 'weight',
             // 'unit_id',
             // 'price',

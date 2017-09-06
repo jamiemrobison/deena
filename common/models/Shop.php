@@ -44,7 +44,7 @@ class Shop extends \yii\db\ActiveRecord
         return [
             [['name'],'required'],
             [['zipcode', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'description', 'email', 'address', 'phone', 'mobile', 'logo', 'taxid', 'website', 'facebook', 'line','lecense_no'], 'string', 'max' => 255],
+            [['name', 'description', 'email', 'address', 'phone', 'mobile', 'logo', 'taxid', 'website', 'facebook', 'line','license_no'], 'string', 'max' => 255],
         ];
     }
 

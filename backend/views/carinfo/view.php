@@ -6,14 +6,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Carinfo */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Carinfos', 'url' => ['index']];
+$this->title = $model->findBrand($model->brand).'/'.$model->model.'/'.$model->findCaryear($model->car_year);
+$this->params['breadcrumbs'][] = ['label' => 'ข้อมูลรถ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carinfo-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,15 +25,39 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'brand',
+           // 'id',
+            [
+               'attribute'=>'brand',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->brand !='' ? $data->findBrand($data->brand):'';
+               }
+             ],
+            
             'model',
-            'car_year',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+             [
+               'attribute'=>'car_year',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->car_year !='' ? $data->findCaryear($data->car_year):'';
+               }
+             ],
+            [
+               'attribute'=>'status',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+               }
+             ],
+            [
+               'attribute'=>'created_at',
+               'value'=>function($data){
+                 return date('d-m-Y',$data->created_at);
+               }
+             ],
+            // 'updated_at',
+            // 'created_by',
+            // 'updated_by',
         ],
     ]) ?>
 

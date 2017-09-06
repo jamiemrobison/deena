@@ -34,5 +34,12 @@ class Product extends \common\models\Product
  public function getUnit(){
     return $this->hasOne(\common\models\Unit::className(),['id'=>'unit_id']);
  }
+ public function getCategory(){
+    return $this->hasOne(\backend\models\Category::className(),['id'=>'category_id']);
+ }
+ public function getProdname($id){
+    $model = Product::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
  
 }

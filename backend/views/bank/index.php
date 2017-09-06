@@ -38,9 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'logo',
             [
             'attribute'=>'logo',
+            'contentOptions' =>['style'=>'width: 25px'],
             'format'=>'raw',
             'value'=>function($data){
-                return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:15%;']):'';
+                return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:100%;']):'';
             }
             ],
             'name',

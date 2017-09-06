@@ -22,7 +22,7 @@ $user = backend\models\User::find()->where(['status'=>10])->all();
           <div class="panel-body">
             <div class="row">
                 <div class="col-lg-3">
-                   <div style="text-align: center;padding: 50px 0 0 50px;">
+                   <div style="text-align: center;padding: 20px 0 0 50px;">
 
                       <div style="border-radius: 25px;border: 2px solid #73AD21;padding: 20px;width: 200px;height: 200px;align: center;">
                           <?php echo Html::img('@web/uploads/logo/'.$model->photo,['style'=>'width:80%;'])?><br />

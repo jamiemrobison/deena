@@ -8,6 +8,7 @@ use backend\models\CarbrandSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CarbrandController implements the CRUD actions for Carbrand model.
@@ -23,7 +24,7 @@ class CarbrandController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -65,8 +66,19 @@ class CarbrandController extends Controller
     {
         $model = new Carbrand();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'logo');
+            if(!empty($uploaded)){
+                  $upfiles = time() . "." . $uploaded->getExtension();
+
+                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                       $model->logo = $upfiles;
+                    }
+            }
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +96,19 @@ class CarbrandController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $uploaded = UploadedFile::getInstance($model, 'logo');
+            if(!empty($uploaded)){
+                  $upfiles = time() . "." . $uploaded->getExtension();
+
+                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                       $model->logo = $upfiles;
+                    }
+            }
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

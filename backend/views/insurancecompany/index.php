@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\InsurancecompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -36,16 +37,28 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'id',
             [
             'attribute'=>'logo',
+            'contentOptions' =>['style'=>'width: 100px'],
             'format'=>'raw',
             'value'=>function($data){
-                return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:15%;']):'';
+                return $data->logo!=''? Html::img('@web/uploads/logo/'.$data->logo,['style'=>'width:40%;']):'';
             }
             ],
             'name',
             'short_name',
           //'logo',
-            'credit_limit',
-            'reg_capital',
+            // 'credit_limit',
+            [
+            'attribute'=>'credit_limit',
+            'value'=>function($data){
+                return number_format($data->credit_limit);
+            }
+            ],
+            [
+            'attribute'=>'reg_capital',
+            'value'=>function($data){
+                return number_format($data->reg_capital);
+            }
+            ],
             'vat',
             'payment_term',
             // 'status',

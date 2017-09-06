@@ -38,8 +38,8 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','category_id'],'required'],
-            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name','category_id','product_code'],'required'],
+            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id'], 'integer'],
             [['weight', 'price'], 'number'],
             [['product_code', 'name', 'description', 'photo'], 'string', 'max' => 255],
         ];
@@ -61,6 +61,7 @@ class Product extends \yii\db\ActiveRecord
             'unit_id' => 'หน่วย',
             'price' => 'ราคา',
             'status' => 'สถานะ',
+            'parent_id' => 'หมวดผลิตภัณฑ์ย่อย',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

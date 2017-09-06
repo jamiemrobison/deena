@@ -35,6 +35,7 @@ class InsureCompany extends \yii\db\ActiveRecord
     {
         return [
             [['name'],'required'],
+            [['name'],'unique'],
             [['credit_limit'], 'number'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','found_date','reg_capital','vat'], 'integer'],
             [['name', 'short_name', 'logo','emergency_call','payment_term'], 'string', 'max' => 255],

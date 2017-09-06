@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\models\BankAccount;
 
 /**
  * ShopController implements the CRUD actions for Shop model.
@@ -108,8 +109,16 @@ class ShopController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model_bankdata = BankAccount::find()->where(['party_type_id'=>1,'party_id'=>$id])->all();
+        $model_bankaccount = new BankAccount();
 
         if ($model->load(Yii::$app->request->post())) {
+            //var_dump($_POST);return;
+            $bankid = Yii::$app->request->post('bank_id');
+            $accountno = Yii::$app->request->post('account_no');
+            $brance = Yii::$app->request->post('brance');
+
+            //echo $accountno[0];return;
              $uploaded = UploadedFile::getInstance($model, 'logo');
             if(!empty($uploaded)){
                   $upfiles = time() . "." . $uploaded->getExtension();
@@ -119,12 +128,31 @@ class ShopController extends Controller
                        $model->logo = $upfiles;
                     }
             }
+
             if($model->save()){
+                if(count($bankid)>0){
+                    BankAccount::deleteAll(['party_id'=>$id]);
+                    for($i=0;$i <= count($bankid)-1;$i++){
+                        $model_account = new BankAccount();
+                        $model_account->bank_id = $bankid[$i];
+                        $model_account->name = $accountno[$i];
+                        $model_account->account_no = $accountno[$i];
+                        $model_account->brance = $brance[$i];
+                        $model_account->party_id = $model->id;
+                        $model_account->party_type_id = 1; // 1 shop
+                        $model_account->status = 1;
+                        $model_account->save(false);
+                 
+                    }
+                    
+                }
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'model_bankaccount' => $model_bankaccount,
+                'model_bankdata' => $model_bankdata,
             ]);
         }
     }
@@ -156,5 +184,28 @@ class ShopController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function actionAddbank(){
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            $bank_name = Yii::$app->request->post('txt');
+            $account_no = Yii::$app->request->post('account');
+            $brance = Yii::$app->request->post('brance');
+            //return $id;
+            if($id){
+               // return $desc;
+                $data = [];
+                $data['id'] = $id;
+                $data['bank_name'] = $bank_name;
+                $data['account_no'] = $account_no;
+                $data['brance'] = $brance;
+
+                return $this->renderPartial("_addbank",['data'=>$data]);
+            }else{
+                return;
+            }
+        }
+       // $data = Yii::$app->request->post("data");
+        
     }
 }

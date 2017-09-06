@@ -33,6 +33,7 @@ class Car extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+        [['car_code','name'],'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['car_code', 'name', 'description'], 'string', 'max' => 255],
         ];
@@ -45,10 +46,10 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'car_code' => 'Car Code',
-            'name' => 'Name',
-            'description' => 'Description',
-            'status' => 'Status',
+            'car_code' => 'รหัสรถ',
+            'name' => 'ชื่อ',
+            'description' => 'รายละเอียด',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
