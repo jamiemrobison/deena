@@ -60,6 +60,18 @@ use backend\models\Bank;
                                   <?= $form->field($model, 'email')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
                                 </div>
                            </div>
+                             <div class="form-group">
+                                <label class="control-label col-sm-2" for="email" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('email_for_insure')?></label>
+                                <div class="col-sm-10">
+                                  <?= $form->field($model, 'email_for_insure')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                           </div>
+                             <div class="form-group">
+                                <label class="control-label col-sm-2" for="email" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('email_for_member')?></label>
+                                <div class="col-sm-10">
+                                  <?= $form->field($model, 'email_for_member')->textInput(['maxlength' => true,'class'=>'form-control'])->label(false) ?>
+                                </div>
+                           </div>
                            <div class="form-group">
                                 <label class="control-label col-sm-2" for="email" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('address')?></label>
                                 <div class="col-sm-10">
@@ -88,6 +100,7 @@ use backend\models\Bank;
                                 <label class="control-label col-sm-2" for="email" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('logo')?></label>
                                 <div class="col-sm-10">
                                   <?= $form->field($model, 'logo')->fileInput()->label(false) ?>
+                                <input type="hidden" name="old_logo" value="<?=$model->logo?>" />
                                 </div>
                            </div>
                            <div class="form-group">
@@ -254,7 +267,7 @@ use backend\models\Bank;
                                   <div class="form-group">
                                               <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;"><?=$model_bankaccount->getAttributeLabel('account_no')?></label>
                                               <div class="col-sm-9">
-                                                <?= $form->field($model_bankaccount, 'account_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'account_no'])->label(false) ?>
+                                                <?= $form->field($model_bankaccount, 'account_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'account_num'])->label(false) ?>
                                               </div>
                                          </div>
 
@@ -293,10 +306,10 @@ use backend\models\Bank;
 
                   $(".btn-addbank").click(function(e){
                   var type = $("#bank_id").val();
-                  var account_no = $("#account_no").val();
+                  var account_no = $("#account_num").val();
                   var brances = $("#brance").val();
                   var bank_text = $("#bank_id option:selected").text();
-                 
+                 //alert(account_no);return;
                     $.ajax({
                            type: "POST",
                            dataType: "html",

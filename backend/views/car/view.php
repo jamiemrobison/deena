@@ -27,6 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
            // 'id',
+        [
+              'attribute'=>'insure_type',
+              'value'=>function($data){
+                return $data->insure_type!=''?\backend\helpers\InsureCodeType::getTypeById($data->insure_type):'';
+              }
+            ],
             'car_code',
             'name',
             'description',

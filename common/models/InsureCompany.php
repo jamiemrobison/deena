@@ -36,9 +36,10 @@ class InsureCompany extends \yii\db\ActiveRecord
         return [
             [['name'],'required'],
             [['name'],'unique'],
-            [['credit_limit'], 'number'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','found_date','reg_capital','vat'], 'integer'],
-            [['name', 'short_name', 'logo','emergency_call','payment_term'], 'string', 'max' => 255],
+            [['credit_limit','reg_capital'],'match','pattern'=>'/^[0-9]+(,[0-9]+)*$/'],
+           // [['credit_limit','reg_capital'],'match','pattern'=>'/^[0-9]{1,12}(\.[0-9]{0,4})?$/'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','found_date','vat'], 'integer'],
+            [['name', 'short_name', 'logo','emergency_call','payment_term','dealer_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +59,7 @@ class InsureCompany extends \yii\db\ActiveRecord
             'vat'=>'ภาษี ณ ที่จ่าย',
             'emergency_call'=>'เบอร์อุบัติเหตุ',
             'status' => 'สถานะ',
+            'dealer_id' => 'รหัสตัวแทน',
             'payment_term'=> 'เงื่อนไขชำระเงิน',
             'created_at' => 'สร้างเมื่อ',
             'updated_at' => 'Updated At',

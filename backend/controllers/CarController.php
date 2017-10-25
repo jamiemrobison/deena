@@ -8,7 +8,8 @@ use backend\models\CarSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use backend\helpers\Checkpermission;
+use yii\web\ForbiddenHttpException;
 /**
  * CarController implements the CRUD actions for Car model.
  */
@@ -51,9 +52,13 @@ class CarController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Checkpermission::canView(1)){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -120,5 +125,25 @@ class CarController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+     public function actionShowact($id){
+      $modelc = \backend\models\Act::find()->where(['id' => $id])->one();
+
+      if($modelc){
+            $model = \backend\models\Act::find()->where(['car_description' => $modelc->car_description])->all();
+              if (count($model) > 0) {
+              foreach ($model as $value) {
+                  $name = $value->car_code.' '.Car::getCarActname($value->car_code);
+                  echo "<option value='" . $value->id . "'>$name</option>";
+
+              }
+              } else {
+                  echo "<option>-</option>";
+              }
+          }else{
+             echo "<option>-</option>";
+          }
+
+     
     }
 }

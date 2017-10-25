@@ -36,13 +36,13 @@ $caryear = backend\models\Caryear::find()->where(['status'=>1])->all();
 
                   <?= $form->field($model, 'model')->textInput(['maxlength' => true]) ?>
 
-                  <?= $form->field($model, 'car_year')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($caryear,'id','year_text'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'year_text'],
-                                    ]
+                  <?php //echo $form->field($model, 'car_year')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($caryear,'id','year_text'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'year_text'],
+                                    // ]
 
-                                  )->label() ?>
+                                //  )->label() ?>
 
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 

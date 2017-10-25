@@ -36,10 +36,11 @@ class ProductPackage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-        [['company_insure','insure_type','name'],'required'],
-            [['company_insure', 'insure_type', 'service_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+        [['company_insure','insure_type','name','package_code'],'required'],
+            [['company_insure', 'insure_type', 'service_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','promotion','car_code'], 'integer'],
+            [['name','package_code'], 'string', 'max' => 255],
             [[ 'start_date', 'end_date'],'safe'],
+            [['score_rate'],'number'],
         ];
     }
 
@@ -50,6 +51,7 @@ class ProductPackage extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'package_code' => 'รห้สแพ็กเก็จ',
             'company_insure' => 'บริษัทประกัน',
             'insure_type' => 'ประเภทประกัน',
             'name' => 'ชื่อแพ็กเกจ',
@@ -57,6 +59,9 @@ class ProductPackage extends \yii\db\ActiveRecord
             'end_date' => 'สิ้นสุดวันที่',
             'service_type' => 'ประเภทการซ่อม',
             'status' => 'สถานะ',
+            'score_rate' =>'อัตราคะแนน (%)',
+            'promotion' => 'โปรโมชั่น',
+            'car_code' => 'รหัสรถ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

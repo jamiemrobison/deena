@@ -1,0 +1,16 @@
+body{
+    font-family: "Garuda";
+    font-size: 10pt;
+}
+
+.table_bordered{
+    border: 0.1px solid #000;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.table_bordered td{
+    /*border:0.1px solid #CCC;
+    border-collapse: collapse;*/
+    padding: 10px;
+}

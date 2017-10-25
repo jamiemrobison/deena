@@ -83,9 +83,11 @@ class LineController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            // echo $model->disc_per;return;
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }     
         } else {
             return $this->render('update', [
                 'model' => $model,

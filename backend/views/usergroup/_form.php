@@ -7,6 +7,7 @@ use toxor88\switchery\Switchery;
 /* @var $this yii\web\View */
 /* @var $model backend\models\UserGroup */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="user-group-form">

@@ -31,5 +31,8 @@ class BankAccount extends \common\models\BankAccount
         ],
     ];
  }
-
+public static function getInfo($id){
+    $model = BankAccount::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->account_no:'';
+}
 }

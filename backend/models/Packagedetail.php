@@ -30,5 +30,9 @@ class Packagedetail extends \common\models\ProductPackageDetail
             'value'=> time(),
         ],
     ];
+ 
+ }
+  public function getActprotect(){
+    return $this->hasOne(\common\models\Actprotect::className(),['id'=>'actprotect_id']);
  }
 }

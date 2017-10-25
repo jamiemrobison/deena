@@ -44,7 +44,7 @@ class Shop extends \yii\db\ActiveRecord
         return [
             [['name'],'required'],
             [['zipcode', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'description', 'email', 'address', 'phone', 'mobile', 'logo', 'taxid', 'website', 'facebook', 'line','license_no'], 'string', 'max' => 255],
+            [['name', 'description', 'email', 'address', 'phone', 'mobile', 'logo', 'taxid', 'website', 'facebook', 'line','license_no','email_for_insure','email_for_member'], 'string', 'max' => 255],
         ];
     }
 
@@ -68,6 +68,8 @@ class Shop extends \yii\db\ActiveRecord
             'facebook' => 'Facebook',
             'line' => 'Line',
            'license_no' => 'เลขที่ใบอนุญาต',
+           'email_for_member'=>'Email mamber',
+           'email_for_insure'=>'Email insurance',
             'status' => 'สถาณะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

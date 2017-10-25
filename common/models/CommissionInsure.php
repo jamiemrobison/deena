@@ -48,7 +48,7 @@ class CommissionInsure extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'insure_type' => 'กรมธรรม์',
+            'insure_type' => 'ประเภทผลิตภัณฑ์',
             'promotion_name' => 'ชื่อโปรโมชั่น',
             'commission_percent' => 'เปอร์เซ็นต์',
             'commission_amont' => 'จำนวน',

@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 /* @var $model backend\models\Product */
 /* @var $form yii\widgets\ActiveForm */
 $cat = \backend\models\Category::find()->where(['status'=>1])->all();
-$sub_cat = \backend\models\Product::find()->where(['status'=>1])->all();
+$sub_cat = \backend\models\Subcategory::find()->where(['status'=>1])->all();
 ?>
 
 <div class="product-form">
@@ -30,14 +30,22 @@ $sub_cat = \backend\models\Product::find()->where(['status'=>1])->all();
                     <?= $form->field($model, 'category_id')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($cat,'id','name'),
-                                    'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์','class'=>'form-control','id'=>'level'],
+                                    'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์','class'=>'form-control','id'=>'level',
+                                       'onchange'=>' 
+                                          $.post("index.php?r=product/showsubcategory&id=' . '"+$(this).val(),function(data){
+                                          $("select#sub_cat").html(data);
+                                          $("select#sub_cat").prop("disabled","");
+
+                                          });
+                                      ',
+                                    ],
                                     ]
 
                                   )->label() ?>
                     <?= $form->field($model, 'parent_id')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($sub_cat,'id','name'),
-                                    'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์ย่อย','class'=>'form-control','id'=>'sub_cat'],
+                                     'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์ย่อย','class'=>'form-control','id'=>'sub_cat','disabled'=>'disabled'],
                                     ]
 
                                   )->label() ?>
@@ -46,7 +54,7 @@ $sub_cat = \backend\models\Product::find()->where(['status'=>1])->all();
 
                     <?= $form->field($model, 'photo')->fileInput(['maxlength' => true]) ?>
 
-
+                     <input type="hidden" name="old_photo" value="<?=$model->photo?>" />
                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
                   <div class="form-group">

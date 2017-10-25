@@ -18,7 +18,7 @@ class m170824_013020_create_contact_table extends Migration
             'party_type_id'=> $this->integer(),
             'name' => $this->string(),
             'contact_type_id' => $this->integer(),
-            'contact_txt' => $this->integer(),
+            'contact_txt' => $this->string(),
             'is_primary' => $this->integer(),
             'status' => $this->integer(),
             'created_at' => $this->integer(),

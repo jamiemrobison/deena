@@ -35,6 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
            // 'employee_code',
+            [
+              'attribute'=>'prefix_name',
+              'value'=>function($data){
+                return $data->prefix_name!=''?\backend\models\Prefixname::getPrefix($data->prefix_name):'';
+              }
+            ],
             'first_name',
             'last_name',
             [

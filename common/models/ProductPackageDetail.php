@@ -34,7 +34,7 @@ class ProductPackageDetail extends \yii\db\ActiveRecord
     {
         return [
             [['package_id'],'required'],
-            [['package_id', 'coverage_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','amount'], 'integer'],
+            [['package_id','actprotect_id', 'coverage_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','amount'], 'integer'],
             [['converage_detail'], 'string', 'max' => 255],
         ];
     }
@@ -49,6 +49,7 @@ class ProductPackageDetail extends \yii\db\ActiveRecord
             'package_id' => 'Package ID',
             'coverage_type' => 'ประเภทความคุ้มครอง',
             'converage_detail' => 'รายละเอียด',
+            'actprotect_id' => 'รายการความคุ้มครอง',
             'amount' => 'จำนวนเงิน',
             'status' => 'สถานะ',
             'created_at' => 'Created At',

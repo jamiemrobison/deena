@@ -17,6 +17,7 @@ return [
                 'theme'=>[
                   'pathMap'=>[
                        '@app/views' => '@backend/views/layouts/yii2-app'
+                       //'@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
                              ]
                  ],
         ],

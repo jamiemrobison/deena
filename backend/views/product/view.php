@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+         //   'id',
             'product_code',
             'name',
             'description',
@@ -37,11 +35,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'weight',
             'unit_id',
             'price',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+          [
+               'attribute'=>'status',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+               }
+             ],
+            [
+               'attribute'=>'created_at',
+               'value'=>function($data){
+                 return date('d-m-Y',$data->created_at);
+               }
+             ],
+            // 'updated_at',
+            // 'created_by',
+            // 'updated_by',
         ],
     ]) ?>
 

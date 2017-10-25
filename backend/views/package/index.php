@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'insure_type',
                 'value'=> function($data){
-                    return $data->insure_type!=''?$data->productinfo->name:'';
+                    return $data->insure_type!=''?$data->productinfo->product_code:'';
                 }
             ],
             'name',
@@ -88,7 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <ul class="dropdown-menu" style="right: 0; left: auto;">
                                         <li><a href="'.Url::toRoute(['/package/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
                                         <li><a href="'.Url::toRoute(['/package/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/package/delete', 'id'=>$model->id],true).'">Delete</a></li>
+                                       
+                                        <li><a onclick="return recDelete($(this));" href="javascript:void(0)" data-url="'.Url::to(['/package/delete', 'id'=>$model->id],true).'">Delete</a></li>
                                         </ul>
                                     </div>
                                 ';
@@ -106,3 +107,21 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
     <?php Pjax::end(); ?>
 </div>
+<?php $this->registerJs('
+    function recDelete(e){
+        //e.preventDefault();
+        var url = e.attr("data-url");
+        //alert(url);
+        swal({
+              title: "ต้องการลบรายการนี้ใช่หรือไม่",
+              text: "",
+              type: "warning",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              showLoaderOnConfirm: true
+            }, function () {
+              e.attr("href",url); 
+              e.toggle("click");        
+        });
+    }
+',static::POS_END);?>

@@ -8,7 +8,7 @@ use backend\helpers\Prefixname;
 /* @var $model backend\models\Member */
 
 $this->title = $model->member_code;
-$this->params['breadcrumbs'][] = ['label' => 'Members', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'สมาชิก', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="member-view">

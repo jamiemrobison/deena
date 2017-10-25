@@ -24,7 +24,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
 
 
     /**
@@ -53,6 +53,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['group_id','role_id'],'integer'],
         ];
     }
 
@@ -99,6 +100,16 @@ class User extends ActiveRecord implements IdentityInterface
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
+    }
+   public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'role_id' => 'สิทธิ์การใช้งาน',
+            'group_id' => 'กลุ่มผู้ใช้งาน',
+            'status' => 'สถานะ',
+       
+        ];
     }
 
     /**

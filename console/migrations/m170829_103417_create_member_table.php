@@ -23,7 +23,7 @@ class m170829_103417_create_member_table extends Migration
             'title_name' => $this->string(),
             'first_name' => $this->string(),
             'last_name' => $this->string(),
-            'card_id' => $this->integer(),
+            'card_id' => $this->string(),
             'dob' => $this->integer(),
             'address' => $this->string(),
             'mobile' => $this->string(),

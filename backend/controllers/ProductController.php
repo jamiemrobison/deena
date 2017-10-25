@@ -8,7 +8,7 @@ use backend\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -84,8 +84,22 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $oldlogo = Yii::$app->request->post('old_photo');
+            $uploaded = UploadedFile::getInstance($model, 'photo');
+            if(!empty($uploaded)){
+                  $upfiles = time() . "." . $uploaded->getExtension();
+
+                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                       $model->photo = $upfiles;
+                    }
+            }else{
+                 $model->photo = $oldlogo;
+            }
+            if($model->save()){
+                return $this->redirect(['update', 'id' => $model->id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -120,5 +134,24 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function actionShowsubcategory($id){
+      $model = \backend\models\Subcategory::find()->where(['category_id' => $id])->all();
+        $i = 0;
+      if (count($model) > 0) {
+          foreach ($model as $value) {
+              if($i == 0){
+                    echo "<option>เลือกหมวดย่อย </option>";
+                    echo "<option value='$value->id'>$value->name</option>";
+                    $i+=1;
+              }else{
+                    echo "<option value='$value->id'>$value->name</option>";
+              }
+
+          }
+      } else {
+          echo "<option value='0'>-</option>";
+      }
+
     }
 }

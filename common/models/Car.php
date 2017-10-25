@@ -34,8 +34,8 @@ class Car extends \yii\db\ActiveRecord
     {
         return [
         [['car_code','name'],'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['car_code', 'name', 'description'], 'string', 'max' => 255],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by','insure_type','car_code_id','type_id','act_id'], 'integer'],
+            [['car_code', 'name', 'description','act_code'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,7 +49,12 @@ class Car extends \yii\db\ActiveRecord
             'car_code' => 'รหัสรถ',
             'name' => 'ชื่อ',
             'description' => 'รายละเอียด',
+            'car_code_id' => 'รหัสรถ',
+            'act_code' => 'รหัส พรบ.',
             'status' => 'สถานะ',
+            'type_id' => 'ประเภทรถ',
+            'act_id' => 'รหัส พรบ.',
+            'insure_type' => 'ประเภทประกันภัย',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

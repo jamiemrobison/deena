@@ -37,9 +37,9 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-        [['first_name','last_name','user_id'],'required'],
-            [['position_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['employee_code', 'first_name', 'last_name', 'phone', 'photo'], 'string', 'max' => 255],
+        [['first_name','last_name','user_id','phone','prefix_name'],'required'],
+            [['position_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','prefix_name'], 'integer'],
+            [['employee_code', 'first_name', 'last_name', 'phone', 'photo','email'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,6 +50,7 @@ class Employee extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'prefix_name'=>'คำนำหน้า',
             'employee_code' => 'รหัสพนักงาน',
             'first_name' => 'ชื่อ',
             'last_name' => 'นามสกุล',
@@ -58,6 +59,7 @@ class Employee extends \yii\db\ActiveRecord
             'photo' => 'รูปภาพ',
             'user_id' => 'ผู้ใช้งาน',
             'status' => 'สถานะ',
+            'email' => 'Email',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

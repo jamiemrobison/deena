@@ -5,11 +5,13 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use toxor88\switchery\Switchery;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Employee */
 /* @var $form yii\widgets\ActiveForm */
 $pos = backend\models\Position::find()->where(['status'=>1])->all();
 $user = backend\models\User::find()->where(['status'=>10])->all();
+$prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 ?>
 
 <div class="employee-form">
@@ -29,16 +31,30 @@ $user = backend\models\User::find()->where(['status'=>10])->all();
                       </div>
                      <br />
                     <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label(false) ?>
+                     <input type="hidden" name="old_photo" value="<?=$model->photo?>" />
                    </div>
                 </div>
               <div class="col-lg-9">
                         
+                        <div class="form-group">
+                                <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('prefix_name')?></label>
+                                <div class="col-sm-10">
+                                   <?= $form->field($model, 'prefix_name')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($prefix,'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'prefix_name'],
+                                    ]
+
+                                  )->label(false) ?>
+                                </div>
+                           </div>
                    <div class="form-group">
                                 <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('first_name')?></label>
                                 <div class="col-sm-10">
                                   <?= $form->field($model, 'first_name')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'first_name'])->label(false) ?>
                                 </div>
                            </div>
+                           
 
                     <div class="form-group">
                                 <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('last_name')?></label>
@@ -64,6 +80,13 @@ $user = backend\models\User::find()->where(['status'=>10])->all();
                                 <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('phone')?></label>
                                 <div class="col-sm-10">
                                   <?= $form->field($model, 'phone')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'phone'])->label(false) ?>
+                                </div>
+                           </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('email')?></label>
+                                <div class="col-sm-10">
+                                  <?= $form->field($model, 'email')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'email'])->label(false) ?>
                                 </div>
                            </div>
 

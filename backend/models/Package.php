@@ -37,4 +37,5 @@ class Package extends \common\models\ProductPackage
  public function getProductinfo(){
     return $this->hasOne(\backend\models\Product::className(),['id'=>'insure_type']);
  }
+ 
 }

@@ -35,7 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
            // 'id',
+            // [
+            //   'attribute'=>'insure_type',
+            //   'value'=>function($data){
+            //     return $data->insure_type!=''?\backend\helpers\InsureCodeType::getTypeById($data->insure_type):'';
+            //   }
+            // ],
             'car_code',
+            'act_code',
             'name',
             'description',
             [

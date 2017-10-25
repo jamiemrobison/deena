@@ -42,37 +42,12 @@ if (Yii::$app->controller->action->id === 'login') {
         <?php $this->head() ?>
     <?php
 
-    $roleaction = $session['roleaction'];
-
-$js =<<<JS
-    $(function(){
-              var socket = io.connect( 'http://127.0.0.1:3000');
-              var count_noti = $('.count_noti').val();
-              if(1 > 0){
-                 // socket.emit('chatmessage',count_noti);
-                 // socket.on('chatmessage' , function(msg){
-                 //  $(".cnt-noti").text(msg);
-                 // });
-                socket.emit('getcountjob',"$roleaction");
-                socket.on('getcountjob',function(res){
-                   if(res > 0){
-                    $(".cnt-noti").text(res);
-                    $(".cnt-msg").text(res);
-                    $(".noti-msg-list").show();
-                   }else{
-                    $(".noti-msg-list").hide();
-                   }
-                   
-                })
-              }
-    });
-JS;
 
 //$this->registerJs($js,static::POS_END);
      ?>
 
     </head>
-    <body class="hold-transition skin-blue-light sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 

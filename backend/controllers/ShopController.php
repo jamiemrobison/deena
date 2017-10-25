@@ -44,6 +44,7 @@ class ShopController extends Controller
         //     'searchModel' => $searchModel,
         //     'dataProvider' => $dataProvider,
         // ]);
+       $model_bankaccount = new BankAccount();
         $modelx = Shop::find()->one();
         if(count($modelx)>0){
             return $this->redirect(['update','id'=>$modelx->id]);
@@ -55,6 +56,7 @@ class ShopController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'model_bankaccount' => $model_bankaccount,
             ]);
         }
     }
@@ -79,7 +81,7 @@ class ShopController extends Controller
     public function actionCreate()
     {
         $model = new Shop();
-
+         $model_bankaccount = new BankAccount();
         if ($model->load(Yii::$app->request->post())) {
             $uploaded = UploadedFile::getInstance($model, 'logo');
             if(!empty($uploaded)){
@@ -96,6 +98,7 @@ class ShopController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'model_bankaccount' => $model_bankaccount,
             ]);
         }
     }
@@ -116,6 +119,7 @@ class ShopController extends Controller
             //var_dump($_POST);return;
             $bankid = Yii::$app->request->post('bank_id');
             $accountno = Yii::$app->request->post('account_no');
+            $oldlogo = Yii::$app->request->post('old_logo');
             $brance = Yii::$app->request->post('brance');
 
             //echo $accountno[0];return;
@@ -127,6 +131,8 @@ class ShopController extends Controller
                     if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
                        $model->logo = $upfiles;
                     }
+            }else{
+                 $model->logo = $oldlogo;
             }
 
             if($model->save()){

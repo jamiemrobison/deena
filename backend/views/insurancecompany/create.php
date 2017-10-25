@@ -16,6 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'model_bankaccount' => $model_bankaccount,
         'model_commission' => $model_commission,
+        'model_contact' => $model_contact,
+        'model_company_com' => $model_company_com,
+        'modelfile'=>$modelfile,
+        'model_cargroup' => $model_cargroup,
+        //'model_cargroup_detail' => $model_cargroup_detail,
     ]) ?>
 
 </div>

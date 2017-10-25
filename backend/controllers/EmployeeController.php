@@ -67,6 +67,7 @@ class EmployeeController extends Controller
         $model = new Employee();
 
         if ($model->load(Yii::$app->request->post())) {
+            $oldlogo = Yii::$app->request->post('old_photo');
             $uploaded = UploadedFile::getInstance($model, 'photo');
             if(!empty($uploaded)){
                   $upfiles = time() . "." . $uploaded->getExtension();
@@ -75,6 +76,8 @@ class EmployeeController extends Controller
                     if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
                        $model->photo = $upfiles;
                     }
+            }else{
+                $model->photo = $oldlogo;
             }
             if($model->save()){
                 return $this->redirect(['update', 'id' => $model->id]);
@@ -97,6 +100,7 @@ class EmployeeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $oldlogo = Yii::$app->request->post('old_photo');
             $uploaded = UploadedFile::getInstance($model, 'photo');
             if(!empty($uploaded)){
                   $upfiles = time() . "." . $uploaded->getExtension();
@@ -105,6 +109,8 @@ class EmployeeController extends Controller
                     if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
                        $model->photo = $upfiles;
                     }
+            }else{
+                 $model->photo = $oldlogo;
             }
             if($model->save()){
                 return $this->redirect(['update', 'id' => $model->id]);

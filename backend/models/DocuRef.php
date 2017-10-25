@@ -31,9 +31,14 @@ class DocuRef extends \common\models\DocuRef
         ],
     ];
  }
- public function positiondata($id){
-    $model=Position::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->name:'';
- }
+    public static function getFileOwner($type,$id){
+        if($type == 2){ //company
+            $model = \backend\models\Insurancecompany::find()->where(['id'=>$id])->one();
+            return count($model)>0?$model->short_name:'';
+        }elseif($type == 3){ //member
+            $model = \backend\models\Member::find()->where(['id'=>$id])->one();
+            return count($model)>0?$model->first_name." ".$model->last_name:'';
+        }
+    }
 
 }

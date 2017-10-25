@@ -23,7 +23,8 @@ class DocurefController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                  // 'index' => ['POST','GET'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -35,6 +36,7 @@ class DocurefController extends Controller
      */
     public function actionIndex()
     {
+      //  Yii::$app->controller->enableCsrfValidation = false;
         $searchModel = new DocurefSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

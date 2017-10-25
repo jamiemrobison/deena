@@ -19,6 +19,11 @@ $this->params['breadcrumbs'][] = 'Update';
         'model_condition' => $model_condition,
         'model_protect_detail' => $model_protect_detail,
         'model_condition_detail' => $model_condition_detail,
+        'model_car_select' => $model_car_select,
+        'model_company_com' => $model_company_com,
+        'model_package'=>$model_package,
+        'model_promotion'=>$model_promotion,
+        'model_promotion_data'=>$model_promotion_data,
     ]) ?>
 
 </div>

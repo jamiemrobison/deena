@@ -11,9 +11,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Docurefs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="docuref-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -28,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'doc_type',
             'doc_group_id',
             'name',
@@ -36,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'party_id',
             'description',
             'filename',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            // 'status',
+            // 'created_at',
+            // 'updated_at',
+            // 'created_by',
+            // 'updated_by',
         ],
     ]) ?>
 

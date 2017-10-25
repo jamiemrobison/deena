@@ -31,4 +31,8 @@ class Insurancecompany extends \common\models\InsureCompany
         ],
     ];
  }
+ public static function getName($id){
+    $model = Insurancecompany::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->short_name:'';
+ }
 }

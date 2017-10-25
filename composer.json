@@ -20,9 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "phpoffice/phpexcel": "dev-master",
-        "dmstr/yii2-adminlte-asset": "2.*",
         "kartik-v/yii2-grid": "*",
-        "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-widget-datepicker": "*",
         "kartik-v/yii2-widget-select2": "@dev",
         "execut/yii2-widget-bootstraptreeview": "dev-master",
@@ -33,7 +31,16 @@
         "open-ecommerce/yii2-backuprestore": "dev-master",
         "ratacibernetica/yii2-node-socket": "^1.0",
         "kartik-v/yii2-widget-typeahead": "*",
-        "toxor88/yii2-widget-switchery": "*"
+        "toxor88/yii2-widget-switchery": "*",
+        "kartik-v/bootstrap-fileinput": "@dev",
+        "kartik-v/yii2-mpdf": "*",
+        "yii2mod/yii2-sweet-alert": "*",
+        "yiister/yii2-gentelella":"~1.0",
+        "dmstr/yii2-adminlte-asset":"2.5.*",
+        "lavrentiev/yii2-toastr": "~2.0.0",
+        "wbraganca/yii2-dynamicform": "*",
+        "bookin/yii2-awesome-bootstrap-checkbox": "@dev",
+        "2amigos/yii2-ckeditor-widget" : "~2.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
@@ -42,7 +49,15 @@
         "yiisoft/yii2-faker": "*"
     },
     "config": {
-        "process-timeout": 1800
+         "process-timeout": 1800,
+        "fxp-asset": {
+        "repositories": {
+        "bower-asset/eve": {
+        "type": "bower-vcs",
+        "url": "https://github.com/adobe-webplatform/eve.git"
+        }
+        }
+        }
     },
     "extra": {
         "asset-installer-paths": {

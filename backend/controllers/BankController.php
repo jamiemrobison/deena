@@ -24,7 +24,7 @@ class BankController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -97,6 +97,7 @@ class BankController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $oldlogo = Yii::$app->request->post('old_logo');
             $uploaded = UploadedFile::getInstance($model, 'logo');
             if(!empty($uploaded)){
                   $upfiles = time() . "." . $uploaded->getExtension();
@@ -105,6 +106,8 @@ class BankController extends Controller
                     if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
                        $model->logo = $upfiles;
                     }
+            }else{
+                 $model->logo = $oldlogo;
             }
             if($model->save()){
                 return $this->redirect(['update', 'id' => $model->id]);

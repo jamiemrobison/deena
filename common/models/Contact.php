@@ -36,8 +36,10 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['party_id', 'party_type_id', 'contact_type_id', 'contact_txt', 'is_primary', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+        [['phone1','email1'],'required'],
+            [['email1','email2'],'email','message'=>'รูปแบบ Email ไม่ถูกต้อง'],
+            [['party_id', 'party_type_id', 'contact_type_id', 'is_primary', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','contact_title'], 'integer'],
+            [['name','contact_section', 'contact_txt','phone1','phone2','email1','email2'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,12 +52,18 @@ class Contact extends \yii\db\ActiveRecord
             'id' => 'ID',
             'party_id' => 'Party ID',
             'party_type_id' => 'Party Type ID',
-            'name' => 'Name',
-            'contact_type_id' => 'Contact Type ID',
-            'contact_txt' => 'Contact Txt',
+            'name' => 'ชื่อผู้ติดต่อ',
+            'contact_type_id' => 'ประเภท',
+            'contact_txt' => 'รายละเอียด',
             'is_primary' => 'Is Primary',
-            'status' => 'Status',
-            'created_at' => 'Created At',
+            'contact_title' => 'คำนำหน้า',
+            'contact_section' => 'หน่วยงานติดต่อ',
+            'status' => 'สถานะ',
+            'phone1' => 'เบอร์โทร 1',
+            'phone2' => 'เบอร์โทร 2',
+            'email1' => 'อีเมล์ 1',
+            'email2' => 'อีเมล์ 2',
+            'created_at' => 'สร้างเมื่อ',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',

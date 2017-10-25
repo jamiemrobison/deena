@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'name',
             'description',
             'email:email',
@@ -41,11 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'website',
             'facebook',
             'line',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            [
+               'attribute'=>'status',
+               'format' => 'html',
+               'value'=>function($data){
+                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+               }
+             ],
+            [
+               'attribute'=>'created_at',
+               'value'=>function($data){
+                 return date('d-m-Y',$data->created_at);
+               }
+             ],
+            // 'updated_at',
+            // 'created_by',
+            // 'updated_by',
         ],
     ]) ?>
 

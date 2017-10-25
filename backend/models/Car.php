@@ -31,4 +31,16 @@ class Car extends \common\models\Car
         ],
     ];
  }
+ public static function getCarcode($id){
+    $model = Car::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->car_code:'';
+ }
+ public static function getCarActcode($id){
+    $model = Car::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->act_code:'';
+ }
+  public static function getCarActname($id){
+    $model = Car::find()->where(['car_code'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
 }

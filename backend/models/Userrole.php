@@ -31,4 +31,14 @@ class Userrole extends \common\models\UserRole
         ],
     ];
  }
+ public function checkRoleEnable($id,$menu_id){
+   $model = \backend\models\Permission::find()->where(['role_id'=>$id,'menu_id'=>$menu_id])->one();
+   $data = [];
+   if($model){
+      array_push($data,['full'=>$model->is_full,'view'=>$model->is_view,'modified'=>$model->is_update,'delete'=>$model->is_delete]);
+      if(count($data)>0){
+        return $data;
+      }
+   }
+ }
 }

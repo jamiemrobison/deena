@@ -28,6 +28,8 @@ use toxor88\switchery\Switchery;
 
                   <?= $form->field($model, 'logo')->fileInput(['maxlength' => true]) ?>
 
+                   <input type="hidden" name="old_logo" value="<?=$model->logo?>" />
+
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
                   <div class="form-group">

@@ -15,6 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'model_protect' => $model_protect,
         'model_condition' => $model_condition,
+        'model_company_com' => $model_company_com,
+        'model_package'=>$model_package,
+        'model_promotion'=>$model_promotion,
     ]) ?>
 
 </div>
