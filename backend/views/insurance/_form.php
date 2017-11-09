@@ -22,6 +22,8 @@ use kartik\file\Fileinput;
 use yii\helpers\Url;
 use backend\models\Promotion;
 use lavrentiev\widgets\toastr\Notification;
+use backend\helpers\ProtectTitle;
+use backend\helpers\ConditionTitle;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Insurance */
 /* @var $form yii\widgets\ActiveForm */
@@ -52,32 +54,32 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 <div class="insurance-form">
   <?php $session = Yii::$app->session;
       if ($session->getFlash('msg')): ?>
-       <div class="alert alert-success alert-dismissible" role="alert">
+       <!-- <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <?php echo $session->getFlash('msg'); ?>
-      </div>
-      <!--  <?php //echo Notification::widget([
-            // 'type' => 'success',
-            // 'title' => 'แจ้งผลการทำงาน',
-            // 'message' => $session->getFlash('msg'),
-            // 'options' => [
-            //     "closeButton" => false,
-            //     "debug" => false,
-            //     "newestOnTop" => false,
-            //     "progressBar" => false,
-            //     "positionClass" => "toast-top-right",
-            //     "preventDuplicates" => false,
-            //     "onclick" => null,
-            //     "showDuration" => "300",
-            //     "hideDuration" => "1000",
-            //     "timeOut" => "6000",
-            //     "extendedTimeOut" => "1000",
-            //     "showEasing" => "swing",
-            //     "hideEasing" => "linear",
-            //     "showMethod" => "fadeIn",
-            //     "hideMethod" => "fadeOut"
-            // ]
-       // ]); ?> -->
+          <?php //echo $session->getFlash('msg'); ?>
+      </div> -->
+        <?php echo Notification::widget([
+            'type' => 'success',
+            'title' => 'แจ้งผลการทำงาน',
+            'message' => $session->getFlash('msg'),
+            'options' => [
+                "closeButton" => false,
+                "debug" => false,
+                "newestOnTop" => false,
+                "progressBar" => false,
+                "positionClass" => "toast-top-right",
+                "preventDuplicates" => false,
+                "onclick" => null,
+                "showDuration" => "300",
+                "hideDuration" => "1000",
+                "timeOut" => "6000",
+                "extendedTimeOut" => "1000",
+                "showEasing" => "swing",
+                "hideEasing" => "linear",
+                "showMethod" => "fadeIn",
+                "hideMethod" => "fadeOut"
+            ]
+        ]); ?> 
         <?php endif; 
   ?>
 
@@ -109,10 +111,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลแจ้งประกัน</a></li>
               <li><a href="#tab_2" data-toggle="tab">สลักหลัง</a></li>
+              <li><a href="#tab_7" data-toggle="tab">ความคุ้มครอง</a></li>
               <li id="tab_installment"><a href="#tab_6" data-toggle="tab">คำนวณผ่อนชำระ</a></li>
               <li><a href="#tab_3" data-toggle="tab">ประวัติชำระเงิน</a></li>
               <li><a href="#tab_4" data-toggle="tab">แนบไฟล์</a></li>
               <li><a href="#tab_5" data-toggle="tab">อื่นๆ</a></li>
+              
             </ul>
 
             <div class="tab-content">
@@ -483,12 +487,15 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'member_id',
                                                 'onchange'=>'
                                                   $.post("index.php?r=insurance/getlevel&id=' . '"+$(this).val(),function(data){
+                                                      $("select#level_id").empty();
                                                       $("select#level_id").append(data);
                                                   });
                                                   $.post("index.php?r=insurance/getintro&id=' . '"+$(this).val(),function(data){
+                                                      $("select#intro_id").empty();
                                                       $("select#intro_id").append(data);
                                                   });
                                                   $.post("index.php?r=insurance/getline&id=' . '"+$(this).val(),function(data){
+                                                       $("select#line_id").empty();
                                                       $("select#line_id").append(data);
                                                   });
                                                 '
@@ -922,6 +929,84 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                     </div>
                   </div>
                 </div>
+              </div>
+               <div class="tab-pane" id="tab_7">
+                    <div class="panel">
+                      <div class="panel-body">
+                          <div class="row">
+                        <div class="col-lg-12">
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              ความคุ้มครอง
+                            </div>
+                            <div class="panel-body">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <!-- <a href="" class="btn-addprotect"><i class="fa fa-plus"></i> เพิ่มรายการ</a> -->
+                                  <table class="table table-striped table-hover table-protect">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>ชื่อ</th>
+                                        <th>รายละเอียด</th>
+                                        <th>จำนวนเงิน</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="add-protect-body">
+                                      <?php if(!$model->isNewRecord):?>
+                                      <?php $cnt =0;?>
+                                        <?php foreach($insure_package as $value):?>
+                                        <?php $cnt+=1;?>
+                                            <tr id="ordered-protect-id-">
+                                                <td><?=$cnt;?></td>
+                                                <td>
+                                                  <div class="coverage_txt">
+                                                    <?= ProtectTitle::getTypeById($value->coverage_type);?>
+                                                  </div>
+                                                  <input type="hidden" class="protectid" name="protectid[]" value="<?= $value->coverage_type;?>"/>
+                                                </td>
+                                                <td>
+                                                  <!-- <input type="text" class="form-control name" name="name[]" value=""/> -->
+                                                   <div class="protect_txt">
+                                                    <?=\backend\models\Actprotect::getActprotectname($value->actprotect_id);?>
+                                                  </div>
+                                                <input type="hidden" class="name" name="name[]" value="<?= $value->amount;?>" />
+                                                <input type="hidden" class="actprotectid" name="actprotectid[]" value="<?= $value->actprotect_id;?>" />
+                                              </td>
+                                              <td>
+                                                  <!-- <input type="text" class="form-control name" name="name[]" value=""/> -->
+                                                   <div class="amount_txt">
+                                                    <?=number_format($value->amount);?>
+                                                  </div>
+                                                <input type="hidden" class="amount" name="amount[]" value="<?= $value->amount;?>" />
+                                              </td>
+                            
+                                              <td class="action">
+                                                  <!-- <a class="btn btn-white remove-line" onClick="protectremove($(this));" href="javascript:void(0);"><i class="fa fa-trash-o"></i></a>
+                                                <a class="btn btn-white edit-line" onClick="protectEdit($(this));" href="javascript:void(0);"><i class="fa fa-edit"></i></a> -->
+                                                </td>
+                                            </tr>
+                                        <?php endforeach;?>
+                                      <?php endif;?> 
+                                    </tbody>
+                                  </table>
+                                </div>
+                                
+                              </div>
+                              </div>
+                              <!-- <div class="panel-footer">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="btn btn-default btn-copy-protect"><i class="fa fa-copy"></i> Copy ความคุ้มครอง</div>
+                                  </div>              
+                                </div>   
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
               </div>
       </div>
     </div>

@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\web\ForbiddenHttpException;
+
 
 /**
  * EmployeeController implements the CRUD actions for Employee model.
@@ -52,9 +54,14 @@ class EmployeeController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $role_act = \backend\models\Userrole::checkRoleEnable("employee");
+        if($role_act[0]['view'] == 1){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -65,27 +72,31 @@ class EmployeeController extends Controller
     public function actionCreate()
     {
         $model = new Employee();
+        $role_act = \backend\models\Userrole::checkRoleEnable("employee");
+        if($role_act[0]['create'] == 1){
+                if ($model->load(Yii::$app->request->post())) {
+                    $oldlogo = Yii::$app->request->post('old_photo');
+                    $uploaded = UploadedFile::getInstance($model, 'photo');
+                    if(!empty($uploaded)){
+                          $upfiles = time() . "." . $uploaded->getExtension();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $oldlogo = Yii::$app->request->post('old_photo');
-            $uploaded = UploadedFile::getInstance($model, 'photo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
-
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->photo = $upfiles;
+                            //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                            if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                               $model->photo = $upfiles;
+                            }
+                    }else{
+                        $model->photo = $oldlogo;
                     }
-            }else{
-                $model->photo = $oldlogo;
-            }
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                    if($model->save()){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -98,27 +109,31 @@ class EmployeeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $role_act = \backend\models\Userrole::checkRoleEnable("employee");
+        if($role_act[0]['modified'] == 1){
+                if ($model->load(Yii::$app->request->post())) {
+                    $oldlogo = Yii::$app->request->post('old_photo');
+                    $uploaded = UploadedFile::getInstance($model, 'photo');
+                    if(!empty($uploaded)){
+                          $upfiles = time() . "." . $uploaded->getExtension();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $oldlogo = Yii::$app->request->post('old_photo');
-            $uploaded = UploadedFile::getInstance($model, 'photo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
-
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->photo = $upfiles;
+                            //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                            if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                               $model->photo = $upfiles;
+                            }
+                    }else{
+                         $model->photo = $oldlogo;
                     }
-            }else{
-                 $model->photo = $oldlogo;
-            }
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                    if($model->save()){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+         }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -130,9 +145,14 @@ class EmployeeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+         $role_act = \backend\models\Userrole::checkRoleEnable("employee");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

@@ -12,25 +12,33 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menu-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Menu', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+     <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+           <div>
+        <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างเมนู', ['create'], ['class' => 'btn btn-success']) ?>
+         <div class="btn-group pull-right" style="bottom: 10px">
+        <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
+      </div>
+      </div>
+      </div>
+      <div class="panel-body">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+           // 'id',
             'name',
             'description',
             'menu_type_id',
-            'status',
+            //'status',
             //'created_at',
             //'updated_at',
             //'created_by',
@@ -39,5 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+     </div>
+  </div>
+  </div>
+  </div>
     <?php Pjax::end(); ?>
 </div>

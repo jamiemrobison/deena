@@ -14,7 +14,7 @@ class m170910_083937_create_act_table extends Migration
     {
         $this->createTable('act', [
             'id' => $this->primaryKey(),
-            'car_code' => $this->integer(),
+            'car_code' => $this->string(),
             'car_type_id' => $this->integer(),
             'car_description' => $this->string(),
             'tax_premium' => $this->float(),

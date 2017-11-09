@@ -34,8 +34,8 @@ class Menu extends \yii\db\ActiveRecord
     {
         return [
         [['name'],'required'],
-            [['menu_type_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name','description'], 'string', 'max' => 255],
+            [['menu_type_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id'], 'integer'],
+            [['name','description','icon','url','controller'], 'string', 'max' => 255],
         ];
     }
 

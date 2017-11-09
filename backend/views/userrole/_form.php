@@ -47,6 +47,7 @@ use bookin\aws\checkbox\AwesomeCheckbox;
                         <tr style="background: #ccc;text-color: #fff">
                           <th style="widht: 60%;text-align: center;">ชื่อเมนู</th>
                           <th style="widht: 10%;text-align: center;">Full</th>
+                          <th style="widht: 10%;text-align: center;">Create</th>
                           <th style="widht: 10%;text-align: center;">View</th>
                           <th style="widht: 10%;text-align: center;">Modified</th>
                           <th style="widht: 10%;text-align: center;">Delete</th>
@@ -55,7 +56,7 @@ use bookin\aws\checkbox\AwesomeCheckbox;
                       </thead>
                       <tbody>
                         <?php $i=0;?>
-                        <?php if(!$model->isNewRecord):?>
+                        <?php if(!$model->isNewRecord && count($listmenu_select)>0):?>
                             <?php foreach($listmenu_select as $value):?>
                                  <?php $i+=1;?>
                                 <tr>
@@ -73,6 +74,20 @@ use bookin\aws\checkbox\AwesomeCheckbox;
                                             'label'=>' ',
                                             'onclick'=>'rowallcheck($(this))',
 
+                                        ]
+                                    ]);?>
+                                  </td>
+                                  <td style="widht: 10%;text-align: center;">
+                                    <input type="hidden" class="input_is_create" name="is_create[]" value="<?=$value->is_create?>"/> 
+                                   <?= AwesomeCheckbox::widget([
+                                        'name'=>'test',
+                                        'id'=>'is_create-'.$i,
+                                        'type'=>AwesomeCheckbox::TYPE_CHECKBOX,
+                                        'style'=>[AwesomeCheckbox::STYLE_CIRCLE, AwesomeCheckbox::STYLE_SUCCESS],
+                                        'checked' => $value->is_create?true:false,
+                                        'options'=>[
+                                            'label'=>' ',
+                                            'onclick'=>'rowcheck($(this))',
                                         ]
                                     ]);?>
                                   </td>
@@ -152,6 +167,19 @@ use bookin\aws\checkbox\AwesomeCheckbox;
                                               'label'=>' ',
                                               'onclick'=>'rowallcheck($(this))',
 
+                                          ]
+                                      ]);?>
+                                    </td>
+                                    <td style="widht: 10%;text-align: center;">
+                                      <input type="hidden" class="input_is_create" name="is_create[]" value=""/> 
+                                     <?= AwesomeCheckbox::widget([
+                                          'name'=>'test',
+                                          'id'=>'is_create-'.$i,
+                                          'type'=>AwesomeCheckbox::TYPE_CHECKBOX,
+                                          'style'=>[AwesomeCheckbox::STYLE_CIRCLE, AwesomeCheckbox::STYLE_SUCCESS],
+                                          'options'=>[
+                                              'label'=>' ',
+                                              'onclick'=>'rowcheck($(this))',
                                           ]
                                       ]);?>
                                     </td>
@@ -238,24 +266,28 @@ use bookin\aws\checkbox\AwesomeCheckbox;
           e.closest("tr").find("#is_modified-"+id[1]).prop("checked","checked");
           e.closest("tr").find("#is_delete-"+id[1]).prop("checked","checked");
           e.closest("tr").find("#is_approve-"+id[1]).prop("checked","checked");
+          e.closest("tr").find("#is_create-"+id[1]).prop("checked","checked");
 
           e.closest("tr").find(".input_is_full").val("1");
           e.closest("tr").find(".input_is_view").val("1");
           e.closest("tr").find(".input_is_modified").val("1");
           e.closest("tr").find(".input_is_delete").val("1");
           e.closest("tr").find(".input_is_approve").val("1");
+          e.closest("tr").find(".input_is_create").val("1");
 
         }else{
           e.closest("tr").find("#is_view-"+id[1]).prop("checked","");
           e.closest("tr").find("#is_modified-"+id[1]).prop("checked","");
           e.closest("tr").find("#is_delete-"+id[1]).prop("checked","");
           e.closest("tr").find("#is_approve-"+id[1]).prop("checked","");
+          e.closest("tr").find("#is_create-"+id[1]).prop("checked","");
 
           e.closest("tr").find(".input_is_full").val("0");
           e.closest("tr").find(".input_is_view").val("0");
           e.closest("tr").find(".input_is_modified").val("0");
           e.closest("tr").find(".input_is_delete").val("0");
           e.closest("tr").find(".input_is_approve").val("0");
+          e.closest("tr").find(".input_is_create").val("0");
         }
       }
       function rowcheck(e){
@@ -266,7 +298,7 @@ use bookin\aws\checkbox\AwesomeCheckbox;
            e.closest("tr").find("."+cname).val("1");
             
 
-           if(e.closest("tr").find("#is_view-"+id[1]).is(":checked") && e.closest("tr").find("#is_modified-"+id[1]).is(":checked") && e.closest("tr").find("#is_delete-"+id[1]).is(":checked") && e.closest("tr").find("#is_approve-"+id[1]).is(":checked")){
+           if(e.closest("tr").find("#is_view-"+id[1]).is(":checked") && e.closest("tr").find("#is_modified-"+id[1]).is(":checked") && e.closest("tr").find("#is_delete-"+id[1]).is(":checked") && e.closest("tr").find("#is_approve-"+id[1]).is(":checked") && e.closest("tr").find("#is_create-"+id[1]).is(":checked")){
             e.closest("tr").find("#is_full-"+id[1]).prop("checked","checked");
             e.closest("tr").find(".input_is_full").val("1");
 

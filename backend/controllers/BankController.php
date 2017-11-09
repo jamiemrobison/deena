@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\web\ForbiddenHttpException;
 
 /**
  * BankController implements the CRUD actions for Bank model.
@@ -52,9 +53,14 @@ class BankController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+         $role_act = \backend\models\Userrole::checkRoleEnable("bank");
+        if($role_act[0]['view'] == 1){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -65,24 +71,28 @@ class BankController extends Controller
     public function actionCreate()
     {
         $model = new Bank();
+        $role_act = \backend\models\Userrole::checkRoleEnable("bank");
+        if($role_act[0]['create'] == 1){
+                        if ($model->load(Yii::$app->request->post())) {
+                            $uploaded = UploadedFile::getInstance($model, 'logo');
+                            if(!empty($uploaded)){
+                                  $upfiles = time() . "." . $uploaded->getExtension();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $uploaded = UploadedFile::getInstance($model, 'logo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
-
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->logo = $upfiles;
-                    }
-            }
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                                       $model->logo = $upfiles;
+                                    }
+                            }
+                            if($model->save()){
+                                return $this->redirect(['update', 'id' => $model->id]);
+                            }
+                        } else {
+                            return $this->render('create', [
+                                'model' => $model,
+                            ]);
+                        }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -96,26 +106,32 @@ class BankController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $oldlogo = Yii::$app->request->post('old_logo');
-            $uploaded = UploadedFile::getInstance($model, 'logo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
+         $role_act = \backend\models\Userrole::checkRoleEnable("bank");
+        if($role_act[0]['modified'] == 1){
 
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->logo = $upfiles;
+                    if ($model->load(Yii::$app->request->post())) {
+                        $oldlogo = Yii::$app->request->post('old_logo');
+                        $uploaded = UploadedFile::getInstance($model, 'logo');
+                        if(!empty($uploaded)){
+                              $upfiles = time() . "." . $uploaded->getExtension();
+
+                                //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                                if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                                   $model->logo = $upfiles;
+                                }
+                        }else{
+                             $model->logo = $oldlogo;
+                        }
+                        if($model->save()){
+                            return $this->redirect(['update', 'id' => $model->id]);
+                        }
+                    } else {
+                        return $this->render('update', [
+                            'model' => $model,
+                        ]);
                     }
-            }else{
-                 $model->logo = $oldlogo;
-            }
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -127,9 +143,14 @@ class BankController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+         $role_act = \backend\models\Userrole::checkRoleEnable("bank");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

@@ -40,7 +40,7 @@ class Permission extends \yii\db\ActiveRecord
     {
         return [
             [['position_id', 'menu_id', 'menu_type_id', 'is_view', 'is_delete', 'is_update', 'is_insert',
-             'is_approve', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+             'is_approve','is_create', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
         ];
     }

@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'model_contact' => $model_contact,
         'model_company_com' => $model_company_com,
          'modelfile'=>$modelfile,
+         'modelfile2'=>$modelfile2,
         'model_filedata'=> $model_filedata,
         'model_cargroup'=>$model_cargroup,
         'model_cargroup_detail'=>$model_cargroup_detail,

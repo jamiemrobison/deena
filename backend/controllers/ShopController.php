@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\models\BankAccount;
-
+use yii\web\ForbiddenHttpException;
 /**
  * ShopController implements the CRUD actions for Shop model.
  */
@@ -68,9 +68,14 @@ class ShopController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $role_act = \backend\models\Userrole::checkRoleEnable("shop");
+        if($role_act[0]['modified'] == 1){   
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -81,26 +86,32 @@ class ShopController extends Controller
     public function actionCreate()
     {
         $model = new Shop();
-         $model_bankaccount = new BankAccount();
-        if ($model->load(Yii::$app->request->post())) {
-            $uploaded = UploadedFile::getInstance($model, 'logo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
+        $model_bankaccount = new BankAccount();
 
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->logo = $upfiles;
+        $role_act = \backend\models\Userrole::checkRoleEnable("shop");
+        if($role_act[0]['create'] == 1){
+                if ($model->load(Yii::$app->request->post())) {
+                    $uploaded = UploadedFile::getInstance($model, 'logo');
+                    if(!empty($uploaded)){
+                          $upfiles = time() . "." . $uploaded->getExtension();
+
+                            //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                            if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                               $model->logo = $upfiles;
+                            }
                     }
-            }
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'model_bankaccount' => $model_bankaccount,
-            ]);
-        }
+                    if($model->save()){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                        'model_bankaccount' => $model_bankaccount,
+                    ]);
+                }
+         }else{
+                throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+         }       
     }
 
     /**
@@ -115,52 +126,59 @@ class ShopController extends Controller
         $model_bankdata = BankAccount::find()->where(['party_type_id'=>1,'party_id'=>$id])->all();
         $model_bankaccount = new BankAccount();
 
-        if ($model->load(Yii::$app->request->post())) {
-            //var_dump($_POST);return;
-            $bankid = Yii::$app->request->post('bank_id');
-            $accountno = Yii::$app->request->post('account_no');
-            $oldlogo = Yii::$app->request->post('old_logo');
-            $brance = Yii::$app->request->post('brance');
 
-            //echo $accountno[0];return;
-             $uploaded = UploadedFile::getInstance($model, 'logo');
-            if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
+        $role_act = \backend\models\Userrole::checkRoleEnable("shop");
+        if($role_act[0]['modified'] == 1){
 
-                    //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->logo = $upfiles;
+                if ($model->load(Yii::$app->request->post())) {
+                    //var_dump($_POST);return;
+                    $bankid = Yii::$app->request->post('bank_id');
+                    $accountno = Yii::$app->request->post('account_no');
+                    $oldlogo = Yii::$app->request->post('old_logo');
+                    $brance = Yii::$app->request->post('brance');
+
+                    //echo $accountno[0];return;
+                     $uploaded = UploadedFile::getInstance($model, 'logo');
+                    if(!empty($uploaded)){
+                          $upfiles = time() . "." . $uploaded->getExtension();
+
+                            //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                            if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
+                               $model->logo = $upfiles;
+                            }
+                    }else{
+                         $model->logo = $oldlogo;
                     }
-            }else{
-                 $model->logo = $oldlogo;
-            }
 
-            if($model->save()){
-                if(count($bankid)>0){
-                    BankAccount::deleteAll(['party_id'=>$id]);
-                    for($i=0;$i <= count($bankid)-1;$i++){
-                        $model_account = new BankAccount();
-                        $model_account->bank_id = $bankid[$i];
-                        $model_account->name = $accountno[$i];
-                        $model_account->account_no = $accountno[$i];
-                        $model_account->brance = $brance[$i];
-                        $model_account->party_id = $model->id;
-                        $model_account->party_type_id = 1; // 1 shop
-                        $model_account->status = 1;
-                        $model_account->save(false);
-                 
+                    if($model->save()){
+                        if(count($bankid)>0){
+                            BankAccount::deleteAll(['party_id'=>$id]);
+                            for($i=0;$i <= count($bankid)-1;$i++){
+                                $model_account = new BankAccount();
+                                $model_account->bank_id = $bankid[$i];
+                                $model_account->name = $accountno[$i];
+                                $model_account->account_no = $accountno[$i];
+                                $model_account->brance = $brance[$i];
+                                $model_account->party_id = $model->id;
+                                $model_account->party_type_id = 1; // 1 shop
+                                $model_account->status = 1;
+                                $model_account->save(false);
+                         
+                            }
+                            
+                        }
+                        return $this->redirect(['update', 'id' => $model->id]);
                     }
-                    
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                        'model_bankaccount' => $model_bankaccount,
+                        'model_bankdata' => $model_bankdata,
+                    ]);
                 }
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'model_bankaccount' => $model_bankaccount,
-                'model_bankdata' => $model_bankdata,
-            ]);
-        }
+            }else{
+                 throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+            }  
     }
 
     /**
@@ -171,9 +189,14 @@ class ShopController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $role_act = \backend\models\Userrole::checkRoleEnable("shop");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

@@ -31,4 +31,8 @@ class Caryear extends \common\models\Caryear
         ],
     ];
  }
+ public static function getCaryearName($id){
+    $model = Caryear::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->year_eng:'';
+ }
 }

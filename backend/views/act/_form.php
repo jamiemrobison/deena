@@ -98,7 +98,7 @@ $cartype = CarType::find()->all();
                          <div class="form-group">
                                 <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('tax_premium')?></label>
                                 <div class="col-sm-9">
-                                  <?= $form->field($model, 'tax_premium')->textInput(['maxlength' => true,'class'=>'form-control form-inline tax_premium'])->label(false) ?>
+                                  <?= $form->field($model, 'tax_premium')->textInput(['maxlength' => true,'class'=>'form-control form-inline tax_premium','value'=>number_format($model->tax_premium,2)])->label(false) ?>
                                 </div>
                         </div>
                          <div class="form-group">

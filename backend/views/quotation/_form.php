@@ -155,7 +155,7 @@ $prefix = \backend\models\Prefixname::find()->all();
                         
                         <tr>
                           <td colspan="5">
-                            <table class="table table-striped" border="1" cellpadding="1" cellspacing="0" width="100%">
+                            <table class="table table-striped table-list" border="1" cellpadding="1" cellspacing="0" width="100%">
                               <tr>
                                 <td style="background-color:pink;padding: 5px;text-align: center;border-bottom: none;border-left:none;border-top:none;width:50%;">
                                   เงื่อนไขความคุ้มครอง
@@ -267,8 +267,11 @@ $prefix = \backend\models\Prefixname::find()->all();
                                 </td>
                                 <?php if(count($insurecost)>0):?>
                                   <?php for($i=0;$i<=count($insurecost)-1;$i++):?>
+                                    <?php
+                                       $capital = \backend\models\Quotation::getCapitalRate($insurecost[$i]['id'],$insurecost[$i]['lineid']);
+                                     ?>
                                     <td style="text-align: left;border-top: none;border-bottom: none;border-left:none;padding-top: 5px;">
-                                      <input type="text" class="form-control cost" id="cost-<?=$i?>" onchange="checkcost($(this))" style="text-align: right;" value=""/> 
+                                      <input type="text" class="form-control cost" name="capital" id="cost-<?=$i?>" onchange="checkcost($(this))" style="text-align: right;" value="<?=$capital?>"/> 
                                     </td>
                                   <?php endfor;?>
                                   <?php endif;?>
@@ -455,7 +458,9 @@ $prefix = \backend\models\Prefixname::find()->all();
 <?php $this->registerJs('
   var packageid = 0;
   var quotelist = [];
+  var toon = 0;
   $(function(){
+         
          $(".btn-create-insure").click(function(){
              if(quotelist.length > 1){
                 alert("เลือกรายการเกิน 1 รายการแล้ว");
@@ -465,7 +470,7 @@ $prefix = \backend\models\Prefixname::find()->all();
                 return;
             }
             var packids = quotelist[0];
-            alert(packids);
+            //alert(packids);
             var ids = "'.$model->id.'";
             alert(ids);
             swal({
@@ -480,7 +485,7 @@ $prefix = \backend\models\Prefixname::find()->all();
                           type: "POST",
                           dataType: "html",
                           url: "'.Url::toRoute(['/quotation/geninsure'], true).'",
-                          data: {id: ids,packid: packids},
+                          data: {id: ids,packid: packids,insure_amt: toon},
                           success: function(data){
                            // alert(data);return;
                             swal.close();
@@ -502,7 +507,37 @@ $prefix = \backend\models\Prefixname::find()->all();
                 });
         });
          $(".btn-selected").on("click",function(){
+          
+           var toonindex = $(this).parent().index()-1;
+           var findfor = "#cost-"+toonindex;
+          // alert(findfor);
+           $(".table-list tr").each(function(){
+              toon = $(this).closest("td").find(findfor).val();
+           });
+          
+          var minid = ".s_amt-"+toonindex;
+            var maxid = ".n_amt-"+toonindex;
+            
+            var min = $(minid).val();
+            var max = $(maxid).val();
 
+            if(toon>=min && toon<=max){
+
+            }else{
+              swal({
+                      title: "ทุนประกันต้องอยู่ในช่วงทุนเท่านั้น",
+                      text: "",
+                      type: "warning",
+                      showCancelButton: true,
+                      closeOnConfirm: false,
+                      showLoaderOnConfirm: true
+                     }, function () {
+                      swal.close();
+                      //e.val("0");
+                    
+                });
+               return;
+            }
            
           $(this).toggleClass("btn-warning btn-success");
 

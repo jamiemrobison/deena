@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Package;
-
+use yii\web\ForbiddenHttpException;
 /**
  * ProductpriceController implements the CRUD actions for Productprice model.
  */
@@ -52,9 +52,14 @@ class ProductpriceController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $role_act = \backend\models\Userrole::checkRoleEnable("productprice");
+        if($role_act[0]['view'] == 1){
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -65,20 +70,25 @@ class ProductpriceController extends Controller
     public function actionCreate()
     {
         $model = new Productprice();
+        $role_act = \backend\models\Userrole::checkRoleEnable("productprice");
+        if($role_act[0]['create'] == 1){
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->amount_start = str_replace(',', '', $model->amount_start);
-            $model->amount_end = str_replace(',', '', $model->amount_end);
-            $model->total = str_replace(',', '', $model->total);
-            $model->alltotal = str_replace(',', '', $model->alltotal);
-            $model->score = str_replace(',', '', $model->score);
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                if ($model->load(Yii::$app->request->post())) {
+                    $model->amount_start = str_replace(',', '', $model->amount_start);
+                    $model->amount_end = str_replace(',', '', $model->amount_end);
+                    $model->total = str_replace(',', '', $model->total);
+                    $model->alltotal = str_replace(',', '', $model->alltotal);
+                    $model->score = str_replace(',', '', $model->score);
+                    if($model->save()){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -91,21 +101,26 @@ class ProductpriceController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $role_act = \backend\models\Userrole::checkRoleEnable("productprice");
+        if($role_act[0]['modified'] == 1){
 
-        if ($model->load(Yii::$app->request->post())) {
-          //  echo str_replace(',', '', $model->score);
-            $model->amount_start = str_replace(',', '', $model->amount_start);
-            $model->amount_end = str_replace(',', '', $model->amount_end);
-            $model->total = str_replace(',', '', $model->total);
-            $model->alltotal = str_replace(',', '', $model->alltotal);
-            $model->score = str_replace(',', '', $model->score);
-            if($model->save(false)){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                if ($model->load(Yii::$app->request->post())) {
+                  //  echo str_replace(',', '', $model->score);
+                    $model->amount_start = str_replace(',', '', $model->amount_start);
+                    $model->amount_end = str_replace(',', '', $model->amount_end);
+                    $model->total = str_replace(',', '', $model->total);
+                    $model->alltotal = str_replace(',', '', $model->alltotal);
+                    $model->score = str_replace(',', '', $model->score);
+                    if($model->save(false)){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -117,9 +132,14 @@ class ProductpriceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $role_act = \backend\models\Userrole::checkRoleEnable("productprice");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

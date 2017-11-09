@@ -14,6 +14,7 @@ class Checkinsure extends Model
     public function rules()
     {
         return [
+            [['brand','model','year'],'required'],
             [['brand','model'],'integer'],
             [['year','product','include_act','carcode','usetype'],'integer'],
 

@@ -93,7 +93,7 @@ if(isset($searchtype)){
                                 <?php if(isset($brand)){$model->brand = $brand;}?>
                              <?= $form->field($model,'brand')->widget(Select2::className(),[
                                 'data'=>ArrayHelper::map(Carbrand::find()->all(),'id','name'),
-                                'options'=>['placeholder'=>'เลือกยี่ห้อ',
+                                'options'=>['placeholder'=>'เลือกยี่ห้อ','id'=>'brand',
                                     'onchange'=>'
                                         $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
                                               $("select#car_model").html(data);
@@ -319,6 +319,11 @@ if(isset($searchtype)){
 	var quotelist = [];
 
 	$(function(){
+
+      var hasbrand = "'.$brand.'";
+      if(hasbrand > 0){
+        $("#brand").trigger("change");
+      }
 
       if($("#search_type").val() == "0"){
         $("#tab_car_year").addClass("active");

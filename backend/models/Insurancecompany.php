@@ -35,4 +35,12 @@ class Insurancecompany extends \common\models\InsureCompany
     $model = Insurancecompany::find()->where(['id'=>$id])->one();
     return count($model)>0?$model->short_name:'';
  }
+ public static function getFullName($id){
+    $model = Insurancecompany::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
+  public static function getLogo($id){
+    $model = Insurancecompany::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->logo:'';
+ }
 }

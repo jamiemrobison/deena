@@ -14,6 +14,8 @@ use backend\models\DocuRef;
 use backend\models\Package;
 use backend\models\Installment;
 use backend\models\PaymentChannel;
+use yii\web\ForbiddenHttpException;
+use backend\models\Packagedetail;
 
 
 /**
@@ -58,9 +60,14 @@ class InsuranceController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
+        if($role_act[0]['view'] == 1){   
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -74,60 +81,67 @@ class InsuranceController extends Controller
         $modelfile = new Modelfile();
         $installment_model = new \backend\models\Installment();
 
-        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post()) && $installment_model->load(Yii::$app->request->post()) ) {
+        $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
+        if($role_act[0]['create'] == 1){  
 
-            $fileupload = UploadedFile::getInstances($modelfile, 'file');
+                      if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post()) && $installment_model->load(Yii::$app->request->post()) ) {
 
-            $model->protect_start_date = strtotime($model->protect_start_date);
-            $model->protect_end_date = strtotime($model->protect_end_date);
-            $model->receive_date = strtotime($model->receive_date);
-            $model->driver_date_one = strtotime($model->driver_date_one);
-            $model->driver_date_two = strtotime($model->driver_date_two);
-            $model->insure_renew_date = strtotime($model->insure_renew_date);
+                          $fileupload = UploadedFile::getInstances($modelfile, 'file');
 
-            if($model->save()){
-                      if(!empty($fileupload)){
-                                      foreach($fileupload as $file){
-                                          $model_doc = new DocuRef();
-                                         // $upfiles = time() . "." . $file->getExtension();
-                                          //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                                          if ($file->saveAs('../web/uploads/files/' . $file)) {
-                                             $model_doc->doc_type = $file->getExtension();
-                                             $model_doc->doc_group_id = $modelfile->filecategory;
-                                             $model_doc->name = $file;
-                                             $model_doc->party_type_id = 4; // 4 insure
-                                             $model_doc->party_id = $model->id;
-                                             $model_doc->save(false);
-                                          }
+                          $model->protect_start_date = strtotime($model->protect_start_date);
+                          $model->protect_end_date = strtotime($model->protect_end_date);
+                          $model->receive_date = strtotime($model->receive_date);
+                          $model->driver_date_one = strtotime($model->driver_date_one);
+                          $model->driver_date_two = strtotime($model->driver_date_two);
+                          $model->insure_renew_date = strtotime($model->insure_renew_date);
+
+                          if($model->save()){
+                                    if(!empty($fileupload)){
+                                                    foreach($fileupload as $file){
+                                                        $model_doc = new DocuRef();
+                                                       // $upfiles = time() . "." . $file->getExtension();
+                                                        //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                                                        if ($file->saveAs('../web/uploads/files/' . $file)) {
+                                                           $model_doc->doc_type = $file->getExtension();
+                                                           $model_doc->doc_group_id = $modelfile->filecategory;
+                                                           $model_doc->name = $file;
+                                                           $model_doc->party_type_id = 4; // 4 insure
+                                                           $model_doc->party_id = $model->id;
+                                                           $model_doc->save(false);
+                                                        }
+                                                    }
+                                            
+                                      }else{
+                                           
                                       }
-                              
-                        }else{
-                             
-                        }
 
-               
-                    $install = new Installment();
-                    $install->payment_type = 1;
-                    $install->period = $installment_model->period;
-                    $install->first_period = str_replace(",","",$installment_model->first_period);
-                    $install->remain = $installment_model->remain;
-                    $install->period_per = str_replace(",","",$installment_model->period_per);
-                    $install->insure_no = $insureid;
-                    $install->save(false);
-                
-              $session = Yii::$app->session;
-              $session->setFlash('msg', 'บันทึกรายการเรียบร้อยแล้ว');
-              return $this->redirect(['update', 'id' => $model->id]);  
+                             
+                                  $install = new Installment();
+                                  $install->payment_type = 1;
+                                  $install->period = $installment_model->period;
+                                  $install->first_period = str_replace(",","",$installment_model->first_period);
+                                  $install->remain = $installment_model->remain;
+                                  $install->period_per = str_replace(",","",$installment_model->period_per);
+                                  $install->insure_no = $insureid;
+                                  $install->save(false);
+                              
+                            $session = Yii::$app->session;
+                            $session->setFlash('msg', 'บันทึกรายการเรียบร้อยแล้ว');
+                            return $this->redirect(['update', 'id' => $model->id]);  
+                          }
+                          
+                      } else {
+                          return $this->render('create', [
+                              'model' => $model,
+                              'runno' => $model::getLastNo(),
+                              'modelfile'=>$modelfile,
+                              'installment_model'=>$installment_model,
+                          ]);
+                      }
+            }else{
+              throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+              
             }
-            
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'runno' => $model::getLastNo(),
-                'modelfile'=>$modelfile,
-                'installment_model'=>$installment_model,
-            ]);
-        }
     }
 
     public function getRuning(){
@@ -149,75 +163,82 @@ class InsuranceController extends Controller
         $modelfile = new Modelfile();
         $installment_model = new \backend\models\Installment();
         $installment_data = Installment::find()->where(['insure_no'=>$id])->one();
+
+        $insure_package = Packagedetail::find()->where(['package_id'=>$model->package_id])->all();
       
+        $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
+        if($role_act[0]['modified'] == 1){  
+                   if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())  && $installment_model->load(Yii::$app->request->post()) ) {
+                        $model->protect_start_date = strtotime($model->protect_start_date);
+                        $model->protect_end_date = strtotime($model->protect_end_date);
+                        $model->receive_date = strtotime($model->receive_date);
+                        $model->driver_date_one = strtotime($model->driver_date_one);
+                        $model->driver_date_two = strtotime($model->driver_date_two);
+                        $model->insure_renew_date = strtotime($model->insure_renew_date);
+                        $model->note_date = strtotime($model->note_date);
 
-       if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())  && $installment_model->load(Yii::$app->request->post()) ) {
-            $model->protect_start_date = strtotime($model->protect_start_date);
-            $model->protect_end_date = strtotime($model->protect_end_date);
-            $model->receive_date = strtotime($model->receive_date);
-            $model->driver_date_one = strtotime($model->driver_date_one);
-            $model->driver_date_two = strtotime($model->driver_date_two);
-            $model->insure_renew_date = strtotime($model->insure_renew_date);
-            $model->note_date = strtotime($model->note_date);
-
-            $fileupload = UploadedFile::getInstances($modelfile, 'file');
+                        $fileupload = UploadedFile::getInstances($modelfile, 'file');
 
 
-            if($model->save(false)){
-                        if(!empty($fileupload)){
-                                      foreach($fileupload as $file){
-                                          $model_doc = new DocuRef();
-                                         // $upfiles = time() . "." . $file->getExtension();
-                                          //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                                          if ($file->saveAs('../web/uploads/files/' . $file)) {
-                                             $model_doc->doc_type = $file->getExtension();
-                                             $model_doc->doc_group_id = $modelfile->filecategory;
-                                             $model_doc->name = $file;
-                                             $model_doc->party_type_id = 4; // 4 insure
-                                             $model_doc->party_id = $model->id;
-                                             $model_doc->save(false);
-                                          }
-                                      }
-                              
-                        }else{
-                             
+                        if($model->save(false)){
+                                    if(!empty($fileupload)){
+                                                  foreach($fileupload as $file){
+                                                      $model_doc = new DocuRef();
+                                                     // $upfiles = time() . "." . $file->getExtension();
+                                                      //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
+                                                      if ($file->saveAs('../web/uploads/files/' . $file)) {
+                                                         $model_doc->doc_type = $file->getExtension();
+                                                         $model_doc->doc_group_id = $modelfile->filecategory;
+                                                         $model_doc->name = $file;
+                                                         $model_doc->party_type_id = 4; // 4 insure
+                                                         $model_doc->party_id = $model->id;
+                                                         $model_doc->save(false);
+                                                      }
+                                                  }
+                                          
+                                    }else{
+                                         
+                                    }
+                            $check_has = Installment::find()->where(['insure_no'=>$model->id])->count();
+                            if($check_has > 0){
+                                $install = Installment::find()->where(['insure_no'=>$model->id])->one();
+                                $install->payment_type = 1;
+                                $install->period = $installment_model->period;
+                                $install->first_period = str_replace(",","",$installment_model->first_period);
+                                $install->remain = $installment_model->remain;
+                                $install->period_per = str_replace(",","",$installment_model->period_per);
+                                $install->insure_no = $model->id;
+                                $install->save(false);
+                            }else{
+                                $install = new Installment();
+                                $install->payment_type = 1;
+                                $install->period = $installment_model->period;
+                                $install->first_period = str_replace(",","",$installment_model->first_period);
+                                $install->remain = $installment_model->remain;
+                                $install->period_per = str_replace(",","",$installment_model->period_per);
+                                $install->insure_no = $model->id;
+                                $install->save(false);
+                            }
+                            $session = Yii::$app->session;
+                            $session->setFlash('msg', 'บันทึกรายการเรียบร้อยแล้ว');
+                            return $this->redirect(['update', 'id' => $model->id]);
                         }
-                $check_has = Installment::find()->where(['insure_no'=>$model->id])->count();
-                if($check_has > 0){
-                    $install = Installment::find()->where(['insure_no'=>$model->id])->one();
-                    $install->payment_type = 1;
-                    $install->period = $installment_model->period;
-                    $install->first_period = str_replace(",","",$installment_model->first_period);
-                    $install->remain = $installment_model->remain;
-                    $install->period_per = str_replace(",","",$installment_model->period_per);
-                    $install->insure_no = $model->id;
-                    $install->save(false);
-                }else{
-                    $install = new Installment();
-                    $install->payment_type = 1;
-                    $install->period = $installment_model->period;
-                    $install->first_period = str_replace(",","",$installment_model->first_period);
-                    $install->remain = $installment_model->remain;
-                    $install->period_per = str_replace(",","",$installment_model->period_per);
-                    $install->insure_no = $model->id;
-                    $install->save(false);
-                }
-                $session = Yii::$app->session;
-                $session->setFlash('msg', 'บันทึกรายการเรียบร้อยแล้ว');
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-            
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'modelfile'=>$modelfile,
-                'paymentdata'=>$paymentdata,
-                  'modelfile'=>$modelfile,
-                'model_filedata'=> $model_filedata,
-                'installment_model'=>$installment_model,
-                'installment_data'=>$installment_data,
-            ]);
-        }
+                        
+                    } else {
+                        return $this->render('update', [
+                            'model' => $model,
+                            'modelfile'=>$modelfile,
+                            'paymentdata'=>$paymentdata,
+                              'modelfile'=>$modelfile,
+                            'model_filedata'=> $model_filedata,
+                            'installment_model'=>$installment_model,
+                            'installment_data'=>$installment_data,
+                            'insure_package' => $insure_package,
+                        ]);
+                    }
+         }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+         }           
     }
 
     public function actionCopyinsure(){
@@ -246,9 +267,14 @@ class InsuranceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+         $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -399,10 +425,11 @@ class InsuranceController extends Controller
     }
      public function actionGetintro($id){
       $model = \backend\models\Member::find()->where(['id' =>$id])->one();
-
+      //echo "<option>-</option>";return;
       if (count($model) > 0) {
           //$data = \backend\models\Introduce::find()->where(['id' =>$model->intro_code])->one();
-          echo "<option value='" . $data->intro_code . "'>$this->getIntrocode($data->intro_code)</option>";
+           $into = $this->getIntrocode($model->member_into);
+          echo "<option value='" . $model->member_into . "'>$into</option>";
       } else {
           echo "<option>-</option>";
       }
@@ -412,7 +439,7 @@ class InsuranceController extends Controller
 
       if (count($model) > 0) {
          // $data = \backend\models\Introduce::find()->where(['id' =>$model->intro_code])->one();
-          echo "<option value='" . $data->intro_code . "'>$data->intro_code</option>";
+          echo "<option value='" . $data->intro_code . "' selected>$data->intro_code</option>";
       } else {
           echo "<option>-</option>";
       }
@@ -427,9 +454,9 @@ class InsuranceController extends Controller
           echo "<option>-</option>";
       }
     }
-    public function getIntrocode($id){
-      $model = \backend\models\Introduce::find()->where(['id'=>$id])->one();
-      return count($model)>0?$model->intro_code:'';
+    public static function getIntrocode($id){
+      $model = \backend\models\Member::find()->where(['id'=>$id])->one();
+      return count($model)>0?$model->member_code." [".$model->first_name." ".$model->last_name." ]":'';
     }
     
 }

@@ -115,7 +115,7 @@ class QuotationController extends Controller
             $qury = Yii::$app->db->createCommand($sql);
             $actprice = $qury->queryAll();
             
-            $sql = "SELECT quotation.id,quotation_detail.package_id,quotation_detail.id as lineid,product_price.amount_start,product_price.amount_end FROM quotation INNER JOIN quotation_detail ON quotation.id = quotation_detail.quatation_id INNER JOIN product_package ON quotation_detail.package_id = product_package.id INNER JOIN product_price on quotation_detail.package_id = product_price.package_id WHERE quotation_detail.quatation_id=".$id;
+            $sql = "SELECT quotation.id,quotation_detail.package_id,quotation_detail.id as lineid,quotation_detail.insure_amount,product_price.amount_start,product_price.amount_end FROM quotation INNER JOIN quotation_detail ON quotation.id = quotation_detail.quatation_id INNER JOIN product_package ON quotation_detail.package_id = product_package.id INNER JOIN product_price on quotation_detail.package_id = product_price.package_id WHERE quotation_detail.quatation_id=".$id;
             $qury = Yii::$app->db->createCommand($sql);
             $insurecost = $qury->queryAll();
             
@@ -129,14 +129,17 @@ class QuotationController extends Controller
             $lineid = Yii::$app->request->post('line-id');
             $package_act = Yii::$app->request->post('package-act');
             $package_amt = Yii::$app->request->post('package-amt');
+            $capital = Yii::$app->request->post('capital');
             // print_r($package_act);return;
             $model->quotation_date = strtotime($model->quotation_date);
+            
             if($model->save()){
                 if(count($package_amt)>0){
                     for($i=0;$i<=count($package_amt)-1;$i++){
                         $modelline = \backend\models\Quotationdetail::find()->where(['id'=>$lineid[$i]])->one();
                         $modelline->amount = str_replace(",", "", $package_amt[$i]);
                         $modelline->act_amount = str_replace(",", "", $package_act[$i]);
+                        $modelline->insure_amount = $capital;
                         $modelline->save(false);
                     }
                 }
@@ -193,6 +196,7 @@ class QuotationController extends Controller
         if(Yii::$app->request->isAjax){
             $id = Yii::$app->request->post('id');
             $packid = Yii::$app->request->post('packid');
+            $insure_amt = Yii::$app->request->post('insure_amt');
 
             if($id){
                 $model = Quotation::find()->where(['id'=>$id])->one();
@@ -218,10 +222,17 @@ class QuotationController extends Controller
                     $model_insure->quotation_id = $model->id;
                     $model_insure->grand_total = $modelpackage->amount;
                     $model_insure->status = 0;
+                    $model_insure->package_id = $packid;
+                    $model_insure->insure_capital = $insure_amt;
                     
 
 
                     if($model_insure->save(false)){
+                        $modelpackage->insure_amount = $insure_amt;
+                        $modelpackage->save(false);
+                        // $model_insure_package = new \common\models\InsurancePackage();
+                        // $model_insure_package->insure_id = $model_insure->id;
+                        // $model_
                         return $model_insure->insure_code;
                     }
                 }

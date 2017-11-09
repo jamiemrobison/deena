@@ -33,6 +33,6 @@ class Cartype extends \common\models\Cartype
  }
  public static function getCarTypeName($id){
     $model = CarType::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->name:'';
+    return count($model)>0?$model->year_eng:0;
  }
 }

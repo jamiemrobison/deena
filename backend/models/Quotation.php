@@ -53,4 +53,46 @@ class Quotation extends \common\models\Quotation
   $model = Quotation::find()->where(['id'=>$id])->one();
   return count($model)>0?$model->quotation_no:'';
  }
+ public function getCapitalRate($quotation_id,$lineid){
+    
+    $rate = 0;
+    //return $quotation_id.' - '.$lineid;
+    $modelqo = \backend\models\Quotation::find()->where(['id'=>$quotation_id])->one();
+    $model = \backend\models\QuotationDetail::find()->where(['id'=>$lineid])->one();
+    
+    if($model && $modelqo){
+      $compid = self::findCompany($model->package_id);
+      $brand = strtoupper(self::findBrand($modelqo->car_brand)) ;
+      $modelcar = strtoupper(self::findModelName($modelqo->car_model)) ;
+      $yearname = \backend\models\Caryear::getCaryearName($modelqo->car_year);
+      $yearcount = (int)date("Y") - (int)$yearname;
+
+      $cap_year = date("Y");
+
+      if($compid >0){
+          $capyear = \common\models\CapitalYear::find()->where(['insure_company_id'=>$compid,'cap_year'=>$cap_year])->one();
+          if($capyear){ //return $cap_year;
+            $capcar =\common\models\VCapital::find()->where(['cap_year'=>$cap_year,'brand_name'=>$brand,'model_name'=>$modelcar,'year_count'=>$yearcount])->one();
+            if($capcar){
+             // return 9090;
+              $max = $capcar->max;
+              $rate = $max - 20000;
+            }
+          }
+      }
+    }
+    return $rate;
+ }
+ public function findCompany($id){
+  $model = \backend\models\Package::find()->where(['id'=>$id])->one();
+  return count($model)>0?$model->company_insure:0;
+ }
+  public function findBrand($id){
+  $model = \backend\models\Carbrand::find()->where(['id'=>$id])->one();
+  return count($model)>0?$model->name:'';
+ }
+  public function findModelName($id){
+  $model = \backend\models\Carinfo::find()->where(['id'=>$id])->one();
+  return count($model)>0?$model->model:'';
+ }
 }

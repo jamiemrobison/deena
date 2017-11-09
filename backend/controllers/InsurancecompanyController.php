@@ -27,6 +27,7 @@ use app\base\Model;
  */
 class InsurancecompanyController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -230,6 +231,7 @@ class InsurancecompanyController extends Controller
 
         $model_filedata = DocuRef::find()->where(['party_type_id'=>2,'party_id'=>$id])->all();
         $modelfile = new Modelfile();
+        $modelfile2 = new \backend\models\Modelfile2();
         $model_cargroup = new Cargroupcompany();
          $model_cargroup_detail = Cargroupcompany::find()->where(['insure_company_id'=>$id])->all();
 
@@ -360,6 +362,7 @@ class InsurancecompanyController extends Controller
                 'model_contact' => $model_contact,
                 'model_company_com' => $model_company_com,
                  'modelfile'=>$modelfile,
+                 'modelfile2'=>$modelfile2,
                 'model_filedata'=> $model_filedata,
                 'model_cargroup'=>$model_cargroup,
                 'model_cargroup_detail'=>$model_cargroup_detail,
@@ -619,5 +622,15 @@ class InsurancecompanyController extends Controller
       } else {
           echo "<option>-</option>";
       }
+    }
+    public function actionImportcapital(){
+        print_r(Yii::$app->request->post());
+        $model = new \backend\models\Modelfile2();
+        $fileupload = UploadedFile::getInstanceByName('upload-capital');
+        if(!empty($uploaded)){
+            echo "ok";
+        }else{
+            echo "no";
+        }
     }
 }

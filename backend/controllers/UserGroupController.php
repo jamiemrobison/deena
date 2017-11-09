@@ -8,12 +8,15 @@ use backend\models\UserGroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Userrole;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UserGroupController implements the CRUD actions for UserGroup model.
  */
 class UsergroupController extends Controller
 {
+    public $role_act;
     /**
      * @inheritdoc
      */
@@ -28,6 +31,10 @@ class UsergroupController extends Controller
             ],
         ];
     }
+    public function init(){
+        $user_roleid = Yii::$app->user->identity->role_id;
+        $role_act = Userrole::checkRoleEnable($user_roleid,8);
+    }
 
     /**
      * Lists all UserGroup models.
@@ -35,6 +42,10 @@ class UsergroupController extends Controller
      */
     public function actionIndex()
     {
+        
+
+       // print_r($role_act);
+
         $searchModel = new UserGroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -51,9 +62,15 @@ class UsergroupController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $user_roleid = Yii::$app->user->identity->role_id;
+        $role_act = Userrole::checkRoleEnable($user_roleid,8);
+        if($role_act[0]['view'] == 1){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -64,13 +81,19 @@ class UsergroupController extends Controller
     public function actionCreate()
     {
         $model = new UserGroup();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $role_act = Userrole::checkRoleEnable("usergroup");
+       // echo $role_act;return;
+       // print_r($role_act);return;
+        if($role_act[0]['create'] == 1){
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -83,13 +106,18 @@ class UsergroupController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+         $role_act = Userrole::checkRoleEnable("usergroup");
+        //print_r($role_act);return;
+        if($role_act[0]['modified'] == 1){
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['update', 'id' => $model->id]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
         }
     }
 
@@ -101,9 +129,14 @@ class UsergroupController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $role_act = Userrole::checkRoleEnable("usergroup");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

@@ -84,7 +84,7 @@ class InsuranceTable extends \yii\db\ActiveRecord
              'driver_two', 'beneficiary', 'remark','plate_category','note_remark'], 'string', 'max' => 255],
             [['fname','lname','cc','seat','weight'],'string'],
             [['email'],'email'],
-            [['note_empid','note_status','payment_method','quotation_id'],'integer'],
+            [['note_empid','note_status','payment_method','quotation_id','package_id'],'integer'],
             [['note_date',],'safe']
         ];
     }
@@ -163,6 +163,7 @@ class InsuranceTable extends \yii\db\ActiveRecord
             'photo_remark' =>'หมายเหตุ',
             'payment_method' => 'วิธีชำระเงิน',
             'quotation_id'=>'ใบเสนอราคา',
+            'package_id' => 'รหัสแพ็กเก็จ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

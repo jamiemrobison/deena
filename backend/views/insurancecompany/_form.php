@@ -69,6 +69,7 @@ $carinfo = Carinfo::find()->where(['status'=>1])->all();
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลบริษัทประกัน</a></li>
               <li><a href="#tab_2" data-toggle="tab">กลุ่มรถ</a></li>
+              <li><a href="#tab_3" data-toggle="tab">ช่วงทุนรถ</a></li>
             </ul>
 
             <div class="tab-content">
@@ -524,6 +525,14 @@ $carinfo = Carinfo::find()->where(['status'=>1])->all();
                   </div>
                 </div>
               </div>
+              <div class="tab-pane" id="tab_3">
+                
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="btn btn-primary btn-upload-cap"><i class="fa fa-download"></i> อัพโหลดข้อมูล</div>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -930,6 +939,8 @@ $carinfo = Carinfo::find()->where(['status'=>1])->all();
           </div>
         </div>
         </div>
+
+        
 <?php 
         $this->registerJs('
 
@@ -1180,6 +1191,10 @@ $carinfo = Carinfo::find()->where(['status'=>1])->all();
                                   $("#carmodel").empty();
                                 }
                       });
+                  });
+
+                  $(".btn-upload-cap").click(function(){
+                    $("#myModal-import-cap").modal("show");
                   });
               
 

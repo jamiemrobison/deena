@@ -46,35 +46,40 @@ class CheckinsureController extends Controller
 			$usetype = $model->usetype;
 
 		    $searchtype = Yii::$app->request->post('search_type');
+		   // echo $searchtype;return;
             $sql = '';
 			if($searchtype == 0){
 				   $sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
 					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
-					, car_year.year_eng, car_brand.name, insure_company.logo, insure_company.name AS insure_name
+					, car_brand.name, insure_company.logo, insure_company.name AS insure_name
 					, car_info.id as carinfoid,product_price.alltotal
 					FROM product_package INNER JOIN package_car ON product_package.id = package_car.package_id 
-					INNER JOIN car_info ON package_car.car_id = car_info.id INNER JOIN car_year ON car_info.car_year = car_year.id 
+					INNER JOIN car_info ON package_car.car_id = car_info.id 
 					INNER JOIN car_brand ON car_info.brand = car_brand.id 
 					INNER JOIN insure_company ON product_package.company_insure = insure_company.id
 					LEFT JOIN product_price ON product_package.id = product_price.package_id";
-					if($brand){
-						$sql.= " WHERE brand =".$brand;
-					}
-					if($product!='' && $brand!=''){
-						$sql.= " AND product_package.insure_type =".$product;
-					}elseif($product != ''){
-						$sql.= " WHERE product_package.insure_type =".$product;
-					}
-					if($brand!='' && $carmodel!=''){
-						$sql.= " AND car_info.id =".$carmodel;
-					}else{
-						$sql.= " WHERE car_info.id =".$carmodel;
-					}
-					if($brand!='' && $carmodel!='' && $year!=''){
-						$sql.= " AND car_year =".$year;
-					}elseif($year!=''){
-						$sql.= " AND car_year =".$year;
-					}
+
+					$sql.=" WHERE brand =".$brand;
+					$sql.=" AND product_package.insure_type =".$product;
+					$sql.=" AND car_info.id =".$carmodel;
+					// if($brand){
+					// 	$sql.= " WHERE brand =".$brand;
+					// }
+					// if($product!='' && $brand!=''){
+					// 	$sql.= " AND product_package.insure_type =".$product;
+					// }elseif($product != ''){
+					// 	$sql.= " WHERE product_package.insure_type =".$product;
+					// }
+					// if($brand!='' && $carmodel!=''){
+					// 	$sql.= " AND car_info.id =".$carmodel;
+					// }else{
+					// 	$sql.= " WHERE car_info.id =".$carmodel;
+					// }
+					// if($brand!='' && $carmodel!='' && $year!=''){
+					// 	$sql.= " AND car_year =".$year;
+					// }elseif($year!=''){
+					// 	$sql.= " AND car_year =".$year;
+					// }  INNER JOIN car_year ON car_info.car_year = car_year.id 
 
 					$sql.=" GROUP BY id";
 

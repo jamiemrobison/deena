@@ -37,7 +37,7 @@ class QuotationDetail extends \yii\db\ActiveRecord
     {
         return [
             [['quatation_id', 'car_id', 'car_code', 'package_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['amount', 'total_amount','act_amount'], 'number'],
+            [['amount', 'total_amount','act_amount','insure_amount'], 'number'],
         ];
     }
 
@@ -54,6 +54,7 @@ class QuotationDetail extends \yii\db\ActiveRecord
             'package_id' => 'Package ID',
             'amount' => 'Amount',
             'total_amount' => 'Total Amount',
+            'insure_amount' => 'Insure Amount',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

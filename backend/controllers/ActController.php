@@ -8,6 +8,7 @@ use backend\models\ActSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * ActController implements the CRUD actions for Act model.
@@ -51,9 +52,14 @@ class ActController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $role_act = \backend\models\Userrole::checkRoleEnable("act");
+        if($role_act[0]['view'] == 1){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**
@@ -64,19 +70,24 @@ class ActController extends Controller
     public function actionCreate()
     {
         $model = new Act();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->all_premium = str_replace(',', '', $model->all_premium);
-            $model->protect_amount = str_replace(',', '', $model->protect_amount);
-         
-            if($model->save(false)){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        $role_act = \backend\models\Userrole::checkRoleEnable("act");
+        if($role_act[0]['create'] == 1){
+                if ($model->load(Yii::$app->request->post())) {
+                    $model->all_premium = str_replace(',', '', $model->all_premium);
+                     $model->tax_premium = str_replace(',', '', $model->tax_premium);
+                    $model->protect_amount = str_replace(',', '', $model->protect_amount);
+                 
+                    if($model->save(false)){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }      
     }
 
     /**
@@ -88,19 +99,24 @@ class ActController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-             $model->all_premium = str_replace(',', '', $model->all_premium);
-            $model->protect_amount = str_replace(',', '', $model->protect_amount);
-         
-            if($model->save(false)){
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        $role_act = \backend\models\Userrole::checkRoleEnable("act");
+        if($role_act[0]['modified'] == 1){
+                if ($model->load(Yii::$app->request->post())) {
+                     $model->all_premium = str_replace(',', '', $model->all_premium);
+                     $model->tax_premium = str_replace(',', '', $model->tax_premium);
+                    $model->protect_amount = str_replace(',', '', $model->protect_amount);
+                 
+                    if($model->save(false)){
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }        
     }
 
     /**
@@ -111,9 +127,14 @@ class ActController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $role_act = \backend\models\Userrole::checkRoleEnable("act");
+        if($role_act[0]['delete'] == 1){
+                $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+                return $this->redirect(['index']);
+        }else{
+            throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
                 'model_filedata'=> $model_filedata,
                 'installment_model'=>$installment_model,
                 'installment_data'=>$installment_data,
+                'insure_package' => $insure_package,
     ]) ?>
 
 </div>

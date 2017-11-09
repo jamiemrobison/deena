@@ -70,7 +70,7 @@ class UserroleController extends Controller
     public function actionCreate()
     {
         $model = new Userrole();
-        $listmenu =  Menu::find()->all();
+        $listmenu =  Menu::find()->orderby(['menu_type_id'=>SORT_ASC,'number'=>SORT_ASC])->all();
         if ($model->load(Yii::$app->request->post())) {
             $menuid = Yii::$app->request->post('menuid');
             $is_full = Yii::$app->request->post('is_full');
@@ -78,6 +78,7 @@ class UserroleController extends Controller
             $is_modified = Yii::$app->request->post('is_modified');
             $is_delete = Yii::$app->request->post('is_delete');
             $is_approve = Yii::$app->request->post('is_approve');
+            $is_create = Yii::$app->request->post('is_create');
 
             if( $model->save()){
                 if(count($menuid)>0){
@@ -85,11 +86,13 @@ class UserroleController extends Controller
                         $model_per = new Permission();
                         $model_per->role_id = $model->id;
                         $model_per->menu_id = $menuid[$i];
+                        $model_per->menu_type_id = $this->findType($menuid[$i]);
                         $model_per->is_full = $is_full[$i];
                         $model_per->is_view = $is_view[$i];
                         $model_per->is_update = $is_modified[$i];
                         $model_per->is_delete = $is_delete[$i];
                         $model_per->is_approve = $is_approve[$i];
+                        $model_per->is_create = $is_create[$i];
                         $model_per->save(false);
                         
                     }
@@ -113,7 +116,7 @@ class UserroleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $listmenu =Menu::find()->orderBy(['id'=>SORT_ASC])->all();
+        $listmenu =Menu::find()->orderBy(['menu_type_id'=>SORT_ASC,'number'=>SORT_ASC])->all();
         $listmenu_select = Permission::find()->where(['role_id'=>$id])->orderBy(['id'=>SORT_ASC])->all();
         if ($model->load(Yii::$app->request->post())) {
 
@@ -123,6 +126,7 @@ class UserroleController extends Controller
             $is_modified = Yii::$app->request->post('is_modified');
             $is_delete = Yii::$app->request->post('is_delete');
             $is_approve = Yii::$app->request->post('is_approve');
+            $is_create = Yii::$app->request->post('is_create');
 
           //  echo $id;
             //echo count($is_full);
@@ -134,17 +138,32 @@ class UserroleController extends Controller
                  if(count($menuid)>0){
 
                     for($i=0;$i<=count($menuid)-1;$i++){
+
                          $model_per = Permission::find()->where(['menu_id'=>$menuid[$i],'role_id'=>$id])->one();
                          if($model_per){
                        //       //echo $is_full[$i];return;
                        // // $model_per->role_id = $model->id;
                        // // $model_per->menu_id = $menuid[$i];
-                        $model_per->is_full = $is_full[$i];
-                        $model_per->is_view = $is_view[$i];
-                        $model_per->is_update = $is_modified[$i];
-                        $model_per->is_delete = $is_delete[$i];
-                        $model_per->is_approve = $is_approve[$i];
-                        $model_per->save(false);
+                            $model_per->menu_type_id = $this->findType($menuid[$i]);
+                             $model_per->is_full = $is_full[$i];
+                             $model_per->is_view = $is_view[$i];
+                             $model_per->is_update = $is_modified[$i];
+                             $model_per->is_delete = $is_delete[$i];
+                             $model_per->is_approve = $is_approve[$i];
+                             $model_per->is_create = $is_create[$i];
+                             $model_per->save(false);
+                         }else{
+                            $model_per = new Permission();
+                            $model_per->role_id = $model->id;
+                            $model_per->menu_id = $menuid[$i];
+                            $model_per->menu_type_id = $this->findType($menuid[$i]);
+                            $model_per->is_full = $is_full[$i];
+                            $model_per->is_view = $is_view[$i];
+                            $model_per->is_update = $is_modified[$i];
+                            $model_per->is_delete = $is_delete[$i];
+                            $model_per->is_approve = $is_approve[$i];
+                            $model_per->is_create = $is_create[$i];
+                            $model_per->save(false);
                          }
                          
                         
@@ -189,5 +208,9 @@ class UserroleController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function findType($id){
+        $model = \backend\models\Menu::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->menu_type_id:0;
     }
 }

@@ -52,4 +52,5 @@ class Member extends \common\models\Member
         return $prefix.'000000001';
     }
 }
+
 }
