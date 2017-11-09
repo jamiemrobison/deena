@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\UserGroup;
+use backend\models\Usergroup;
 
 /**
  * UserGroupSearch represents the model behind the search form of `backend\models\UserGroup`.
  */
-class UserGroupSearch extends UserGroup
+class UserGroupSearch extends Usergroup
 {
     public $globalSearch;
     /**
