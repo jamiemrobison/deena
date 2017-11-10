@@ -42,9 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
             //   }
             // ],
             'car_code',
-            'act_code',
+            //'act_code',
             'name',
             'description',
+            [
+              'attribute'=>'type_id',
+              'value' => function($data){
+                return \backend\models\Cartype::getCarTypeName($data->type_id);
+              }
+            ],
             [
                'attribute'=>'status',
                'format' => 'html',

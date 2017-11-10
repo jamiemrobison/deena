@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Cartype extends \common\models\Cartype
+class Cartype extends \common\models\CarType
 {
   public function behaviors()
 {
@@ -33,6 +33,6 @@ class Cartype extends \common\models\Cartype
  }
  public static function getCarTypeName($id){
     $model = CarType::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->year_eng:0;
+    return count($model)>0?$model->name:0;
  }
 }

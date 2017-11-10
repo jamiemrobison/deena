@@ -18,7 +18,7 @@ use backend\models\Act;
 use common\models\Province;
 use common\models\Amphur;
 use common\models\District;
-use kartik\file\Fileinput;
+use kartik\file\FileInput;
 use yii\helpers\Url;
 use backend\models\Promotion;
 use lavrentiev\widgets\toastr\Notification;

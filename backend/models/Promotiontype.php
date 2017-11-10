@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 
 date_default_timezone_set('Asia/Bangkok');
-class Promotiontype extends \common\models\Promotiontype
+class Promotiontype extends \common\models\PromotionType
 {
   public function behaviors()
 {

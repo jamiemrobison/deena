@@ -10,7 +10,7 @@ use backend\helpers\Prefixname;
 use yii\helpers\Url;
 use backend\models\Bank;
 use backend\helpers\BankAccountType;
-use kartik\file\Fileinput;
+use kartik\file\FileInput;
 use common\models\Province;
 use common\models\Amphur;
 use common\models\District;
@@ -541,7 +541,7 @@ $isinto = $model->is_into;
                           <div class="col-lg-4">
                               <?php echo "<h5>แนบไฟล์</h5>";?>
                              <?php
-                                 echo FileInput::widget([
+                                 echo Fileinput::widget([
                                      'model' => $modelfile,
                                      'attribute' => 'file[]',
                                      'id'=>'upfile',

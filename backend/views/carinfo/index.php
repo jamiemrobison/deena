@@ -44,13 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
                }
              ],
             'model',
-            [
-               'attribute'=>'car_year',
-               'format' => 'html',
-               'value'=>function($data){
-                 return $data->car_year != ''?$data->findCaryear($data->car_year):'';
-               }
-             ],
+            // [
+            //    'attribute'=>'car_year',
+            //    'format' => 'html',
+            //    'value'=>function($data){
+            //      return $data->car_year != ''?$data->findCaryear($data->car_year):'';
+            //    }
+            //  ],
             [
                'attribute'=>'status',
                'format' => 'html',

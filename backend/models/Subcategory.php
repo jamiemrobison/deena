@@ -31,4 +31,7 @@ class Subcategory extends \common\models\SubCategory
         ],
     ];
  }
+ public function getCategoryinfo(){
+    return $this->hasOne(\backend\models\Category::className(),['id'=>'category_id']);
+ }
 }

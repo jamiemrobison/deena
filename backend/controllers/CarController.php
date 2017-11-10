@@ -152,10 +152,10 @@ class CarController extends Controller
 
               }
               } else {
-                  echo "<option>-</option>";
+                  echo "<option value='0'>-</option>";
               }
           }else{
-             echo "<option>-</option>";
+             echo "<option value='0'>-</option>";
           }
 
      

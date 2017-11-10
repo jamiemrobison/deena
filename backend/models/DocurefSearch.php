@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Docuref;
+use backend\models\DocuRef;
 
 /**
  * DocurefSearch represents the model behind the search form of `backend\models\Docuref`.
  */
-class DocurefSearch extends Docuref
+class DocurefSearch extends DocuRef
 {
      public $globalSearch;
     /**

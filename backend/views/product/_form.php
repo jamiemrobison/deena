@@ -42,13 +42,12 @@ $sub_cat = \backend\models\Subcategory::find()->where(['status'=>1])->all();
                                     ]
 
                                   )->label() ?>
-                    <?= $form->field($model, 'parent_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($sub_cat,'id','name'),
-                                     'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์ย่อย','class'=>'form-control','id'=>'sub_cat','disabled'=>'disabled'],
-                                    ]
-
-                                  )->label() ?>
+                    <?php //echo $form->field($model, 'parent_id')->widget(Select2::className(),
+                                  //  [
+                                    // 'data'=> ArrayHelper::map($sub_cat,'id','name'),
+                                     //'options'=>['placeholder' => 'เลือกหมวดผลิตภัณฑ์ย่อย','class'=>'form-control','id'=>'sub_cat','disabled'=>'disabled'],
+                                   // ]
+                                  //)->label() ?>
 
                     <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
 

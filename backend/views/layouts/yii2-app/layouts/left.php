@@ -54,7 +54,7 @@
                 //           ];
                 foreach ($menulist as $value) {
                      $sub_menu = [];
-                     $model_sub = \backend\models\Menu::find()->where(['parent_id'=>$value->id])->andFilterWhere(['id'=>$submenuid])->all();
+                     $model_sub = \backend\models\Menu::find()->where(['parent_id'=>$value->id])->andFilterWhere(['id'=>$submenuid])->orderby(['sub_number'=>SORT_DESC])->all();
                      if(count($model_sub)>0){
                         foreach ($model_sub as $data_sub) {
                            $sub_menu[] = [

@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 
 use backend\models\Car;
-use backend\models\CarType;
+use backend\models\Cartype;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ActSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
              'attribute'=>'car_type_id',
              'value'=> function($data){
-                return $data->car_type_id!=''?CarType::getCarTypeName($data->car_type_id):'';
+                return $data->car_type_id!=''?Cartype::getCarTypeName($data->car_type_id):'';
              }
              ],
             'car_description',

@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Productprice extends \common\models\Productprice
+class Productprice extends \common\models\ProductPrice
 {
   public function behaviors()
 {

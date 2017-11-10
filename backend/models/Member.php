@@ -32,7 +32,7 @@ class Member extends \common\models\Member
     ];
  }
  public function getLevelinfo(){
-    return $this->hasOne(\common\models\Memberlevel::className(),['id'=>'level_id']);
+    return $this->hasOne(\common\models\MemberLevel::className(),['id'=>'level_id']);
  }
  public static function getLastNo(){
     $model = Member::find()->MAX('member_code');

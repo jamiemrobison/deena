@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use backend\models\Bank;
 use backend\helpers\BankAccountType;
 use backend\models\Product;
-use kartik\file\Fileinput;
+use kartik\file\FileInput;
 
 use wbraganca\dynamicform\DynamicFormWidget;
 

@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-use kartik\file\Fileinput;
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;

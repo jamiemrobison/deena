@@ -6,13 +6,13 @@ use toxor88\switchery\Switchery;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
-use backend\models\CarType;
+use backend\models\Cartype;
 
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Act */
 /* @var $form yii\widgets\ActiveForm */
-$cartype = CarType::find()->all();
+$cartype = Cartype::find()->all();
 
 ?>
 

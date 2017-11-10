@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Memberlevel extends \common\models\Memberlevel
+class Memberlevel extends \common\models\MemberLevel
 {
   public function behaviors()
 {

@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 
 date_default_timezone_set('Asia/Bangkok');
-class Caryear extends \common\models\Caryear
+class Caryear extends \common\models\CarYear
 {
   public function behaviors()
 {
