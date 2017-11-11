@@ -38,7 +38,7 @@ class MemberLevel extends \yii\db\ActiveRecord
         [['level'],'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['level', 'name', 'condition', 'description'], 'string', 'max' => 255],
-            [['disc_per'],'match','pattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+            [['disc_per'],'match','pattern' => '/(^\d+\,\d+\.\d+$)|(^\d+\.\d+$)/'],
         ];
     }
 

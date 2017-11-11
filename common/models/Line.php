@@ -38,7 +38,7 @@ class Line extends \yii\db\ActiveRecord
             [['line_code','disc_per'],'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['line_code', 'name', 'condition', 'description'], 'string', 'max' => 255],
-            [['disc_per'],'match','pattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+            [['disc_per'],'match','pattern' => '/(^\d+\,\d+\.\d+$)|(^\d+\.\d+$)/'],
         ];
     }
 

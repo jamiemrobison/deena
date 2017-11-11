@@ -37,11 +37,35 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'description',
-            'amount',
-            // 'promotion_type',
+            [
+              'attribute' => 'amount',
+              'value'=> function($data){
+                return number_format($data->amount);
+              }
+            ],
+            //'amount',
+            //'promotion_type',
             // 'start_date',
             // 'end_date',
             // 'photo',
+            [
+              'attribute' => 'promotion_type',
+              'value'=> function($data){
+                return \backend\models\Promotiontype::getTypeName($data->promotion_type);
+              }
+            ],
+              [
+              'attribute' => 'start_date',
+              'value'=> function($data){
+                return date("d-m-Y",$data->start_date);
+              }
+            ],
+              [
+              'attribute' => 'end_date',
+              'value'=> function($data){
+                return date("d-m-Y",$data->end_date);
+              }
+            ],
             [
                'attribute'=>'status',
                'format' => 'html',

@@ -31,4 +31,8 @@ class Act extends \common\models\Act
         ],
     ];
  }
+  public function getActname($id){
+    $model = Act::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->car_code:'';
+ }
 }

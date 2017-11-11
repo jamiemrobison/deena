@@ -86,7 +86,7 @@ class MemberController extends Controller
 
                     //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
                     if ($uploaded->saveAs('../web/uploads/logo/' . $uploaded)) {
-                       $model->photo = $upfiles;
+                       $model->photo = $uploaded;
                     }
             }
             
@@ -117,6 +117,7 @@ class MemberController extends Controller
                     
                 }
                 if(!empty($fileupload)){
+
                             foreach($fileupload as $file){
                                 $model_doc = new DocuRef();
                                // $upfiles = time() . "." . $file->getExtension();
@@ -172,16 +173,17 @@ class MemberController extends Controller
             //echo $id;return;
 
              $fileupload = UploadedFile::getInstances($modelfile, 'file');
+            // echo count($fileupload);return;
 
             $oldlogo = Yii::$app->request->post('old_photo');
             $uploaded = UploadedFile::getInstance($model, 'photo');
 
             if(!empty($uploaded)){
-                  $upfiles = time() . "." . $uploaded->getExtension();
+                 // $upfiles = time() . "." . $uploaded->getExtension();
 
                     //if ($uploaded->saveAs('../uploads/products/' . $upfiles)) {
-                    if ($uploaded->saveAs('../web/uploads/logo/' . $upfiles)) {
-                       $model->photo = $upfiles;
+                    if ($uploaded->saveAs('../web/uploads/logo/' . $uploaded)) {
+                       $model->photo = $uploaded;
                     }
             }else{
                  $model->photo = $oldlogo;
@@ -212,11 +214,11 @@ class MemberController extends Controller
                  
                     }
                          
-                    return $this->redirect(['update', 'id' => $model->id]);
+                   // return $this->redirect(['update', 'id' => $model->id]);
                 }else{
                     BankAccount::deleteAll(['party_id'=>$id,'party_type_id'=>3]);
                 }
-                if(!empty($fileupload)){
+                if(count($fileupload) > 0){
                             foreach($fileupload as $file){
                                 $model_doc = new DocuRef();
                                // $upfiles = time() . "." . $file->getExtension();

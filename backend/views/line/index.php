@@ -37,7 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'condition',
             'description',
-            // 'disc_per',
+              [
+               'attribute'=>'disc_per',
+               'value'=>function($data){
+                 return number_format($data->disc_per,3);
+               }
+             ],
            [
                'attribute'=>'status',
                'format' => 'html',

@@ -31,10 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
       </div>
       <div class="panel-body">
-
+    <div class="table-responsive">
+        
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
+        //'responsive'=> true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -61,25 +63,25 @@ $this->params['breadcrumbs'][] = $this->title;
              [
              'attribute'=>'tax_premium',
              'value'=> function($data){
-                return number_format($data->tax_premium);
+                return number_format($data->tax_premium,2);
              }
              ],
               [
              'attribute'=>'tax',
              'value'=> function($data){
-                return number_format($data->tax);
+                return number_format($data->tax,2);
              }
              ],
               [
              'attribute'=>'duty',
              'value'=> function($data){
-                return number_format($data->duty);
+                return number_format($data->duty,2);
              }
              ],
               [
                  'attribute'=>'all_premium',
                  'value'=> function($data){
-                    return number_format($data->all_premium);
+                    return number_format($data->all_premium,2);
                  }
              ],
               [
@@ -128,5 +130,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
         ],
     ]); ?>
+    </div>
     <?php Pjax::end(); ?>
 </div>

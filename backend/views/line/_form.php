@@ -27,7 +27,7 @@ use toxor88\switchery\Switchery;
 
                     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'disc_per')->textInput() ?>
+                    <?= $form->field($model, 'disc_per')->textInput(['value'=>number_format($model->disc_per,3)]) ?>
 
                      <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 

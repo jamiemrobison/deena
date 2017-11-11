@@ -36,8 +36,9 @@ class Introduce extends \yii\db\ActiveRecord
     {
         return [
             [['intro_code','name'],'required'],
-            [['disc_per', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [[ 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['intro_code', 'name', 'condition', 'description'], 'string', 'max' => 255],
+             [['disc_per'],'match','pattern' => '/(^\d+\,\d+\.\d+$)|(^\d+\.\d+$)/'],
         ];
     }
 

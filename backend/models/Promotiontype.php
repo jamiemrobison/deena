@@ -31,10 +31,10 @@ class Promotiontype extends \common\models\PromotionType
         ],
     ];
  }
- // public static function getCarcode($id){
- //    $model = Car::find()->where(['id'=>$id])->one();
- //    return count($model)>0?$model->car_code:'';
- // }
+ public static function getTypeName($id){
+    $model = Promotiontype::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
  // public static function getCarActcode($id){
  //    $model = Car::find()->where(['id'=>$id])->one();
  //    return count($model)>0?$model->act_code:'';

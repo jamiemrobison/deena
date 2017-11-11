@@ -46,7 +46,7 @@ class Act extends \yii\db\ActiveRecord
             [['car_description','car_code'], 'string', 'max' => 255],
             [['protect_amount','score'],'safe'],
            // [['all_premium'],'match','pattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/']
-              [['all_premium','tax_premium'],'match','pattern' => '/^(?!0+\.00)(?=.{1,9}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d+)?$/']
+              [['all_premium','tax_premium'],'match','pattern' => '(/^\d*\.?\d*[0-9]+\d*$)|(^[0-9]+\d*\.\d*$)/']
         ];
     }
 

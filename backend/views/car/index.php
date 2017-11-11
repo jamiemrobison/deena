@@ -42,7 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //   }
             // ],
             'car_code',
-            //'act_code',
+            [
+              'attribute'=>'act_id',
+              'value' => function($data){
+                return \backend\models\Act::getActName($data->act_id);
+              }
+            ],
             'name',
             'description',
             [
