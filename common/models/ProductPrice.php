@@ -45,7 +45,8 @@ class ProductPrice extends \yii\db\ActiveRecord
             [['package_id'],'required'],
             [['product_id', 'package_id', 'car_start_year', 'car_end_year', 'is_discount', 'is_introduce', 'is_line', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['description'], 'string', 'max' => 255],
-            [['amount_start','amount_end','total', 'alltotal','score'],'match','pattern' => '/^(?!0+\.00)(?=.{1,9}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d+)?$/']
+            //[['amount_start','amount_end','total', 'alltotal','score'],'match','pattern' => '/^(?!0+\.00)(?=.{1,9}(\.|$))(?!0(?!\.))\d{1,3}(,\d{3})*(\.\d+)?$/']
+             [['amount_start','amount_end','total', 'alltotal','score'],'match','pattern' => '(/^\d*\.?\d*[0-9]+\d*$)|(^[0-9]+\d*\.\d*$)/']
         ];
     }
 

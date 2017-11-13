@@ -61,13 +61,19 @@ $this->params['breadcrumbs'][] = $this->title;
               [
                 'attribute'=>'total',
                 'value'=>function($data){
-                    return $data->total!=''?number_format($data->total,0):'0';
+                    return $data->total!=''?number_format($data->total,2):'0';
                 }
             ],
              [
                 'attribute'=>'alltotal',
                 'value'=>function($data){
-                    return $data->alltotal!=''?number_format($data->alltotal,0):'0';
+                    return $data->alltotal!=''?number_format($data->alltotal,2):'0';
+                }
+            ],
+             [
+                'attribute'=>'score',
+                'value'=>function($data){
+                    return $data->score!=''?number_format($data->score,2):'0';
                 }
             ],
             [

@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->insure_type!=''?$data->productinfo->name:'';
                 }
             ],
-            'name',
+            'package_code',
             [
                 'attribute'=>'start_date',
                 'value'=> function($data){
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
               [
                 'attribute'=>'car_code',
                 'value'=> function($data){
-                    return $data->car_code;
+                    return $data->car_code!=''?\backend\models\Car::getCarcode($data->car_code):'';
                 }
             ],
             [

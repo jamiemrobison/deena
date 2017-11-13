@@ -7,13 +7,13 @@ class YesNo
     const YES = 1;
     const NO = 0;
     private static $data = [
-        0 => 'No',
-        1 => 'Yes'
+        0 => 'ไม่ถ่ายรูป',
+        1 => 'ถ่ายรูป'
     ];
 
 	private static $dataobj = [
-        ['id'=>0,'name' => 'No'],
-        ['id'=>1,'name' => 'Yes'],
+        ['id'=>0,'name' => 'ไม่ถ่ายรูป'],
+        ['id'=>1,'name' => 'ถ่ายรูป'],
     ];
     public static function asArray()
     {
