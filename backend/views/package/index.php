@@ -38,13 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'company_insure',
                 'value'=> function($data){
-                    return $data->company_insure!=''?$data->companyinfo->name:'';
+                    return $data->company_insure!=''?$data->companyinfo->short_name:'';
                 }
             ],
             [
                 'attribute'=>'insure_type',
                 'value'=> function($data){
-                    return $data->insure_type!=''?$data->productinfo->product_code:'';
+                    return $data->insure_type!=''?$data->productinfo->name:'';
                 }
             ],
             'name',
@@ -64,6 +64,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'service_type',
                 'value'=> function($data){
                     return $data->service_type!=''?\backend\helpers\Servicetype::getTypeById($data->service_type):'';
+                }
+            ],
+             [
+                'attribute'=>'score_rate',
+                'value'=> function($data){
+                    return number_format($data->score_rate);
+                }
+            ],
+              [
+                'attribute'=>'car_code',
+                'value'=> function($data){
+                    return $data->car_code;
                 }
             ],
             [

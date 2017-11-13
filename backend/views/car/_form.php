@@ -36,10 +36,10 @@ use kartik\select2\Select2;
                       'data'=> ArrayHelper::map(\backend\models\Cartype::find()->where(['status'=>1])->all(),'id','name'),
                       'options'=>['placeholder'=>'เลือกประเภทรถ','id'=>'type_id',
                           'onchange'=>'
-                            $.post("index.php?r=car/showact&id=' . '"+$(this).val(),function(data){
-                              $("select#act_id").html(data);
-                              $("select#act_id").prop("disabled","");
-                            });
+                            // $.post("index.php?r=car/showact&id=' . '"+$(this).val(),function(data){
+                            //   $("select#act_id").html(data);
+                            //   $("select#act_id").prop("disabled","");
+                            // });
                           '
                       ],
                       'pluginOptions'=>[
@@ -49,7 +49,7 @@ use kartik\select2\Select2;
                   
                    <?= $form->field($model, 'act_id')->widget(Select2::className(),[
                       'data'=> ArrayHelper::map(\backend\models\Act::find()->where(['status'=>1])->all(),'id','car_code'),
-                      'options'=>['placeholder'=>'เลือกรหัสพรบ','id'=>'act_id','disabled'=>'disabled',
+                      'options'=>['placeholder'=>'เลือกรหัสพรบ','id'=>'act_id',
                           'onchange'=>'
                             
                           '
