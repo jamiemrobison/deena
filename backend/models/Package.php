@@ -37,5 +37,13 @@ class Package extends \common\models\ProductPackage
  public function getProductinfo(){
     return $this->hasOne(\backend\models\Product::className(),['id'=>'insure_type']);
  }
+ public function getCarold($id){
+    $model = \backend\models\Packagecondition::find()->where(['package_id'=>$id,'title_id'=>1])->one();
+    return count($model)>0?$model->condition_text:'';
+ }
+ public function getPhoto($id){
+    $model = \backend\models\Packagecondition::find()->where(['package_id'=>$id,'title_id'=>2])->one();
+    return count($model)>0?$model->condition_text:'';
+ }
  
 }

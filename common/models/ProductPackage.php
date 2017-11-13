@@ -22,6 +22,7 @@ use Yii;
  */
 class ProductPackage extends \yii\db\ActiveRecord
 {
+    public $caryear,$isphoto;
     /**
      * @inheritdoc
      */
@@ -41,6 +42,7 @@ class ProductPackage extends \yii\db\ActiveRecord
             [['name','package_code'], 'string', 'max' => 255],
             [[ 'start_date', 'end_date'],'safe'],
             [['score_rate'],'number'],
+            [['caryear','isphoto'],'safe'],
         ];
     }
 
@@ -62,6 +64,8 @@ class ProductPackage extends \yii\db\ActiveRecord
             'score_rate' =>'อัตราคะแนน (%)',
             'promotion' => 'โปรโมชั่น',
             'car_code' => 'รหัสรถ',
+            'caryear' => 'ปีรถ',
+            'isphoto' => 'รูปถ่าย',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

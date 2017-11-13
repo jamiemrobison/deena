@@ -78,6 +78,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->car_code!=''?\backend\models\Car::getCarcode($data->car_code):'';
                 }
             ],
+             [
+                'attribute'=>'caryear',
+                'value'=> function($data){
+                    return \backend\models\Package::getCarold($data->id);
+                }
+            ],
+             [
+                'attribute'=>'isphoto',
+                'value'=> function($data){
+                    return \backend\models\Package::getPhoto($data->id);
+                
+                }
+            ],
             [
                'attribute'=>'status',
                'format' => 'html',
