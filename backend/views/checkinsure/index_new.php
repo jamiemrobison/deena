@@ -30,10 +30,6 @@ if(isset($searchtype)){
 <div class="row">
 	<div class="col-lg-5">
 
-<?php $form = ActiveForm::begin(); ?>
-    <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken; ?>">
-    <input type="hidden" id="search_type" name="search_type" value="<?=$search?>" />
-
 		<div class="nav-tabs-custom">
             <ul id="search_tab" class="nav nav-tabs">
               <li id="tab_car_year" class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-car text-danger"></i> ยี่ห้อรุ่นปีรถ</a></li>
@@ -42,6 +38,8 @@ if(isset($searchtype)){
 
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
+                <?php $form = ActiveForm::begin(); ?>
+                <input type="hidden" id="search_type" name="search_type" value="<?=$search?>" />
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -131,15 +129,28 @@ if(isset($searchtype)){
                     </div>
                 </div> -->
                 <br />
+                <div class="row"> 
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;"></label>
+                             <div class="col-sm-7">
+                             <input type="submit" value="ค้นหา" name="search" class="btn btn-primary" />
+                             <!-- <div class="btn btn-default btn-quotation"><i class="fa fa-print"></i> สร้างใบเสนอราคา</div> -->
+                             </div>
+                        </div>
+                    </div>
+                </div>
                 
+                <?php ActiveForm::end();?>
               </div>
                <div class="tab-pane" id="tab_2">
+                <?php $form = ActiveForm::begin(['id'=>'by_type'])?>
                   <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
                              <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">รหัสรถ</label>
                              <div class="col-sm-7">
-                                <?= $form->field($model, 'usetype')->widget(Select2::className(),[
+                                <?= $form->field($model2, 'carcode')->widget(Select2::className(),[
                                       'data'=> ArrayHelper::map(\backend\models\Car::find()->where(['status'=>1])->all(),"id",function($data){
                                         return $data->car_code." ".$data->name;
                                       }),
@@ -164,27 +175,41 @@ if(isset($searchtype)){
                          <div class="form-group">
                              <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">ประเภทประกัน</label>
                              <div class="col-sm-7">
-                                <?php if(isset($year)){$model->year = $year;}?>
-                                    <?= $form->field($model,'carcode')->widget(Select2::className(),[
-                                    'data'=>ArrayHelper::map(Car::find()->all(),'id',function($data){
-                                        return $data->car_code." ".$data->name;
-                                    }),
-                                    'options'=>['placeholder'=>'เลือกรหัสรถ','id'=>'carcode','disabled'=>'disabled'],
-                                     'pluginOptions'=>[
-                                        'allowClear'=> true,
-                                    ]
+                                <?php if(isset($producttype)){$model2->producttype = $producttype;}?>
+                             <?= $form->field($model2,'producttype')->widget(Select2::className(),[
+                                'data'=>ArrayHelper::map($prod,'id',function($data){
+                                    return $data->product_code." ".$data->name;
+                                }),
+                                'options'=>['placeholder'=>'เลือกผลิตภัณฑ์',
+                                ],
+                                 'pluginOptions'=>[
+                                    'allowClear'=> true,
+                                ]
                                 ])->label(false) ?>
                              </div>
                         </div>
                     </div>
                   </div>
+                  <br />
+                  <div class="row"> 
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;"></label>
+                             <div class="col-sm-7">
+                             <input type="submit" value="ค้นหา" name="search" class="btn btn-success" />
+                            <!--  <div class="btn btn-default btn-quotation"><i class="fa fa-print"></i> สร้างใบเสนอราคา</div> -->
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                  <?php ActiveForm::end(); ?>
                 </div>
                 <div class="row"> 
                     <div class="col-lg-12">
                         <div class="form-group">
                              <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;"></label>
                              <div class="col-sm-7">
-                             <input type="submit" value="ค้นหา" name="search" class="btn btn-primary" />
+                            <!--  <input type="submit" value="ค้นหา" name="search" class="btn btn-primary" /> -->
                              <div class="btn btn-default btn-quotation"><i class="fa fa-print"></i> สร้างใบเสนอราคา</div>
                              </div>
                         </div>
@@ -193,7 +218,7 @@ if(isset($searchtype)){
           </div>
       </div>
 
-      <?php ActiveForm::end(); ?>
+      
 	</div>
 	<div class="col-lg-7">
 		<?php if(count($modellist)>0):?>
@@ -354,7 +379,7 @@ if(isset($searchtype)){
 
       }
       $("#tab_car_year").click(function(){
-        $("#search_type").val(0);
+        $("#search_type").val(1);
          $(".result").hide();
       });
        $("#tab_car_code").click(function(){
@@ -369,7 +394,6 @@ if(isset($searchtype)){
       	});
 
     $(".btn-quote").on("click",function(){
-
     	// $(this).removeClass("btn-warning");
     	// $(this).addClass("btn-success");
         if(quotelist.length > 3){
@@ -392,6 +416,7 @@ if(isset($searchtype)){
     });
     
     $(".btn-quotation").click(function(){
+        alert();
         if(quotelist.length <= 0){return;}
         var Url = "'.Yii::$app->getUrlManager()->createUrl("checkinsure/genquotation").'";
         $(".list").val(quotelist);

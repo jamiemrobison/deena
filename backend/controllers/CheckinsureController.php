@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use backend\models\Package;
 use common\models\PackageCar;
 use backend\models\Checkinsure;
+use backend\models\Checkinsurebytype;
 use kartik\mpdf\Pdf;
 use backend\models\Quotation;
 
@@ -28,27 +29,28 @@ class CheckinsureController extends Controller
     }
 	public function actionIndex(){
 		$model = new Checkinsure();
+	    $model2 = new Checkinsurebytype();
 		$product = '';
 		$brand = '';
 		$carmodel = '';
 		$year = '';
 		$modellist = null;
+		$carcode = '';
+		$producttype = '';
+		$searchtype = '';
 		
 		if($model->load(Yii::$app->request->post())){
+			
 			$product = $model->product;
 			$brand = $model->brand;
 			$carmodel = $model->model;
 			$year = $model->year;
-
+            
+            $searchtype = 0;
 			//echo $carmodel;return;
 
-			$carcode = $model->carcode;
-			$usetype = $model->usetype;
 
-		    $searchtype = Yii::$app->request->post('search_type');
-		   // echo $searchtype;return;
-            $sql = '';
-			if($searchtype == 0){
+                   $sql = '';
 				   $sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
 				    , product_package.name as package_name
 					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
@@ -60,6 +62,7 @@ class CheckinsureController extends Controller
 					INNER JOIN insure_company ON product_package.company_insure = insure_company.id
 					LEFT JOIN product_price ON product_package.id = product_price.package_id";
 
+                   
 					$sql.=" WHERE brand =".$brand;
 					$sql.=" AND product_package.insure_type =".$product;
 					$sql.=" AND car_info.id =".$carmodel;
@@ -84,26 +87,6 @@ class CheckinsureController extends Controller
 
 					$sql.=" GROUP BY id";
 
-			}else{
-					$sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
-					, product_package.name as package_name
-					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
-					, car_year.year_eng, car_brand.name, insure_company.logo, insure_company.name AS insure_name
-					, car_info.id as carinfoid,product_price.alltotal
-					FROM product_package INNER JOIN package_car ON product_package.id = package_car.package_id 
-					INNER JOIN car_info ON package_car.car_id = car_info.id INNER JOIN car_year ON car_info.car_year = car_year.id 
-					INNER JOIN car_brand ON car_info.brand = car_brand.id 
-					INNER JOIN insure_company ON product_package.company_insure = insure_company.id
-					LEFT JOIN product_price ON product_package.id = product_price.package_id";
-					if($carcode){
-						$sql.= " WHERE product_package.car_code =".$carcode;
-					}
-					
-
-					$sql.=" GROUP BY id";
-
-			}
-
 			
 			//echo $sql;return;
 			
@@ -112,6 +95,7 @@ class CheckinsureController extends Controller
 
 			return $this->render('index_new',[
 			'model'=>$model,
+			'model2'=>$model2,
 			'product'=>$brand,
 		    'brand'=>$brand,
 			'carmodel'=>$carmodel,
@@ -121,8 +105,60 @@ class CheckinsureController extends Controller
 		]);
 			
 		}
+
+		if($model2->load(Yii::$app->request->post())){
+			$carcode = $model2->carcode;
+			$producttype = $model2->producttype;
+
+			$searchtype = 1;
+
+			$sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
+					, product_package.name as package_name
+					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
+					, car_year.year_eng, car_brand.name, insure_company.logo, insure_company.name AS insure_name
+					, car_info.id as carinfoid,product_price.alltotal
+					FROM product_package INNER JOIN package_car ON product_package.id = package_car.package_id 
+					INNER JOIN car_info ON package_car.car_id = car_info.id INNER JOIN car_year ON car_info.car_year = car_year.id 
+					INNER JOIN car_brand ON car_info.brand = car_brand.id 
+					INNER JOIN insure_company ON product_package.company_insure = insure_company.id
+					LEFT JOIN product_price ON product_package.id = product_price.package_id";
+					if($carcode !=''){
+						$sql.= " WHERE product_package.car_code =".$carcode;
+					}
+					if($carcode !='' && $producttype != ""){
+						$sql.= " WHERE product_package.car_code =".$carcode;
+						$sql.= " AND product_package.insure_type =".$producttype;
+					}
+
+					
+
+					$sql.=" GROUP BY id";
+
+					$qury = Yii::$app->db->createCommand($sql);
+					$modellist = $qury->queryAll();
+
+					return $this->render('index_new',[
+					'model'=>$model,
+					'model2'=>$model2,
+					'product'=>$brand,
+				    'brand'=>$brand,
+					'carmodel'=>$carmodel,
+					'year'=>$year,
+					'modellist'=>$modellist,
+					'carcode'=>$carcode,
+					'producttype'=>$producttype,
+					'searchtype'=>$searchtype,
+				]);
+			
+		}
+
+
+
+
+
 		return $this->render('index_new',[
 			'model'=>$model,
+			'model2'=>$model2,
 			'brand'=>$brand,
 			'carmodel'=>$carmodel,
 			'year'=>$year,
