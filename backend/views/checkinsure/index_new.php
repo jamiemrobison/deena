@@ -215,7 +215,7 @@ if(isset($searchtype)){
 											    
 											    <span><div class="label label-primary">ซ่อมอู่</div> <?=$modellist[$i]['package_code']." ".$modellist[$i]['package_name']?></span>
 											    <h5>
-											        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+											        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 											          <i class="fa fa-caret-down"></i> ดูรายละเอียด
 											        </a>
 											     </h5>
@@ -233,7 +233,7 @@ if(isset($searchtype)){
 						    		</div>
 						    	</div>
 						    </div>
-						    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 						      <div class="panel-body">
 						      		<div class="row">
 						            	<div class="col-lg-2">
