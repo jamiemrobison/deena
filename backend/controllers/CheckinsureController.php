@@ -50,6 +50,7 @@ class CheckinsureController extends Controller
             $sql = '';
 			if($searchtype == 0){
 				   $sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
+				    , product_package.name as package_name
 					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
 					, car_brand.name, insure_company.logo, insure_company.name AS insure_name
 					, car_info.id as carinfoid,product_price.alltotal
@@ -85,6 +86,7 @@ class CheckinsureController extends Controller
 
 			}else{
 					$sql = "SELECT product_package.company_insure, product_package.insure_type, product_package.package_code
+					, product_package.name as package_name
 					, product_package.id, package_car.car_id, car_info.model, car_info.car_year, car_info.brand
 					, car_year.year_eng, car_brand.name, insure_company.logo, insure_company.name AS insure_name
 					, car_info.id as carinfoid,product_price.alltotal
@@ -108,7 +110,7 @@ class CheckinsureController extends Controller
 			$qury = Yii::$app->db->createCommand($sql);
 			$modellist = $qury->queryAll();
 
-			return $this->render('index',[
+			return $this->render('index_new',[
 			'model'=>$model,
 			'product'=>$brand,
 		    'brand'=>$brand,
@@ -119,7 +121,7 @@ class CheckinsureController extends Controller
 		]);
 			
 		}
-		return $this->render('index',[
+		return $this->render('index_new',[
 			'model'=>$model,
 			'brand'=>$brand,
 			'carmodel'=>$carmodel,

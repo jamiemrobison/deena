@@ -69,7 +69,7 @@ $carinfo = Carinfo::find()->where(['status'=>1])->all();
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลบริษัทประกัน</a></li>
               <li><a href="#tab_2" data-toggle="tab">กลุ่มรถ</a></li>
-              <li><a href="#tab_3" data-toggle="tab">ช่วงทุนรถ</a></li>
+              <!-- <li><a href="#tab_3" data-toggle="tab">ช่วงทุนรถ</a></li> -->
             </ul>
 
             <div class="tab-content">
