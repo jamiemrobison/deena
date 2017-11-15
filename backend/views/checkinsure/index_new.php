@@ -266,7 +266,7 @@ if(isset($searchtype)){
 						            					<?php if($value->actprotect_id!='')echo $value->actprotect->name;?>
 						            				</td>
 						            				<td>
-						            					<?php echo $value->amount;?>
+						            					<?php echo number_format($value->amount);?>
 						            				</td>
 						            			</tr>
 						            			<?php endforeach;?>
