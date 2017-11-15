@@ -28,7 +28,7 @@ if(isset($searchtype)){
 ?>
 
 <div class="row">
-	<div class="col-lg-4">
+	<div class="col-lg-5">
 
 <?php $form = ActiveForm::begin(); ?>
     <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken; ?>">
@@ -36,8 +36,8 @@ if(isset($searchtype)){
 
 		<div class="nav-tabs-custom">
             <ul id="search_tab" class="nav nav-tabs">
-              <li id="tab_car_year" class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-car text-danger"></i> เช็คเบี้ยตามยี่ห้อรุ่นปีรถ</a></li>
-              <li id="tab_car_code"><a href="#tab_2" data-toggle="tab"><i class="fa fa-check-square-o text-success"></i> เช็คเบี้ยตามรหัสรถ</a></li>
+              <li id="tab_car_year" class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-car text-danger"></i> ยี่ห้อรุ่นปีรถ</a></li>
+              <li id="tab_car_code"><a href="#tab_2" data-toggle="tab"><i class="fa fa-check-square-o text-success"></i> รหัสรถ</a></li>
             </ul>
 
             <div class="tab-content">
@@ -140,7 +140,9 @@ if(isset($searchtype)){
                              <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">ประเภทการใช้งานรถ</label>
                              <div class="col-sm-7">
                                 <?= $form->field($model, 'usetype')->widget(Select2::className(),[
-                                      'data'=> ArrayHelper::map(\backend\models\Act::find()->where(['status'=>1])->all(),'id','car_description'),
+                                      'data'=> ArrayHelper::map(\backend\models\Car::find()->where(['status'=>1])->all(),"id",function($data){
+                                        return $data->car_code." ".$data->name;
+                                      }),
                                       'options'=>['placeholder'=>'เลือกประเภทรถ','id'=>'type_id',
                                           'onchange'=>'
                                             $.post("index.php?r=car/showact&id=' . '"+$(this).val(),function(data){
@@ -193,7 +195,7 @@ if(isset($searchtype)){
 
       <?php ActiveForm::end(); ?>
 	</div>
-	<div class="col-lg-8">
+	<div class="col-lg-7">
 		<?php if(count($modellist)>0):?>
 			<?php for($i=0;$i<=count($modellist)-1;$i++):?>
 						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
