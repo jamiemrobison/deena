@@ -70,7 +70,7 @@ class PackageController extends Controller
         $model = new Package();
         $model_protect = new Packagedetail();
         $model_condition = new Packagecondition();
-        $model_promotion = Packagepromotion::find()->all();
+        $model_promotion = \backend\models\Promotion::find()->all();
         $model_company_com = VCompanyCom::find()->all();
         $model_package = Package::find()->all();
 

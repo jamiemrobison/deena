@@ -137,7 +137,7 @@ if(isset($searchtype)){
                   <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">ประเภทการใช้งานรถ</label>
+                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">รหัสรถ</label>
                              <div class="col-sm-7">
                                 <?= $form->field($model, 'usetype')->widget(Select2::className(),[
                                       'data'=> ArrayHelper::map(\backend\models\Car::find()->where(['status'=>1])->all(),"id",function($data){
@@ -162,7 +162,7 @@ if(isset($searchtype)){
                   <div class="row">
                     <div class="col-lg-12">
                          <div class="form-group">
-                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">รหัสรถ</label>
+                             <label class="control-label col-sm-3" for="name" style="bottom: -5px;text-align: right;">ประเภทประกัน</label>
                              <div class="col-sm-7">
                                 <?php if(isset($year)){$model->year = $year;}?>
                                     <?= $form->field($model,'carcode')->widget(Select2::className(),[
@@ -197,10 +197,12 @@ if(isset($searchtype)){
 	</div>
 	<div class="col-lg-7">
 		<?php if(count($modellist)>0):?>
+        <?php $x = 0;?>
 			<?php for($i=0;$i<=count($modellist)-1;$i++):?>
+            <?php $x+=1;?>
 						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						  <div class="panel">
-						    <div class="panel-heading" role="tab" id="headingOne">
+						    <div class="panel-heading" role="tab" id="heading-<?=$x?>">
 						    	<div class="row">
 						    		<div class="col-lg-1">
 						    			<?php echo Html::img('@web/uploads/logo/'.$modellist[$i]['logo'],['class'=>'img-logo'])?>
@@ -217,7 +219,7 @@ if(isset($searchtype)){
 											    
 											    <span><div class="label label-primary">ซ่อมอู่</div> <?=$modellist[$i]['package_code']." ".$modellist[$i]['package_name']?></span>
 											    <h5>
-											        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											        <a role="button" data-toggle="collapse" href="#collapse-<?=$x?>" aria-expanded="true" aria-controls="collapse-<?=$x?>">
 											          <i class="fa fa-caret-down"></i> ดูรายละเอียด
 											        </a>
 											     </h5>
@@ -235,7 +237,7 @@ if(isset($searchtype)){
 						    		</div>
 						    	</div>
 						    </div>
-						    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						    <div id="collapse-<?=$x?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<?=$x?>">
 						      <div class="panel-body">
 						      		<div class="row">
 						            	<div class="col-lg-2">
