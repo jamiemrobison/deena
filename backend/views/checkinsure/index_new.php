@@ -197,12 +197,12 @@ if(isset($searchtype)){
 	</div>
 	<div class="col-lg-7">
 		<?php if(count($modellist)>0):?>
-        <?php $x = 0;?>
+  
 			<?php for($i=0;$i<=count($modellist)-1;$i++):?>
-            <?php $x+=1;?>
+     
 						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						  <div class="panel">
-						    <div class="panel-heading" role="tab" id="heading-<?=$x?>">
+						    <div class="panel-heading" role="tab" id="heading-<?=$i?>">
 						    	<div class="row">
 						    		<div class="col-lg-1">
 						    			<?php echo Html::img('@web/uploads/logo/'.$modellist[$i]['logo'],['class'=>'img-logo'])?>
@@ -219,7 +219,7 @@ if(isset($searchtype)){
 											    
 											    <span><div class="label label-primary">ซ่อมอู่</div> <?=$modellist[$i]['package_code']." ".$modellist[$i]['package_name']?></span>
 											    <h5>
-											        <a role="button" data-toggle="collapse" href="#collapse-<?=$x?>" aria-expanded="true" aria-controls="collapse-<?=$x?>">
+											        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-<?=$i?>" aria-expanded="true" aria-controls="collapse-<?=$i?>">
 											          <i class="fa fa-caret-down"></i> ดูรายละเอียด
 											        </a>
 											     </h5>
@@ -237,7 +237,7 @@ if(isset($searchtype)){
 						    		</div>
 						    	</div>
 						    </div>
-						    <div id="collapse-<?=$x?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<?=$x?>">
+						    <div id="collapse-<?=$i?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?=$i?>">
 						      <div class="panel-body">
 						      		<div class="row">
 						            	<div class="col-lg-2">
