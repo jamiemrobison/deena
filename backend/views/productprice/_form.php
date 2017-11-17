@@ -107,7 +107,7 @@ use yii\helpers\Url;
                                     <?php $model->isNewRecord?$model->is_discount=1:$model->is_discount;?>
                                   <?= $form->field($model, 'is_discount')->widget(Select2::className(),
                                     [
-                                     'data'=> ArrayHelper::map(\backend\helpers\YesNo::asArrayObject(),'id','name'),
+                                     'data'=> ArrayHelper::map(\backend\helpers\Yesorno::asArrayObject(),'id','name'),
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'is_discount'],
                                     ]
 
@@ -121,7 +121,7 @@ use yii\helpers\Url;
                                     <?php $model->isNewRecord?$model->is_introduce=1:$model->is_introduce;?>
                                   <?= $form->field($model, 'is_introduce')->widget(Select2::className(),
                                     [
-                                     'data'=> ArrayHelper::map(\backend\helpers\YesNo::asArrayObject(),'id','name'),
+                                     'data'=> ArrayHelper::map(\backend\helpers\Yesorno::asArrayObject(),'id','name'),
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'is_introduce'],
                                     ]
 
@@ -135,7 +135,7 @@ use yii\helpers\Url;
                                     <?php $model->isNewRecord?$model->is_line=1:$model->is_line;?>
                                   <?= $form->field($model, 'is_line')->widget(Select2::className(),
                                     [
-                                     'data'=> ArrayHelper::map(\backend\helpers\YesNo::asArrayObject(),'id','name'),
+                                     'data'=> ArrayHelper::map(\backend\helpers\Yesorno::asArrayObject(),'id','name'),
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'is_line'],
                                     ]
 

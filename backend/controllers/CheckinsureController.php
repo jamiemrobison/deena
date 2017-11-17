@@ -38,7 +38,7 @@ class CheckinsureController extends Controller
 		$carcode = '';
 		$producttype = '';
 		$searchtype = '';
-		
+
 		if($model->load(Yii::$app->request->post())){
 			
 			$product = $model->product;
@@ -107,8 +107,11 @@ class CheckinsureController extends Controller
 		}
 
 		if($model2->load(Yii::$app->request->post())){
+			//echo "ok"; return;
 			$carcode = $model2->carcode;
 			$producttype = $model2->producttype;
+
+			print_r($model2);return;
 
 			$searchtype = 1;
 

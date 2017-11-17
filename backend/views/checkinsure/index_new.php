@@ -23,8 +23,7 @@ if(isset($searchtype)){
  }else{
   $search = 0;
  }
-
-
+//echo $producttype;
 ?>
 
 <div class="row">
@@ -154,11 +153,11 @@ if(isset($searchtype)){
                                       'data'=> ArrayHelper::map(\backend\models\Car::find()->where(['status'=>1])->all(),"id",function($data){
                                         return $data->car_code." ".$data->name;
                                       }),
-                                      'options'=>['placeholder'=>'เลือกประเภทรถ','id'=>'type_id',
+                                      'options'=>['placeholder'=>'เลือกประเภทรถ','id'=>'carcode',
                                           'onchange'=>'
                                             $.post("index.php?r=car/showact&id=' . '"+$(this).val(),function(data){
-                                              $("select#carcode").html(data);
-                                              $("select#carcode").prop("disabled","");
+                                              // $("select#carcode").html(data);
+                                              // $("select#carcode").prop("disabled","");
                                             });
                                           '
                                       ],
@@ -181,6 +180,7 @@ if(isset($searchtype)){
                                     return $data->product_code." ".$data->name;
                                 }),
                                 'options'=>['placeholder'=>'เลือกผลิตภัณฑ์',
+                                    'onchange'=>'alert($(this).val())'
                                 ],
                                  'pluginOptions'=>[
                                     'allowClear'=> true,

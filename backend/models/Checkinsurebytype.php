@@ -25,7 +25,7 @@ class Checkinsurebytype extends Model
     {
         return [
             'carcode' => 'รหัสรถ',
-            'brand' => 'ประเภทประกัน',
+            'producttype' => 'ประเภทประกัน',
         
         ];
     }
