@@ -12,6 +12,8 @@ return [
         'cache' => [
            // 'class' => 'yii\caching\FileCache',
             'class' => 'yii\caching\MemCache',
+            'useMemcached' => true,
+            'serializer' => false,
         ],
     ],
 ];
