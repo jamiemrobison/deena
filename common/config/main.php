@@ -10,7 +10,8 @@ return [
             'class' => 'yii\rbac\DbManager',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+           // 'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\MemCache',
         ],
     ],
 ];
