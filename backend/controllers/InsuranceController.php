@@ -95,7 +95,8 @@ class InsuranceController extends Controller
                           $model->driver_date_two = strtotime($model->driver_date_two);
                           $model->insure_renew_date = strtotime($model->insure_renew_date);
 
-                          if($model->save()){
+                         // print_r($model->getErrors(false));
+                          if($model->save(false)){
                                     if(!empty($fileupload)){
                                                     foreach($fileupload as $file){
                                                         $model_doc = new DocuRef();
@@ -122,7 +123,7 @@ class InsuranceController extends Controller
                                   $install->first_period = str_replace(",","",$installment_model->first_period);
                                   $install->remain = $installment_model->remain;
                                   $install->period_per = str_replace(",","",$installment_model->period_per);
-                                  $install->insure_no = $insureid;
+                                  $install->insure_no = $model->id;
                                   $install->save(false);
                               
                             $session = Yii::$app->session;
