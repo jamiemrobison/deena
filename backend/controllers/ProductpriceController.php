@@ -79,7 +79,7 @@ class ProductpriceController extends Controller
                     $model->total = str_replace(',', '', $model->total);
                     $model->alltotal = str_replace(',', '', $model->alltotal);
                     $model->score = str_replace(',', '', $model->score);
-                    if($model->save()){
+                    if($model->save(false)){
                         return $this->redirect(['update', 'id' => $model->id]);
                     }
                 } else {
