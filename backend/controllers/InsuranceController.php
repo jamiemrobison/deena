@@ -81,7 +81,7 @@ class InsuranceController extends Controller
         $modelfile = new Modelfile();
         $installment_model = new \backend\models\Installment();
 
-        $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
+        //$role_act = \backend\models\Userrole::checkRoleEnable("insurance");
        // if($role_act[0]['create'] == 1){  
 
                       if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post()) && $installment_model->load(Yii::$app->request->post()) ) {
