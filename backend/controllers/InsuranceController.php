@@ -82,7 +82,7 @@ class InsuranceController extends Controller
         $installment_model = new \backend\models\Installment();
 
         $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
-        if($role_act[0]['create'] == 1){  
+       // if($role_act[0]['create'] == 1){  
 
                       if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post()) && $installment_model->load(Yii::$app->request->post()) ) {
 
@@ -139,10 +139,10 @@ class InsuranceController extends Controller
                               'installment_model'=>$installment_model,
                           ]);
                       }
-            }else{
-              throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+            // }else{
+            //   throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
               
-            }
+            // }
     }
 
     public function getRuning(){
