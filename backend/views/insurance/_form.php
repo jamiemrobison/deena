@@ -30,17 +30,17 @@ use backend\helpers\ConditionTitle;
 
 $insure_com = Insurancecompany::find()->where(['status'=> 1])->all();
 $cat = Category::find()->where(['status'=> 1])->all();
-$prod = Product::find()->where(['status'=> 1])->all();
-$brand = Carbrand::find()->where(['status'=> 1])->all();
-$member = Member::find()->where(['status'=> 1])->all();
+// $prod = Product::find()->where(['status'=> 1])->all();
+// $brand = Carbrand::find()->where(['status'=> 1])->all();
+// $member = Member::find()->where(['status'=> 1])->all();
 // $province = Province::find()->where(['status'=> 1])->all();
-$car = Car::find()->where(['status'=> 1])->all();
-$caryear = Caryear::find()->where(['status'=> 1])->all();
-$carinfo = Carinfo::find()->where(['status'=> 1])->all();
-$act = Act::find()->where(['status'=> 1])->all();
-$prov = Province::find()->all();
-$amp = Amphur::find()->all();
-$dist = District::find()->all();
+// $car = Car::find()->where(['status'=> 1])->all();
+// $caryear = Caryear::find()->where(['status'=> 1])->all();
+// $carinfo = Carinfo::find()->where(['status'=> 1])->all();
+// $act = Act::find()->where(['status'=> 1])->all();
+// $prov = Province::find()->all();
+// $amp = Amphur::find()->all();
+// $dist = District::find()->all();
 
 $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 //echo $model->protect_start_date;
