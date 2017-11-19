@@ -29,7 +29,7 @@ use backend\helpers\ConditionTitle;
 /* @var $form yii\widgets\ActiveForm */
 
 $insure_com = Insurancecompany::find()->where(['status'=> 1])->all();
-$cat = Category::find()->where(['status'=> 1])->all();
+//$cat = Category::find()->where(['status'=> 1])->all();
 // $prod = Product::find()->where(['status'=> 1])->all();
 // $brand = Carbrand::find()->where(['status'=> 1])->all();
 // $member = Member::find()->where(['status'=> 1])->all();
@@ -150,40 +150,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   )->label() ?>
                                         </div>
                                          <div class="col-lg-3">
-                                                  <?= $form->field($model, 'insure_type_id')->widget(Select2::className(),
-                                                    [
-                                                     'data'=> ArrayHelper::map($cat,'id','name'),
-                                                    'options'=>['placeholder'=>'เลือกประเภท','maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
-                                                        'onchange'=>'
-                                                            if($(this).val()==1){
-                                                              $("#product_id").prop("disabled","");
-                                                              $("#car_code").prop("disabled","");
-                                                              $("#car_brand").prop("disabled","");
-                                                                $.post("index.php?r=insurance/showcarcode&id=1",function(data){
-                                                                  $("select#car_code").html(data);
-                                                                });
-                                                            }else if($(this).val()==3){
-                                                              $("#product_id").prop("disabled","disabled").empty();
-                                                              $("#car_code").prop("disabled","");
-                                                              $("#car_brand").prop("disabled","disabled");
-
-                                                                $.post("index.php?r=insurance/showcarcode&id=2",function(data){
-                                                                  $("select#car_code").html(data);
-                                                                });
-
-                                                            }else{
-                                                               $("#product_id").prop("disabled","disabled");
-                                                              $("#car_code").prop("disabled","disabled").empty();
-                                                              $("#car_brand").prop("disabled","disabled");
-
-                                                            }
-                                                            
-                                                        '
-                                                     ],
-
-                                                    ]
-
-                                                  )->label() ?>    
+                                                  
                                         </div>
                                         
                                     </div>
