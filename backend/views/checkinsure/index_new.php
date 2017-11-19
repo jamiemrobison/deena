@@ -179,8 +179,8 @@ if(isset($searchtype)){
                                 'data'=>ArrayHelper::map($prod,'id',function($data){
                                     return $data->product_code." ".$data->name;
                                 }),
-                                'options'=>['placeholder'=>'เลือกผลิตภัณฑ์',
-                                    'onchange'=>'alert($(this).val())'
+                                'options'=>['placeholder'=>'เลือกผลิตภัณฑ์','id'=>'producttype',
+                                    'onchange'=>' '
                                 ],
                                  'pluginOptions'=>[
                                     'allowClear'=> true,
@@ -204,6 +204,7 @@ if(isset($searchtype)){
                 </div>
                   <?php ActiveForm::end(); ?>
                 </div>
+                <br/>
                 <div class="row"> 
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -331,7 +332,7 @@ if(isset($searchtype)){
 						  </div>
 						</div>
 				<?php endfor;?>
-			<?php elseif(isset($brand)&&!empty($brand)):?>
+			<?php else:?>
 		            <div class="data-not-found" style="padding: 20px 20px 20px 20px">
 		            	<div class="alert-danger" style="padding: 20px 20px 20px 20px; text-align: center">
 		            		<p><h3><i class="fa fa-info-circle"></i> ไม่พบข็อมูล</h3></p>
@@ -416,7 +417,7 @@ if(isset($searchtype)){
     });
     
     $(".btn-quotation").click(function(){
-        alert();
+      //  alert();
         if(quotelist.length <= 0){return;}
         var Url = "'.Yii::$app->getUrlManager()->createUrl("checkinsure/genquotation").'";
         $(".list").val(quotelist);

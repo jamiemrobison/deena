@@ -110,8 +110,9 @@ class CheckinsureController extends Controller
 			//echo "ok"; return;
 			$carcode = $model2->carcode;
 			$producttype = $model2->producttype;
-
-			print_r($model2);return;
+             
+            // echo $producttype;return;
+			//print_r($model2);return;
 
 			$searchtype = 1;
 
@@ -125,14 +126,18 @@ class CheckinsureController extends Controller
 					INNER JOIN car_brand ON car_info.brand = car_brand.id 
 					INNER JOIN insure_company ON product_package.company_insure = insure_company.id
 					LEFT JOIN product_price ON product_package.id = product_price.package_id";
-					if($carcode !=''){
-						$sql.= " WHERE product_package.car_code =".$carcode;
-					}
+					
 					if($carcode !='' && $producttype != ""){
 						$sql.= " WHERE product_package.car_code =".$carcode;
 						$sql.= " AND product_package.insure_type =".$producttype;
 					}
-
+					if($carcode !='' && $producttype == ""){
+						$sql.= " WHERE product_package.car_code =".$carcode;
+					}
+					if($carcode =='' && $producttype != ""){
+						//$sql.= " WHERE product_package.car_code =".$carcode;
+						$sql.= " WHERE product_package.insure_type =".$producttype;
+					}
 					
 
 					$sql.=" GROUP BY id";

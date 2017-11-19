@@ -14,7 +14,7 @@ class Checkinsurebytype extends Model
     public function rules()
     {
         return [
-            [['carcode','$producttype'],'integer'],
+            [['carcode','producttype'],'integer'],
         ];
     }
 
