@@ -334,7 +334,7 @@ if(isset($searchtype)){
 				<?php endfor;?>
 			<?php else:?>
 		            <div class="data-not-found" style="padding: 20px 20px 20px 20px">
-		            	<div class="alert-danger" style="padding: 20px 20px 20px 20px; text-align: center">
+		            	<div class="alert-warning" style="padding: 20px 20px 20px 20px; text-align: center">
 		            		<p><h3><i class="fa fa-info-circle"></i> ไม่พบข็อมูล</h3></p>
 		            	</div>
 		            </div>
