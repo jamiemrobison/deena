@@ -29,18 +29,18 @@ use backend\helpers\ConditionTitle;
 /* @var $form yii\widgets\ActiveForm */
 
 $insure_com = Insurancecompany::find()->where(['status'=> 1])->all();
-//$cat = Category::find()->where(['status'=> 1])->all();
-// $prod = Product::find()->where(['status'=> 1])->all();
-// $brand = Carbrand::find()->where(['status'=> 1])->all();
-// $member = Member::find()->where(['status'=> 1])->all();
+$cat = Category::find()->where(['status'=> 1])->all();
+$prod = Product::find()->where(['status'=> 1])->all();
+$brand = Carbrand::find()->where(['status'=> 1])->all();
+$member = Member::find()->where(['status'=> 1])->all();
 // $province = Province::find()->where(['status'=> 1])->all();
-// $car = Car::find()->where(['status'=> 1])->all();
-// $caryear = Caryear::find()->where(['status'=> 1])->all();
-// $carinfo = Carinfo::find()->where(['status'=> 1])->all();
-// $act = Act::find()->where(['status'=> 1])->all();
-// $prov = Province::find()->all();
-// $amp = Amphur::find()->all();
-// $dist = District::find()->all();
+$car = Car::find()->where(['status'=> 1])->all();
+$caryear = Caryear::find()->where(['status'=> 1])->all();
+$carinfo = Carinfo::find()->where(['status'=> 1])->all();
+$act = Act::find()->where(['status'=> 1])->all();
+$prov = Province::find()->all();
+$amp = Amphur::find()->all();
+$dist = District::find()->all();
 
 $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 //echo $model->protect_start_date;
@@ -150,14 +150,53 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   )->label() ?>
                                         </div>
                                          <div class="col-lg-3">
-                                                  
+                                                  <?= $form->field($model, 'insure_type_id')->widget(Select2::className(),
+                                                    [
+                                                     'data'=> ArrayHelper::map($cat,'id','name'),
+                                                    'options'=>['placeholder'=>'เลือกประเภท','maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
+                                                        'onchange'=>'
+                                                            if($(this).val()==1){
+                                                              $("#product_id").prop("disabled","");
+                                                              $("#car_code").prop("disabled","");
+                                                              $("#car_brand").prop("disabled","");
+                                                                $.post("index.php?r=insurance/showcarcode&id=1",function(data){
+                                                                  $("select#car_code").html(data);
+                                                                });
+                                                            }else if($(this).val()==3){
+                                                              $("#product_id").prop("disabled","disabled").empty();
+                                                              $("#car_code").prop("disabled","");
+                                                              $("#car_brand").prop("disabled","disabled");
+
+                                                                $.post("index.php?r=insurance/showcarcode&id=2",function(data){
+                                                                  $("select#car_code").html(data);
+                                                                });
+
+                                                            }else{
+                                                               $("#product_id").prop("disabled","disabled");
+                                                              $("#car_code").prop("disabled","disabled").empty();
+                                                              $("#car_brand").prop("disabled","disabled");
+
+                                                            }
+                                                            
+                                                        '
+                                                     ],
+
+                                                    ]
+
+                                                  )->label() ?>    
                                         </div>
                                         
                                     </div>
                   
                     <div class="row">
                        <div class="col-lg-3">
-                                
+                                 <?= $form->field($model, 'product_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($prod,'id','name'),
+                                    'options'=>['placeholder'=>'เลือกผลิตภัณฑ์','maxlength' => true,'class'=>'form-control form-inline','id'=>'product_id','disabled'=>'disabled'],
+                                    ]
+
+                                  )->label() ?>      
                         </div> 
                         <div class="col-lg-3">
                                   <?= $form->field($model, 'insure_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
@@ -166,7 +205,13 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                              <?= $form->field($model, 'id_card')->textInput(['maxlength' => 13,'class'=>'form-control form-inline'])->label() ?>  
                         </div>
                          <div class="col-lg-3">
-                               
+                                   <?= $form->field($model, 'prefix')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($prefix,'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'prefix'],
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                          
                     </div>
@@ -186,13 +231,56 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         
                          <div class="col-lg-3">
-                                  
+                                  <?= $form->field($model, 'province')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
+                                    'options'=>['placeholder'=>'เลือกจังหวัด','maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
+                                       'onchange'=>'
+                                          $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
+                                          $("select#city").html(data);
+                                          $("select#city").prop("disabled","");
+
+                                        });
+                                       '
+                                    ],
+                                    ]
+
+                                  )->label() ?>
                         </div> 
                          <div class="col-lg-3">
-                                
+                                 <?= $form->field($model, 'city')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($amp,'AMPHUR_ID','AMPHUR_NAME'),
+                                    'options'=>['placeholder'=>'เลือกอำเภอ','maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
+                                          'onchange'=>'
+                                          $.post("index.php?r=insurance/showdistrict&id=' . '"+$(this).val(),function(data){
+                                          $("select#district").html(data);
+                                          $("select#district").prop("disabled","");
+
+                                        });
+
+                                           $.post("index.php?r=member/showzipcode&id=' . '"+$(this).val(),function(data){
+                                                $("#zipcode").val(data);
+                                                $("#zipcode").prop("disabled","");
+
+                                              });
+                                       '
+                                    ],
+                                    'pluginOptions'=>[
+                                        'allowClear'=>true,
+                                      ]
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                          <div class="col-lg-3">
-                          
+                            <?= $form->field($model, 'district')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($dist,'DISTRICT_ID','DISTRICT_NAME'),
+                                    'options'=>['placeholder'=>'เลือกตำบล','maxlength' => true,'class'=>'form-control form-inline','id'=>'district','disabled'=>'disabled'],
+                                    ]
+
+                                  )->label() ?> 
                         </div>
                     </div>
 
@@ -212,19 +300,66 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                     </div>
                      <hr />
                     <div class="row">
-                      
+                        <div class="col-lg-3">
+                                  <?= $form->field($model, 'car_code')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($car,'id',function($data){
+                                          return $data->car_code." ".$data->name;
+                                     }),
+                                    'options'=>['placeholder'=>'เลือกรหัสรถ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_code','disabled'=>'disabled',
+                                        'onchange'=> '
+                                            $.post("index.php?r=insurance/showcaract&id=' . '"+$(this).val(),function(data){
+                                              var value = data.split(",");
+                                              $("#car_usage").val(value[0]);
+                                              $("#total").val(value[1]);
+                                              $("#grand_total").val(value[2]);
+                                            });
+                                        '
+                                    ],
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                          <div class="col-lg-3">
                                   <?= $form->field($model, 'car_usage')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_usage'])->label() ?>    
                         </div>
                         <div class="col-lg-3">
-                            
+                             <?= $form->field($model, 'car_brand')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($brand,'id','name'),
+                                    'options'=>['placeholder'=>'เลือกยี่ห้อ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_brand','disabled'=>'disabled',
+                                        'onchange'=>'
+                                              $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
+                                              $("select#car_model").html(data);
+                                              $("select#car_model").prop("disabled","");
+                                            });
+
+                                            
+                                        '
+                                     ],
+                                    ]
+
+                                  )->label() ?>     
                         </div>
                          <div class="col-lg-3">
-                             
+                                  <?= $form->field($model, 'car_model')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($carinfo,'id','model'),
+                                    'options'=>['placeholder'=>'เลือกรุ่นรถ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_model',
+                                     'disabled'=>'disabled',
+                                    ],
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                         <div class="col-lg-3">
-                            
+                             <?= $form->field($model, 'car_year')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($caryear,'id','year_text'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_year'],
+                                    ]
+
+                                  )->label() ?>  
                         </div>
                          <div class="col-lg-1">
                                   <?= $form->field($model, 'plate_category')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
@@ -233,7 +368,13 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   <?= $form->field($model, 'plate_license')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                         </div> 
                         <div class="col-lg-3">
-                          
+                            <?= $form->field($model, 'plate_province')->widget(Select2::className(),
+                                    [
+                                    'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
+                                    'options'=>['placeholder'=>'เลือกจังหวด','maxlength' => true,'class'=>'form-control form-inline','id'=>'plate_province'],
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                         <div class="col-lg-3">
                              <?= $form->field($model, 'body_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
@@ -340,16 +481,59 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 
                     <div class="row">
                         <div class="col-lg-3">
-                                  
+                                   <?= $form->field($model, 'member_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($member,'id','member_code'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'member_id',
+                                                'onchange'=>'
+                                                  $.post("index.php?r=insurance/getlevel&id=' . '"+$(this).val(),function(data){
+                                                      $("select#level_id").empty();
+                                                      $("select#level_id").append(data);
+                                                  });
+                                                  $.post("index.php?r=insurance/getintro&id=' . '"+$(this).val(),function(data){
+                                                      $("select#intro_id").empty();
+                                                      $("select#intro_id").append(data);
+                                                  });
+                                                  $.post("index.php?r=insurance/getline&id=' . '"+$(this).val(),function(data){
+                                                       $("select#line_id").empty();
+                                                      $("select#line_id").append(data);
+                                                  });
+                                                '
+                                               ],
+                                    ]
+
+                                  )->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                   
+                                   <?= $form->field($model, 'level_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map(\backend\models\Memberlevel::find()->all(),'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'level_id','disabled'=>'disabled'],
+                                    ]
+
+                                  )->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                  
+                                   <?= $form->field($model, 'intro_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map(\backend\models\Introduce::find()->all(),'id',function($data){
+                                        return $data->intro_code." ".$data->name;
+                                     }),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'intro_id','disabled'=>'disabled'],
+                                    ]
+
+                                  )->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                   
+                                   <?= $form->field($model, 'line_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map(\backend\models\Line::find()->all(),'id',function($data){
+                                        return $data->line_code." ".$data->name;
+                                     }),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'line_id','disabled'=>'disabled'],
+                                    ]
+
+                                  )->label() ?>     
                         </div>
                     </div>
                     <div class="row">
@@ -375,7 +559,26 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                               }
                           ?>
                             <input type="hidden" name="payment_type_id" id="payment_type_id" value="<?=$model->isNewRecord?0:$payment_type_id?>" />
-                                    
+                                    <?= $form->field($model, 'payment_method')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map(\backend\models\Paymentchannel::find()->all(),'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_payment_method','placeholder'=>'เลือกวิธีชำระเงิน',
+                                              'onchange'=>'
+                                           //   alert($(this).val());
+                                                  $.post("index.php?r=insurance/checkpaytype&id=' . '"+$(this).val(),function(data){
+                                                    if($.inArray(data,["5","6","7"])!= -1){
+                                                      //alert(data);
+                                                      $("#tab_installment").show();
+                                                    }else{
+                                                      $("#tab_installment").hide();
+                                                    }
+                                                  });
+                                                  
+                                              '
+                                    ],
+                                    ]
+
+                                  )->label() ?>
                         </div>
                        
                     </div>
@@ -384,7 +587,13 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                        <hr />
                        <div class="row">
                         <div class="col-lg-3">
-                                  
+                                   <?= $form->field($model, 'insure_driver')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map(\backend\helpers\InsureType::asArrayObject(),'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_driver'],
+                                    ]
+
+                                  )->label() ?>   
                         </div>
                         <div class="col-lg-3">
                              <?= $form->field($model, 'driver_one')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
@@ -490,12 +699,22 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                             </div>
                             <div class="row">
                               <div class="col-lg-8">
-                                
+                                <?= $form->field($model, 'note_empid')->widget(Select2::className(),[
+                                  'data'=> ArrayHelper::map(\backend\models\Employee::find()->all(),'id',function($data){
+                                     return $data->first_name." ".$data->last_name;
+                                  }),
+                                  'options'=>['placeholder'=>'เลือกพนักงาน'],
+                                  'pluginOptions'=>[
+                                    'allowClear'=>true,
+                                  ]
+                                ]) ?> 
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-lg-8">
-                               
+                                <?= $form->field($model, 'note_status')->widget(Select2::className(),[
+                                    'data'=> ArrayHelper::map(\backend\helpers\NoteStatus::asArrayObject(),'id','name')
+                                ]) ?> 
                               </div>
                             </div>
                       </div>
