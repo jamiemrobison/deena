@@ -9,11 +9,11 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        'cache' => [
-           // 'class' => 'yii\caching\FileCache',
-            'class' => 'yii\caching\MemCache',
-            'useMemcached' => true,
-            'serializer' => false,
-        ],
+        // 'cache' => [
+        //     'class' => 'yii\caching\FileCache',
+        //     //'class' => 'yii\caching\MemCache',
+        //     'useMemcached' => false,
+        //     'serializer' => false,
+        // ],
     ],
 ];

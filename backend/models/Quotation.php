@@ -58,7 +58,7 @@ class Quotation extends \common\models\Quotation
     $rate = 0;
     //return $quotation_id.' - '.$lineid;
     $modelqo = \backend\models\Quotation::find()->where(['id'=>$quotation_id])->one();
-    $model = \backend\models\QuotationDetail::find()->where(['id'=>$lineid])->one();
+    $model = \backend\models\Quotationdetail::find()->where(['id'=>$lineid])->one();
     
     if($model && $modelqo){
       $compid = self::findCompany($model->package_id);
