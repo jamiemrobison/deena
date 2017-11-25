@@ -257,7 +257,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         
                          <div class="col-lg-3">
                                      <label for="province">จังหวัด</label>
-                                             <select name="" id="province" class="form-control" onchange="alert();">
+                                             <select name="" id="province" class="form-control">
                                                <?php foreach($prov as $value):?>
                                                <option value="<?=$value->PROVINCE_ID?>"><?=$value->PROVINCE_NAME;?></option>
                                              <?php endforeach;?>
@@ -280,7 +280,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div> 
                          <div class="col-lg-3">
                                       <label for="province">อำเภอ</label>
-                                             <select name="" id="city" class="form-control" onchange="alert();">
+                                             <select name="" id="city" disabled="disabled" class="form-control" onchange="alert();">
                                                <?php foreach($amp as $value):?>
                                                <option value="<?=$value->AMPHUR_ID?>"><?=$value->AMPHUR_NAME;?></option>
                                              <?php endforeach;?>
@@ -1239,6 +1239,12 @@ $this->registerJs('
           //                 }
           //         });
          //  }
+      });
+
+      $("#province").change(function(){
+         $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
+         $("select#city").html(data);
+         $("select#city").prop("disabled","");
       });
 
       $(".alert").show().fadeOut(5000);
