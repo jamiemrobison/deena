@@ -135,7 +135,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   <?= $form->field($model, 'inform_code')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                                         </div>
                                         <div class="col-lg-3">
-                                             <label for="">บริษัทประกัน</label>
+                                             <label for="insure_company_id">บริษัทประกัน</label>
                                              <select name="" class="form-control" onchange="alert();">
                                                <?php foreach($insure_com as $value):?>
                                                <option value="<?=$value->id?>"><?=$value->name;?></option>
@@ -195,13 +195,20 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                   
                     <div class="row">
                        <div class="col-lg-3">
-                                 <?= $form->field($model, 'product_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($prod,'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'product_id','disabled'=>'disabled'],
-                                    ]
 
-                                  )->label() ?>      
+                                            <label for="">ผลิตภัณฑ์</label>
+                                             <select name="product_id" class="form-control" onchange="alert();">
+                                               <?php foreach($prod as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                 <?php //echo $form->field($model, 'product_id')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($prod,'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'product_id','disabled'=>'disabled'],
+                                    // ]
+
+                                 // )->label() ?>      
                         </div> 
                         <div class="col-lg-3">
                                   <?= $form->field($model, 'insure_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
@@ -210,13 +217,19 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                              <?= $form->field($model, 'id_card')->textInput(['maxlength' => 13,'class'=>'form-control form-inline'])->label() ?>  
                         </div>
                          <div class="col-lg-3">
-                                   <?= $form->field($model, 'prefix')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($prefix,'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'prefix'],
-                                    ]
+                                            <label for="">ผลิตภัณฑ์</label>
+                                             <select name="prefix" class="form-control" onchange="alert();">
+                                               <?php foreach($prefix as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'prefix')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($prefix,'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'prefix'],
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                          
                     </div>
@@ -279,13 +292,19 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   )->label() ?>   
                         </div>
                          <div class="col-lg-3">
-                            <?= $form->field($model, 'district')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($dist,'DISTRICT_ID','DISTRICT_NAME'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'district','disabled'=>'disabled'],
-                                    ]
+                                            <label for="">ผลิตภัณฑ์</label>
+                                             <select name="product_id" id="district" class="form-control" onchange="alert();">
+                                               <?php foreach($dist as $value):?>
+                                               <option value="<?=$value->DISTRICT_ID?>"><?=$value->DISTRICT_NAME;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                            <?php //echo $form->field($model, 'district')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($dist,'DISTRICT_ID','DISTRICT_NAME'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'district','disabled'=>'disabled'],
+                                    // ]
 
-                                  )->label() ?> 
+                                  //)->label() ?> 
                         </div>
                     </div>
 
