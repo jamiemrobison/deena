@@ -135,7 +135,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   <?= $form->field($model, 'inform_code')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                                         </div>
                                         <div class="col-lg-3">
-                                             <select name="">
+                                             <select name="" class="form-control">
                                                <?php foreach($insure_com as $value):?>
                                                <option value="<?=$value->id?>"><?=$value->name;?></option>
                                              <?php endforeach;?>
