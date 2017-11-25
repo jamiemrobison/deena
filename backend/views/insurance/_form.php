@@ -138,7 +138,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <?= $form->field($model, 'insure_company_id')->widget(Select2::className(),
                                                     [
                                                      'data'=> ArrayHelper::map($insure_com,'id','name'),
-                                                    'options'=>['placeholder'=>'เลือกบริษัทประกัน','maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_company_id',
+                                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_company_id',
                                                         'onchange'=>'
                                                                 $.post("index.php?r=insurance/showproduct&id=' . '"+$(this).val(),function(data){
                                                                   $("select#product_id").html(data);
@@ -153,7 +153,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   <?= $form->field($model, 'insure_type_id')->widget(Select2::className(),
                                                     [
                                                      'data'=> ArrayHelper::map($cat,'id','name'),
-                                                    'options'=>['placeholder'=>'เลือกประเภท','maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
+                                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
                                                         'onchange'=>'
                                                             if($(this).val()==1){
                                                               $("#product_id").prop("disabled","");
@@ -193,7 +193,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                  <?= $form->field($model, 'product_id')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($prod,'id','name'),
-                                    'options'=>['placeholder'=>'เลือกผลิตภัณฑ์','maxlength' => true,'class'=>'form-control form-inline','id'=>'product_id','disabled'=>'disabled'],
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'product_id','disabled'=>'disabled'],
                                     ]
 
                                   )->label() ?>      
@@ -234,7 +234,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   <?= $form->field($model, 'province')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
-                                    'options'=>['placeholder'=>'เลือกจังหวัด','maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
                                        'onchange'=>'
                                           $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
                                           $("select#city").html(data);
@@ -251,7 +251,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                  <?= $form->field($model, 'city')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($amp,'AMPHUR_ID','AMPHUR_NAME'),
-                                    'options'=>['placeholder'=>'เลือกอำเภอ','maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
                                           'onchange'=>'
                                           $.post("index.php?r=insurance/showdistrict&id=' . '"+$(this).val(),function(data){
                                           $("select#district").html(data);
@@ -277,7 +277,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                             <?= $form->field($model, 'district')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($dist,'DISTRICT_ID','DISTRICT_NAME'),
-                                    'options'=>['placeholder'=>'เลือกตำบล','maxlength' => true,'class'=>'form-control form-inline','id'=>'district','disabled'=>'disabled'],
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'district','disabled'=>'disabled'],
                                     ]
 
                                   )->label() ?> 
@@ -306,7 +306,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                      'data'=> ArrayHelper::map($car,'id',function($data){
                                           return $data->car_code." ".$data->name;
                                      }),
-                                    'options'=>['placeholder'=>'เลือกรหัสรถ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_code','disabled'=>'disabled',
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_code','disabled'=>'disabled',
                                         'onchange'=> '
                                             $.post("index.php?r=insurance/showcaract&id=' . '"+$(this).val(),function(data){
                                               var value = data.split(",");
@@ -327,7 +327,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                              <?= $form->field($model, 'car_brand')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($brand,'id','name'),
-                                    'options'=>['placeholder'=>'เลือกยี่ห้อ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_brand','disabled'=>'disabled',
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_brand','disabled'=>'disabled',
                                         'onchange'=>'
                                               $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
                                               $("select#car_model").html(data);
@@ -345,7 +345,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   <?= $form->field($model, 'car_model')->widget(Select2::className(),
                                     [
                                      'data'=> ArrayHelper::map($carinfo,'id','model'),
-                                    'options'=>['placeholder'=>'เลือกรุ่นรถ','maxlength' => true,'class'=>'form-control form-inline','id'=>'car_model',
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_model',
                                      'disabled'=>'disabled',
                                     ],
                                     ]
@@ -371,7 +371,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                             <?= $form->field($model, 'plate_province')->widget(Select2::className(),
                                     [
                                     'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
-                                    'options'=>['placeholder'=>'เลือกจังหวด','maxlength' => true,'class'=>'form-control form-inline','id'=>'plate_province'],
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'plate_province'],
                                     ]
 
                                   )->label() ?>   
