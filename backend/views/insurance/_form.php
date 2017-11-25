@@ -560,35 +560,55 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   )->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                   <?= $form->field($model, 'level_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\models\Memberlevel::find()->all(),'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'level_id','disabled'=>'disabled'],
-                                    ]
-
-                                  )->label() ?>     
+                          <label for="">ระดับสมาชิก</label>
+                                             <select name="level_id" id="level_id" disabled="disabled" class="form-control" onchange="alert();">
+                                              <?php $lev = \backend\models\Memberlevel::find()->all(); ?>
+                                               <?php foreach($lev as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'level_id')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(\backend\models\Memberlevel::find()->all(),'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'level_id','disabled'=>'disabled'],
+                                    // ]
+                                   //)->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                   <?= $form->field($model, 'intro_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\models\Introduce::find()->all(),'id',function($data){
-                                        return $data->intro_code." ".$data->name;
-                                     }),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'intro_id','disabled'=>'disabled'],
-                                    ]
+                                   <label for="">รหัสสมาชิกแนะนำ</label>
+                                             <select name="intro_id"  id="intro_id" disabled="disabled" class="form-control" onchange="alert();">
+                                              <?php $intro = \backend\models\Introduce::find()->all();?>
+                                               <?php foreach($intro as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->intro_code." ".$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'intro_id')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(\backend\models\Introduce::find()->all(),'id',function($data){
+                                    //     return $data->intro_code." ".$data->name;
+                                    //  }),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'intro_id','disabled'=>'disabled'],
+                                    // ]
 
-                                  )->label() ?>     
+                                  //)->label() ?>     
                         </div>
                         <div class="col-lg-3">
-                                   <?= $form->field($model, 'line_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\models\Line::find()->all(),'id',function($data){
-                                        return $data->line_code." ".$data->name;
-                                     }),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'line_id','disabled'=>'disabled'],
-                                    ]
+                                          <label for="">รหัสสายงาน</label>
+                                             <select name="line_id"  id="line_id" disabled="disabled" class="form-control" onchange="alert();">
+                                              <?php $line = \backend\models\Line::find()->all(); ?>
+                                               <?php foreach($line as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->line_code." ".$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'line_id')->widget(Select2::className(),
+                                    //[
+                                    //  'data'=> ArrayHelper::map(\backend\models\Line::find()->all(),'id',function($data){
+                                    //     return $data->line_code." ".$data->name;
+                                    //  }),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'line_id','disabled'=>'disabled'],
+                                    // ]
 
-                                  )->label() ?>     
+                                 // )->label() ?>     
                         </div>
                     </div>
                     <div class="row">
@@ -760,6 +780,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                             </div>
                             <div class="row">
                               <div class="col-lg-8">
+
                                 <?= $form->field($model, 'note_empid')->widget(Select2::className(),[
                                   'data'=> ArrayHelper::map(\backend\models\Employee::find()->all(),'id',function($data){
                                      return $data->first_name." ".$data->last_name;
