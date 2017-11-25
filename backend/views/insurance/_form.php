@@ -156,40 +156,46 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                  // )->label() ?>
                                         </div>
                                          <div class="col-lg-3">
-                                                  <?= $form->field($model, 'insure_type_id')->widget(Select2::className(),
-                                                    [
-                                                     'data'=> ArrayHelper::map($cat,'id','name'),
-                                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
-                                                        'onchange'=>'
-                                                            if($(this).val()==1){
-                                                              $("#product_id").prop("disabled","");
-                                                              $("#car_code").prop("disabled","");
-                                                              $("#car_brand").prop("disabled","");
-                                                                $.post("index.php?r=insurance/showcarcode&id=1",function(data){
-                                                                  $("select#car_code").html(data);
-                                                                });
-                                                            }else if($(this).val()==3){
-                                                              $("#product_id").prop("disabled","disabled").empty();
-                                                              $("#car_code").prop("disabled","");
-                                                              $("#car_brand").prop("disabled","disabled");
+                                                  <label for="insure_company_id">กธ.ประเภท</label>
+                                                   <select name=""  id="insure_type_id" class="form-control" onchange="alert();">
+                                                     <?php foreach($cat as $value):?>
+                                                     <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                                   <?php endforeach;?>
+                                                   </select>
+                                                  <?php //echo $form->field($model, 'insure_type_id')->widget(Select2::className(),
+                                                    // [
+                                                    //  'data'=> ArrayHelper::map($cat,'id','name'),
+                                                    //  'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_type_id',
+                                                    //     'onchange'=>'
+                                                    //         if($(this).val()==1){
+                                                    //           $("#product_id").prop("disabled","");
+                                                    //           $("#car_code").prop("disabled","");
+                                                    //           $("#car_brand").prop("disabled","");
+                                                    //             $.post("index.php?r=insurance/showcarcode&id=1",function(data){
+                                                    //               $("select#car_code").html(data);
+                                                    //             });
+                                                    //         }else if($(this).val()==3){
+                                                    //           $("#product_id").prop("disabled","disabled").empty();
+                                                    //           $("#car_code").prop("disabled","");
+                                                    //           $("#car_brand").prop("disabled","disabled");
 
-                                                                $.post("index.php?r=insurance/showcarcode&id=2",function(data){
-                                                                  $("select#car_code").html(data);
-                                                                });
+                                                    //             $.post("index.php?r=insurance/showcarcode&id=2",function(data){
+                                                    //               $("select#car_code").html(data);
+                                                    //             });
 
-                                                            }else{
-                                                               $("#product_id").prop("disabled","disabled");
-                                                              $("#car_code").prop("disabled","disabled").empty();
-                                                              $("#car_brand").prop("disabled","disabled");
+                                                    //         }else{
+                                                    //            $("#product_id").prop("disabled","disabled");
+                                                    //           $("#car_code").prop("disabled","disabled").empty();
+                                                    //           $("#car_brand").prop("disabled","disabled");
 
-                                                            }
+                                                    //         }
                                                             
-                                                        '
-                                                     ],
+                                                    //     '
+                                                    //  ],
 
-                                                    ]
+                                                    //]
 
-                                                  )->label() ?>    
+                                                  //)->label() ?>    
                                         </div>
                                         
                                     </div>
@@ -250,47 +256,59 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         
                          <div class="col-lg-3">
-                                  <?= $form->field($model, 'province')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
-                                       'onchange'=>'
-                                          $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
-                                          $("select#city").html(data);
-                                          $("select#city").prop("disabled","");
+                                     <label for="province">จังหวัด</label>
+                                             <select name="" id="province" class="form-control" onchange="alert();">
+                                               <?php foreach($prov as $value):?>
+                                               <option value="<?=$value->PROVINCE_ID?>"><?=$value->PROVINCE_NAME;?></option>
+                                             <?php endforeach;?>
+                                      </select>
+                                  <?php //echo $form->field($model, 'province')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'province',
+                                    //    'onchange'=>'
+                                    //       $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
+                                    //       $("select#city").html(data);
+                                    //       $("select#city").prop("disabled","");
 
-                                        });
-                                       '
-                                    ],
-                                    ]
+                                    //     });
+                                    //    '
+                                    // ],
+                                    // ]
 
-                                  )->label() ?>
+                                  //)->label() ?>
                         </div> 
                          <div class="col-lg-3">
-                                 <?= $form->field($model, 'city')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($amp,'AMPHUR_ID','AMPHUR_NAME'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
-                                          'onchange'=>'
-                                          $.post("index.php?r=insurance/showdistrict&id=' . '"+$(this).val(),function(data){
-                                          $("select#district").html(data);
-                                          $("select#district").prop("disabled","");
+                                      <label for="province">อำเภอ</label>
+                                             <select name="" id="city" class="form-control" onchange="alert();">
+                                               <?php foreach($amp as $value):?>
+                                               <option value="<?=$value->AMPHUR_ID?>"><?=$value->AMPHUR_NAME;?></option>
+                                             <?php endforeach;?>
+                                      </select>
+                                 <?php //echo $form->field($model, 'city')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($amp,'AMPHUR_ID','AMPHUR_NAME'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'city','disabled'=>'disabled',
+                                    //       'onchange'=>'
+                                    //       $.post("index.php?r=insurance/showdistrict&id=' . '"+$(this).val(),function(data){
+                                    //       $("select#district").html(data);
+                                    //       $("select#district").prop("disabled","");
 
-                                        });
+                                    //     });
 
-                                           $.post("index.php?r=member/showzipcode&id=' . '"+$(this).val(),function(data){
-                                                $("#zipcode").val(data);
-                                                $("#zipcode").prop("disabled","");
+                                    //        $.post("index.php?r=member/showzipcode&id=' . '"+$(this).val(),function(data){
+                                    //             $("#zipcode").val(data);
+                                    //             $("#zipcode").prop("disabled","");
 
-                                              });
-                                       '
-                                    ],
-                                    'pluginOptions'=>[
-                                        'allowClear'=>true,
-                                      ]
-                                    ]
+                                    //           });
+                                    //    '
+                                    // ],
+                                    // 'pluginOptions'=>[
+                                    //     'allowClear'=>true,
+                                    //   ]
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                          <div class="col-lg-3">
                                             <label for="">ตำบล</label>
