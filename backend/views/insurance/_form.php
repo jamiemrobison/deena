@@ -1241,12 +1241,7 @@ $this->registerJs('
          //  }
       });
 
-      $("select#province").change(function(){
-        alert();
-         $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
-         $("select#city").html(data);
-         $("select#city").prop("disabled","");
-      });
+      
 
       $(".alert").show().fadeOut(5000);
 
@@ -1273,6 +1268,13 @@ $this->registerJs('
       $("#period_per").val(per_per);
 
     });
+
+    $("select#province").change(function(){
+        alert();
+         $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
+         $("select#city").html(data);
+         $("select#city").prop("disabled","");
+      });
 
     });
 
