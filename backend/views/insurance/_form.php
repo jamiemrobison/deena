@@ -701,9 +701,9 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                           <label for="">ระบุผู้ขับขี่</label>
                                              <select name="insure_driver" id="insure_driver" class="form-control" onchange="alert();">
                                               <?php $insure_type = \backend\helpers\InsureType::asArrayObject();?>
-                                               <?php foreach($insure_type as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->id;?></option>
-                                             <?php endforeach;?>
+                                               <?php for($i=0;$i<=count($insure_type)-1;$i++):?>
+                                               <option value="<?=$insure_type[$i]['id']?>"><?=$insure_type[$i]['name'];?></option>
+                                             <?php endfor;?>
                                              </select>
                                    <?php //echo $form->field($model, 'insure_driver')->widget(Select2::className(),
                                     // [
