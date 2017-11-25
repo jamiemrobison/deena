@@ -31,6 +31,7 @@ use backend\helpers\ConditionTitle;
 $insure_com = Insurancecompany::find()->where(['status'=> 1])->all();
 $cat = Category::find()->where(['status'=> 1])->all();
 $prod = Product::find()->where(['status'=> 1])->all();
+$promotion = Promotion::find()->where(['status'=> 1])->all();
 $brand = Carbrand::find()->where(['status'=> 1])->all();
 $member = Member::find()->where(['status'=> 1])->all();
 // $province = Province::find()->where(['status'=> 1])->all();
@@ -292,8 +293,8 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   )->label() ?>   
                         </div>
                          <div class="col-lg-3">
-                                            <label for="">ผลิตภัณฑ์</label>
-                                             <select name="product_id" id="district" class="form-control" onchange="alert();">
+                                            <label for="">ตำบล</label>
+                                             <select name="district" id="district" class="form-control" disabled="disabled" onchange="alert();">
                                                <?php foreach($dist as $value):?>
                                                <option value="<?=$value->DISTRICT_ID?>"><?=$value->DISTRICT_NAME;?></option>
                                              <?php endforeach;?>
@@ -377,13 +378,19 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   )->label() ?>   
                         </div>
                         <div class="col-lg-3">
-                             <?= $form->field($model, 'car_year')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($caryear,'id','year_text'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_year'],
-                                    ]
+                                           <label for="">ปีรถ</label>
+                                             <select name="car_year" class="form-control" onchange="alert();">
+                                               <?php foreach($caryear as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->year_text;?></option>
+                                             <?php endforeach;?>
+                                          </select>
+                             <?php //echo $form->field($model, 'car_year')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($caryear,'id','year_text'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_year'],
+                                    // ]
 
-                                  )->label() ?>  
+                                  //)->label() ?>  
                         </div>
                          <div class="col-lg-1">
                                   <?= $form->field($model, 'plate_category')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
@@ -392,13 +399,19 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                   <?= $form->field($model, 'plate_license')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                         </div> 
                         <div class="col-lg-3">
-                            <?= $form->field($model, 'plate_province')->widget(Select2::className(),
-                                    [
-                                    'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'plate_province'],
-                                    ]
+                           <label for="">จังหวัด</label>
+                                             <select name="plate_province" class="form-control" onchange="alert();">
+                                               <?php foreach($prov as $value):?>
+                                               <option value="<?=$value->PROVINCE_ID?>"><?=$value->PROVINCE_NAME;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                            <?php //echo $form->field($model, 'plate_province')->widget(Select2::className(),
+                                    // [
+                                    // 'data'=> ArrayHelper::map($prov,'PROVINCE_ID','PROVINCE_NAME'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'plate_province'],
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                         <div class="col-lg-3">
                              <?= $form->field($model, 'body_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
@@ -568,13 +581,19 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                 <?= $form->field($model, 'score')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'score'])->label() ?>    
                         </div>
                         <div class="col-lg-3">
-                                    <?= $form->field($model, 'promotion')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(Promotion::find()->all(),'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'promotion','placeholder'=>'เลือกโปรโมชั่น'],
-                                    ]
+                           <label for="">โปรโมชั่น</label>
+                                             <select name="promotion" id="promotion" class="form-control" onchange="alert();">
+                                               <?php foreach($promotion as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                    <?php //echo $form->field($model, 'promotion')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(Promotion::find()->all(),'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'promotion','placeholder'=>'เลือกโปรโมชั่น'],
+                                    // ]
 
-                                  )->label() ?>
+                                 // )->label() ?>
                         </div>
                          <div class="col-lg-3">
                           <?php 
