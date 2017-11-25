@@ -695,15 +695,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                        
                     </div>
                     
-
                        <hr />
                        <div class="row">
                         <div class="col-lg-3">
-                                  <label for="">จังหวัด</label>
+                                          <label for="">ระบุผู้ขับขี่</label>
                                              <select name="insure_driver" id="insure_driver" class="form-control" onchange="alert();">
                                               <?php $insure_type = \backend\helpers\InsureType::asArrayObject();?>
                                                <?php foreach($insure_type as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <option value="<?=$value->id?>"><?=$value->id;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'insure_driver')->widget(Select2::className(),
