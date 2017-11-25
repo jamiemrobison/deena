@@ -135,19 +135,23 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                                   <?= $form->field($model, 'inform_code')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                                         </div>
                                         <div class="col-lg-3">
-                                             <?= $form->field($model, 'insure_company_id')->widget(Select2::className(),
-                                                    [
-                                                     'data'=> ArrayHelper::map($insure_com,'id','name'),
-                                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_company_id',
-                                                        'onchange'=>'
-                                                                $.post("index.php?r=insurance/showproduct&id=' . '"+$(this).val(),function(data){
-                                                                  $("select#product_id").html(data);
-                                                                });
-                                                        '
-                                                    ],
-                                                    ]
-
-                                                  )->label() ?>
+                                             <select name="">
+                                               <?php foreach($insure_com as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                             <?php //echo $form->field($model, 'insure_company_id')->widget(Select2::className(),
+                                                    // [
+                                                    //  'data'=> ArrayHelper::map($insure_com,'id','name'),
+                                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_company_id',
+                                                    //     'onchange'=>'
+                                                    //             $.post("index.php?r=insurance/showproduct&id=' . '"+$(this).val(),function(data){
+                                                    //               $("select#product_id").html(data);
+                                                    //             });
+                                                    //     '
+                                                    // ],
+                                                    // ]
+                                                 // )->label() ?>
                                         </div>
                                          <div class="col-lg-3">
                                                   <?= $form->field($model, 'insure_type_id')->widget(Select2::className(),
