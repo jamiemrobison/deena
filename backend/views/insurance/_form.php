@@ -1241,7 +1241,7 @@ $this->registerJs('
          //  }
       });
 
-      $("#province").change(function(){
+      $("select#province").change(function(){
         alert();
          $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
          $("select#city").html(data);
