@@ -344,60 +344,78 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                      <hr />
                     <div class="row">
                         <div class="col-lg-3">
-                                  <?= $form->field($model, 'car_code')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($car,'id',function($data){
-                                          return $data->car_code." ".$data->name;
-                                     }),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_code','disabled'=>'disabled',
-                                        'onchange'=> '
-                                            $.post("index.php?r=insurance/showcaract&id=' . '"+$(this).val(),function(data){
-                                              var value = data.split(",");
-                                              $("#car_usage").val(value[0]);
-                                              $("#total").val(value[1]);
-                                              $("#grand_total").val(value[2]);
-                                            });
-                                        '
-                                    ],
-                                    ]
+                              <label for="">รหัสรถ</label>
+                                             <select name="car_code" id="car_code" disabled="disabled" class="form-control" onchange="">
+                                               <?php foreach($car as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->car_code." ".$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                  <?php //echo $form->field($model, 'car_code')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($car,'id',function($data){
+                                    //       return $data->car_code." ".$data->name;
+                                    //  }),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_code','disabled'=>'disabled',
+                                    //     'onchange'=> '
+                                    //         $.post("index.php?r=insurance/showcaract&id=' . '"+$(this).val(),function(data){
+                                    //           var value = data.split(",");
+                                    //           $("#car_usage").val(value[0]);
+                                    //           $("#total").val(value[1]);
+                                    //           $("#grand_total").val(value[2]);
+                                    //         });
+                                    //     '
+                                    // ],
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                          <div class="col-lg-3">
                                   <?= $form->field($model, 'car_usage')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_usage'])->label() ?>    
                         </div>
                         <div class="col-lg-3">
-                             <?= $form->field($model, 'car_brand')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($brand,'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_brand','disabled'=>'disabled',
-                                        'onchange'=>'
-                                              $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
-                                              $("select#car_model").html(data);
-                                              $("select#car_model").prop("disabled","");
-                                            });
+                          <label for="">ยี่ห้อ</label>
+                                             <select name="car_brand" id="car_brand" disabled="disabled" class="form-control" onchange="">
+                                               <?php foreach($brand as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                             <?php //echo $form->field($model, 'car_brand')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($brand,'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_brand','disabled'=>'disabled',
+                                    //     'onchange'=>'
+                                    //           $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
+                                    //           $("select#car_model").html(data);
+                                    //           $("select#car_model").prop("disabled","");
+                                    //         });
 
                                             
-                                        '
-                                     ],
-                                    ]
+                                    //     '
+                                    //  ],
+                                    // ]
 
-                                  )->label() ?>     
+                                  //)->label() ?>     
                         </div>
                          <div class="col-lg-3">
-                                  <?= $form->field($model, 'car_model')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($carinfo,'id','model'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_model',
-                                     'disabled'=>'disabled',
-                                    ],
-                                    ]
+                          <label for="">รุ่น</label>
+                                             <select name="plate_province" id="car_model" disabled="disabled" class="form-control" onchange="">
+                                               <?php foreach($carinfo as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->model;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                  <?php //echo $form->field($model, 'car_model')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($carinfo,'id','model'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'car_model',
+                                    //  'disabled'=>'disabled',
+                                    // ],
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                         <div class="col-lg-3">
                                            <label for="">ปีรถ</label>
-                                             <select name="car_year" class="form-control" onchange="alert();">
+                                             <select name="car_year" id="car_year" disabled="disabled" class="form-control" onchange="alert();">
                                                <?php foreach($caryear as $value):?>
                                                <option value="<?=$value->id?>"><?=$value->year_text;?></option>
                                              <?php endforeach;?>
@@ -640,24 +658,31 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                               }
                           ?>
                             <input type="hidden" name="payment_type_id" id="payment_type_id" value="<?=$model->isNewRecord?0:$payment_type_id?>" />
-                                    <?= $form->field($model, 'payment_method')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\models\Paymentchannel::find()->all(),'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_payment_method','placeholder'=>'เลือกวิธีชำระเงิน',
-                                              'onchange'=>'
-                                           //   alert($(this).val());
-                                                  $.post("index.php?r=insurance/checkpaytype&id=' . '"+$(this).val(),function(data){
-                                                    if($.inArray(data,["5","6","7"])!= -1){
-                                                      //alert(data);
-                                                      $("#tab_installment").show();
-                                                    }else{
-                                                      $("#tab_installment").hide();
-                                                    }
-                                                  });
+                            <label for="">วิธีชำระเงิน</label>
+                                             <select name="payment_method" class="form-control" onchange="alert();">
+                                              <?php $pay = \backend\models\Paymentchannel::find()->all();?>
+                                               <?php foreach($pay as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                    <?php //echo $form->field($model, 'payment_method')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(\backend\models\Paymentchannel::find()->all(),'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_payment_method','placeholder'=>'เลือกวิธีชำระเงิน',
+                                    //           'onchange'=>'
+                                    //        //   alert($(this).val());
+                                    //               $.post("index.php?r=insurance/checkpaytype&id=' . '"+$(this).val(),function(data){
+                                    //                 if($.inArray(data,["5","6","7"])!= -1){
+                                    //                   //alert(data);
+                                    //                   $("#tab_installment").show();
+                                    //                 }else{
+                                    //                   $("#tab_installment").hide();
+                                    //                 }
+                                    //               });
                                                   
-                                              '
-                                    ],
-                                    ]
+                                    //           '
+                                    // ],
+                                    // ]
 
                                   )->label() ?>
                         </div>
