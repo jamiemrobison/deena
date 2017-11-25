@@ -554,28 +554,34 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 
                     <div class="row">
                         <div class="col-lg-3">
-                                   <?= $form->field($model, 'member_id')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map($member,'id','member_code'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'member_id',
-                                                'onchange'=>'
-                                                  $.post("index.php?r=insurance/getlevel&id=' . '"+$(this).val(),function(data){
-                                                      $("select#level_id").empty();
-                                                      $("select#level_id").append(data);
-                                                  });
-                                                  $.post("index.php?r=insurance/getintro&id=' . '"+$(this).val(),function(data){
-                                                      $("select#intro_id").empty();
-                                                      $("select#intro_id").append(data);
-                                                  });
-                                                  $.post("index.php?r=insurance/getline&id=' . '"+$(this).val(),function(data){
-                                                       $("select#line_id").empty();
-                                                      $("select#line_id").append(data);
-                                                  });
-                                                '
-                                               ],
-                                    ]
+                          <label for="">รหัสตัวแทน</label>
+                                             <select name="member_id" id="member_id" class="form-control" onchange="">
+                                               <?php foreach($member as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->member_code;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'member_id')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map($member,'id','member_code'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'member_id',
+                                    //             'onchange'=>'
+                                    //               $.post("index.php?r=insurance/getlevel&id=' . '"+$(this).val(),function(data){
+                                    //                   $("select#level_id").empty();
+                                    //                   $("select#level_id").append(data);
+                                    //               });
+                                    //               $.post("index.php?r=insurance/getintro&id=' . '"+$(this).val(),function(data){
+                                    //                   $("select#intro_id").empty();
+                                    //                   $("select#intro_id").append(data);
+                                    //               });
+                                    //               $.post("index.php?r=insurance/getline&id=' . '"+$(this).val(),function(data){
+                                    //                    $("select#line_id").empty();
+                                    //                   $("select#line_id").append(data);
+                                    //               });
+                                    //             '
+                                    //            ],
+                                    // ]
 
-                                  )->label() ?>     
+                                  //)->label() ?>     
                         </div>
                         <div class="col-lg-3">
                           <label for="">ระดับสมาชิก</label>
@@ -693,13 +699,20 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                        <hr />
                        <div class="row">
                         <div class="col-lg-3">
-                                   <?= $form->field($model, 'insure_driver')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\helpers\InsureType::asArrayObject(),'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_driver'],
-                                    ]
+                                  <label for="">จังหวัด</label>
+                                             <select name="insure_driver" id="insure_driver" class="form-control" onchange="alert();">
+                                              <?php $insure_type = \backend\helpers\InsureType::asArrayObject();?>
+                                               <?php foreach($insure_type as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                   <?php //echo $form->field($model, 'insure_driver')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(\backend\helpers\InsureType::asArrayObject(),'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'insure_driver'],
+                                    // ]
 
-                                  )->label() ?>   
+                                  //)->label() ?>   
                         </div>
                         <div class="col-lg-3">
                              <?= $form->field($model, 'driver_one')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
