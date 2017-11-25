@@ -136,7 +136,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                         </div>
                                         <div class="col-lg-3">
                                              <label for="">บริษัทประกัน</label>
-                                             <select name="" class="form-control">
+                                             <select name="" class="form-control" onchange="alert();">
                                                <?php foreach($insure_com as $value):?>
                                                <option value="<?=$value->id?>"><?=$value->name;?></option>
                                              <?php endforeach;?>
