@@ -719,6 +719,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                  // )->label() ?>     
                         </div>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-lg-3">
                                   <?= $form->field($model, 'act_amount')->textInput(['maxlength' => true,'class'=>'form-control form-inline','id'=>'act_amount'])->label() ?>    
