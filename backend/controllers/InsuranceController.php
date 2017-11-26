@@ -88,6 +88,27 @@ class InsuranceController extends Controller
 
                           $fileupload = UploadedFile::getInstances($modelfile, 'file');
 
+
+                          $model->insure_company_id = Yii::$app->request->post('insure_company_id');
+                          $model->insure_type_id = Yii::$app->request->post('insure_type_id');
+                          $model->product_id = Yii::$app->request->post('product_id');
+                          $model->prefix = Yii::$app->request->post('prefix');
+                          $model->province = Yii::$app->request->post('province');
+                          $model->car_code = Yii::$app->request->post('car_code');
+                          $model->car_brand = Yii::$app->request->post('car_brand');
+                           $model->car_model = Yii::$app->request->post('car_model');
+                           $model->plate_province = Yii::$app->request->post('plate_province');
+                           $model->car_year = Yii::$app->request->post('car_year');
+                           $model->member_id = Yii::$app->request->post('member_id');
+                           $model->insure_driver = Yii::$app->request->post('insure_driver');
+                          $model->level_id = Yii::$app->request->post('level_id');
+                          $model->intro_id = Yii::$app->request->post('intro_id');
+                          $model->line_id = Yii::$app->request->post('line_id');
+                          $model->note_empid = Yii::$app->request->post('note_empid');
+                          $model->note_status = Yii::$app->request->post('note_status');
+                          $model->payment_method = Yii::$app->request->post('payment_method');
+                          $model->package_id = Yii::$app->request->post('package_id');
+
                           $model->protect_start_date = strtotime($model->protect_start_date);
                           $model->protect_end_date = strtotime($model->protect_end_date);
                           $model->receive_date = strtotime($model->receive_date);
@@ -170,6 +191,36 @@ class InsuranceController extends Controller
         $role_act = \backend\models\Userrole::checkRoleEnable("insurance");
         if($role_act[0]['modified'] == 1){  
                    if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())  && $installment_model->load(Yii::$app->request->post()) ) {
+                        
+                         $model->insure_company_id = Yii::$app->request->post('insure_company_id');
+                          $model->insure_type_id = Yii::$app->request->post('insure_type_id');
+                          $model->product_id = Yii::$app->request->post('product_id');
+                          $model->prefix = Yii::$app->request->post('prefix');
+                          $model->province = Yii::$app->request->post('province');
+                          $model->province = Yii::$app->request->post('province');
+                          $model->city = Yii::$app->request->post('city');
+                          $model->district = Yii::$app->request->post('district');
+                          $model->car_brand = Yii::$app->request->post('car_brand');
+                           $model->car_model = Yii::$app->request->post('car_model');
+                           $model->plate_province = Yii::$app->request->post('plate_province');
+                           $model->car_year = Yii::$app->request->post('car_year');
+                           $model->member_id = Yii::$app->request->post('member_id');
+                           $model->insure_driver = Yii::$app->request->post('insure_driver');
+                          $model->level_id = Yii::$app->request->post('level_id');
+                          $model->intro_id = Yii::$app->request->post('intro_id');
+                          $model->line_id = Yii::$app->request->post('line_id');
+                          $model->note_empid = Yii::$app->request->post('note_empid');
+                          $model->note_status = Yii::$app->request->post('note_status');
+                          $model->payment_method = Yii::$app->request->post('payment_method');
+                          $model->package_id = Yii::$app->request->post('package_id');
+
+                          $model->protect_start_date = strtotime($model->protect_start_date);
+                          $model->protect_end_date = strtotime($model->protect_end_date);
+                          $model->receive_date = strtotime($model->receive_date);
+                          $model->driver_date_one = strtotime($model->driver_date_one);
+                          $model->driver_date_two = strtotime($model->driver_date_two);
+                          $model->insure_renew_date = strtotime($model->insure_renew_date);
+
                         $model->protect_start_date = strtotime($model->protect_start_date);
                         $model->protect_end_date = strtotime($model->protect_end_date);
                         $model->receive_date = strtotime($model->receive_date);

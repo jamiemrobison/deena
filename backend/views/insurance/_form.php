@@ -214,7 +214,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                        <div class="col-lg-3">
 
                                             <label for="">ผลิตภัณฑ์</label>
-                                             <select name="product_id" class="form-control" onchange="alert();">
+                                             <select name="product_id" class="form-control">
                                                <?php foreach($prod as $value):?>
                                                <?php $selected = '';
                                                      if($model->product_id == $value->id){
@@ -240,7 +240,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                          <div class="col-lg-3">
                                             <label for="">ผลิตภัณฑ์</label>
-                                             <select name="prefix" class="form-control" onchange="alert();">
+                                             <select name="prefix" id="prefix" class="form-control">
                                                <?php foreach($prefix as $value):?>
                                                <?php $selected = '';
                                                      if($model->prefix == $value->id){
@@ -305,7 +305,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div> 
                          <div class="col-lg-3">
                                       <label for="province">อำเภอ</label>
-                                             <select name="" id="city" disabled="disabled" class="form-control">
+                                             <select name="city" id="city" disabled="disabled" class="form-control">
                                                <?php foreach($amp as $value):?>
                                                <?php $selected = '';
                                                      if($model->city == $value->AMPHUR_ID){
@@ -380,7 +380,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                     <div class="row">
                         <div class="col-lg-3">
                               <label for="">รหัสรถ</label>
-                                             <select name="car_code" id="car_code" disabled="disabled" class="form-control" onchange="">
+                                             <select name="car_code" id="car_code" disabled="disabled" class="form-control">
                                                <?php foreach($car as $value):?>
                                                <?php $selected = '';
                                                      if($model->car_code == $value->id){
@@ -414,7 +414,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         <div class="col-lg-3">
                           <label for="">ยี่ห้อ</label>
-                                             <select name="car_brand" id="car_brand" disabled="disabled" class="form-control" onchange="">
+                                             <select name="car_brand" id="car_brand" disabled="disabled" class="form-control" >
                                                <?php foreach($brand as $value):?>
                                                <?php $selected = '';
                                                      if($model->car_brand == $value->id){
@@ -443,10 +443,10 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                          <div class="col-lg-3">
                           <label for="">รุ่น</label>
-                                             <select name="plate_province" id="car_model" disabled="disabled" class="form-control" onchange="">
+                                             <select name="car_model" id="car_model" disabled="disabled" class="form-control">
                                                <?php foreach($carinfo as $value):?>
                                                <?php $selected = '';
-                                                     if($model->plate_province == $value->id){
+                                                     if($model->car_model == $value->id){
                                                       $selected = "selected";
                                                      }
                                                ?>
@@ -463,9 +463,13 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 
                                   //)->label() ?>   
                         </div>
-                        <div class="col-lg-3">
-                                           <label for="">ปีรถ</label>
-                                             <select name="car_year" id="car_year" disabled="disabled" class="form-control" onchange="alert();">
+                       
+                       
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                           <label for="">ปีรถ</label>
+                                             <select name="car_year" id="car_year" class="form-control">
                                                <?php foreach($caryear as $value):?>
                                                <?php $selected = '';
                                                      if($model->car_year == $value->id){
@@ -482,16 +486,16 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                     // ]
 
                                   //)->label() ?>  
-                        </div>
-                         <div class="col-lg-1">
-                                  <?= $form->field($model, 'plate_category')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
-                        </div> 
-                           <div class="col-lg-2">
-                                  <?= $form->field($model, 'plate_license')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
-                        </div> 
-                        <div class="col-lg-3">
-                           <label for="">จังหวัด</label>
-                                             <select name="plate_province" class="form-control" onchange="alert();">
+                      </div>
+                      <div class="col-lg-3">
+                         <?= $form->field($model, 'plate_category')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
+                      </div>
+                      <div class="col-lg-3">
+                        <?= $form->field($model, 'plate_license')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>
+                      </div>
+                      <div class="col-lg-3">
+                        <label for="">จังหวัด</label>
+                                             <select name="plate_province" class="form-control">
                                                <?php foreach($prov as $value):?>
                                                <?php $selected = '';
                                                      if($model->plate_province == $value->PROVINCE_ID){
@@ -508,12 +512,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                     // ]
 
                                   //)->label() ?>   
-                        </div>
-                        <div class="col-lg-3">
-                             <?= $form->field($model, 'body_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
-                        </div>
+                      </div>
                     </div>
                     <div class="row">
+                         <div class="col-lg-3">
+                             <?= $form->field($model, 'body_no')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>  
+                        </div>
                          <div class="col-lg-3">
                                   <?= $form->field($model, 'body_model')->textInput(['maxlength' => true,'class'=>'form-control form-inline'])->label() ?>    
                         </div>
@@ -615,7 +619,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                     <div class="row">
                         <div class="col-lg-3">
                           <label for="">รหัสตัวแทน</label>
-                                             <select name="member_id" id="member_id" class="form-control" onchange="">
+                                             <select name="member_id" id="member_id" class="form-control">
                                                <?php foreach($member as $value):?>
                                                <?php $selected = '';
                                                      if($model->member_id == $value->id){
@@ -650,7 +654,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         <div class="col-lg-3">
                           <label for="">ระดับสมาชิก</label>
-                                             <select name="level_id" id="level_id" disabled="disabled" class="form-control" onchange="alert();">
+                                             <select name="level_id" id="level_id" disabled="disabled" class="form-control">
                                               <?php $lev = \backend\models\Memberlevel::find()->all(); ?>
                                                <?php foreach($lev as $value):?>
                                                <?php $selected = '';
@@ -670,7 +674,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         <div class="col-lg-3">
                                    <label for="">รหัสสมาชิกแนะนำ</label>
-                                             <select name="intro_id"  id="intro_id" disabled="disabled" class="form-control" onchange="alert();">
+                                             <select name="intro_id"  id="intro_id" disabled="disabled" class="form-control">
                                               <?php $intro = \backend\models\Introduce::find()->all();?>
                                                <?php foreach($intro as $value):?>
                                                <?php $selected = '';
@@ -693,7 +697,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         <div class="col-lg-3">
                                           <label for="">รหัสสายงาน</label>
-                                             <select name="line_id"  id="line_id" disabled="disabled" class="form-control" onchange="alert();">
+                                             <select name="line_id"  id="line_id" disabled="disabled" class="form-control">
                                               <?php $line = \backend\models\Line::find()->all(); ?>
                                                <?php foreach($line as $value):?>
                                                <?php $selected = '';
@@ -724,7 +728,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                         <div class="col-lg-3">
                            <label for="">โปรโมชั่น</label>
-                                             <select name="promotion" id="promotion" class="form-control" onchange="alert();">
+                                             <select name="promotion" id="promotion" class="form-control">
                                                <?php foreach($promotion as $value):?>
                                                <?php $selected = '';
                                                      if($model->promotion == $value->id){
@@ -750,7 +754,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                           ?>
                             <input type="hidden" name="payment_type_id" id="payment_type_id" value="<?=$model->isNewRecord?0:$payment_type_id?>" />
                             <label for="">วิธีชำระเงิน</label>
-                                             <select name="payment_method" class="form-control" onchange="alert();">
+                                             <select name="payment_method" class="form-control">
                                               <?php $pay = \backend\models\Paymentchannel::find()->all();?>
                                                <?php foreach($pay as $value):?>
                                                <?php $selected = '';
@@ -789,7 +793,7 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                        <div class="row">
                         <div class="col-lg-3">
                                           <label for="">ระบุผู้ขับขี่</label>
-                                             <select name="insure_driver" id="insure_driver" class="form-control" onchange="alert();">
+                                             <select name="insure_driver" id="insure_driver" class="form-control">
                                               <?php $insure_type = \backend\helpers\InsureType::asArrayObject();?>
                                                <?php for($i=0;$i<=count($insure_type)-1;$i++):?>
                                                <?php $selected = '';
@@ -912,23 +916,46 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                             </div>
                             <div class="row">
                               <div class="col-lg-8">
-
-                                <?= $form->field($model, 'note_empid')->widget(Select2::className(),[
-                                  'data'=> ArrayHelper::map(\backend\models\Employee::find()->all(),'id',function($data){
-                                     return $data->first_name." ".$data->last_name;
-                                  }),
-                                  'options'=>['placeholder'=>'เลือกพนักงาน'],
-                                  'pluginOptions'=>[
-                                    'allowClear'=>true,
-                                  ]
-                                ]) ?> 
+                                <label for="">ผู้บันทึก</label>
+                                <select name="note_empid" id="note_empid" class="form-control">
+                                              <?php $emp = \backend\models\Employee::find()->all();?>
+                                               <?php foreach($emp as $value):?>
+                                               <?php $selected = '';
+                                                     if($model->note_empid == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->first_name." ".$value->last_name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                                <?php //echo $form->field($model, 'note_empid')->widget(Select2::className(),[
+                                  // 'data'=> ArrayHelper::map(\backend\models\Employee::find()->all(),'id',function($data){
+                                  //    return $data->first_name." ".$data->last_name;
+                                  // }),
+                                  // 'options'=>['placeholder'=>'เลือกพนักงาน'],
+                                  // 'pluginOptions'=>[
+                                  //   'allowClear'=>true,
+                                  // ]
+                                //]) ?> 
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-lg-8">
-                                <?= $form->field($model, 'note_status')->widget(Select2::className(),[
-                                    'data'=> ArrayHelper::map(\backend\helpers\NoteStatus::asArrayObject(),'id','name')
-                                ]) ?> 
+                                <label for="">สถานะ</label>
+                                <select name="note_status" id="note_status" class="form-control">
+                                              <?php $notes = \backend\helpers\NoteStatus::asArrayObject();?>
+                                               <?php for($i=0;$i<=count($notes)-1;$i++):?>
+                                               <?php $selected = '';
+                                                     if($model->payment_method == $notes[$i]['id']){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$notes[$i]['id']?>" <?=$selected?>><?=$notes[$i]['name'];?></option>
+                                             <?php endfor;?>
+                                             </select>
+                                <?php // $form->field($model, 'note_status')->widget(Select2::className(),[
+                                    //'data'=> ArrayHelper::map(\backend\helpers\NoteStatus::asArrayObject(),'id','name')
+                                //]) ?> 
                               </div>
                             </div>
                       </div>
@@ -984,17 +1011,23 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                       <div class="panel-heading">
                         <div class="row">
                           <div class="col-lg-2">
-                             <?php echo "<h5>ประเภทไฟล์</h5>";?>
-                            <?= $form->field($modelfile, 'filecategory')->widget(Select2::className(),
-                                    [
-                                     'data'=> ArrayHelper::map(\backend\models\Filetype::find()->all(),'id','name'),
-                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'filecategory'],
-                                    ]
+                             <label for="">ประเภทไฟล์</label>
+                                <select name="filecategory" id="filecategory" class="form-control">
+                                              <?php $filetype = \backend\models\Filetype::find()->all();?>
+                                               <?php foreach($filetype as $value):?>
+                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                             <?php endforeach;?>
+                                             </select>
+                            <?php //echo $form->field($modelfile, 'filecategory')->widget(Select2::className(),
+                                    // [
+                                    //  'data'=> ArrayHelper::map(\backend\models\Filetype::find()->all(),'id','name'),
+                                    // 'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'filecategory'],
+                                    // ]
 
-                                  )->label(false) ?>   
+                                 // )->label(false) ?>   
                           </div>
                           <div class="col-lg-4">
-                              <?php echo "<h5>แนบไฟล์</h5>";?>
+                             <label for="">แนบไฟล์</label>
                              <?php
                                  echo FileInput::widget([
                                      'model' => $modelfile,
