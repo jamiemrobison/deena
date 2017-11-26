@@ -137,9 +137,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                         </div>
                                         <div class="col-lg-3">
                                              <label for="insure_company_id">บริษัทประกัน</label>
-                                             <select name="" class="form-control" onchange="alert();">
+                                             <select name="insure_company_id" class="form-control">
                                                <?php foreach($insure_com as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->insure_company_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                              <?php //echo $form->field($model, 'insure_company_id')->widget(Select2::className(),
@@ -157,9 +162,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                         </div>
                                          <div class="col-lg-3">
                                                   <label for="insure_company_id">กธ.ประเภท</label>
-                                                   <select name=""  id="insure_type_id" class="form-control" onchange="alert();">
+                                                   <select name="insure_type_id"  id="insure_type_id" class="form-control">
                                                      <?php foreach($cat as $value):?>
-                                                     <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                                     <?php $selected = '';
+                                                       if($model->insure_type_id == $value->id){
+                                                        $selected = "selected";
+                                                       }
+                                                      ?>
+                                                     <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                                    <?php endforeach;?>
                                                    </select>
                                                   <?php //echo $form->field($model, 'insure_type_id')->widget(Select2::className(),
@@ -206,7 +216,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                             <label for="">ผลิตภัณฑ์</label>
                                              <select name="product_id" class="form-control" onchange="alert();">
                                                <?php foreach($prod as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->product_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                  <?php //echo $form->field($model, 'product_id')->widget(Select2::className(),
@@ -227,7 +242,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                             <label for="">ผลิตภัณฑ์</label>
                                              <select name="prefix" class="form-control" onchange="alert();">
                                                <?php foreach($prefix as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->prefix == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'prefix')->widget(Select2::className(),
@@ -257,9 +277,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         
                          <div class="col-lg-3">
                                      <label for="province">จังหวัด</label>
-                                             <select name="" id="province" class="form-control">
+                                             <select name="province" id="province" class="form-control">
                                                <?php foreach($prov as $value):?>
-                                               <option value="<?=$value->PROVINCE_ID?>"><?=$value->PROVINCE_NAME;?></option>
+                                               <?php $selected = '';
+                                                     if($model->province == $value->PROVINCE_ID){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->PROVINCE_ID?>" <?=$selected?>><?=$value->PROVINCE_NAME;?></option>
                                              <?php endforeach;?>
                                       </select>
                                   <?php //echo $form->field($model, 'province')->widget(Select2::className(),
@@ -280,9 +305,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div> 
                          <div class="col-lg-3">
                                       <label for="province">อำเภอ</label>
-                                             <select name="" id="city" disabled="disabled" class="form-control" onchange="alert();">
+                                             <select name="" id="city" disabled="disabled" class="form-control">
                                                <?php foreach($amp as $value):?>
-                                               <option value="<?=$value->AMPHUR_ID?>"><?=$value->AMPHUR_NAME;?></option>
+                                               <?php $selected = '';
+                                                     if($model->city == $value->AMPHUR_ID){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->AMPHUR_ID?>" <?=$selected?>><?=$value->AMPHUR_NAME;?></option>
                                              <?php endforeach;?>
                                       </select>
                                  <?php //echo $form->field($model, 'city')->widget(Select2::className(),
@@ -312,9 +342,14 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                         </div>
                          <div class="col-lg-3">
                                             <label for="">ตำบล</label>
-                                             <select name="district" id="district" class="form-control" disabled="disabled" onchange="alert();">
+                                             <select name="district" id="district" class="form-control" disabled="disabled">
                                                <?php foreach($dist as $value):?>
-                                               <option value="<?=$value->DISTRICT_ID?>"><?=$value->DISTRICT_NAME;?></option>
+                                               <?php $selected = '';
+                                                     if($model->district == $value->DISTRICT_ID){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->DISTRICT_ID?>" <?=$selected?>><?=$value->DISTRICT_NAME;?></option>
                                              <?php endforeach;?>
                                              </select>
                             <?php //echo $form->field($model, 'district')->widget(Select2::className(),
@@ -347,7 +382,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                               <label for="">รหัสรถ</label>
                                              <select name="car_code" id="car_code" disabled="disabled" class="form-control" onchange="">
                                                <?php foreach($car as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->car_code." ".$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->car_code == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->car_code." ".$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                   <?php //echo $form->field($model, 'car_code')->widget(Select2::className(),
@@ -376,7 +416,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                           <label for="">ยี่ห้อ</label>
                                              <select name="car_brand" id="car_brand" disabled="disabled" class="form-control" onchange="">
                                                <?php foreach($brand as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->car_brand == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                              <?php //echo $form->field($model, 'car_brand')->widget(Select2::className(),
@@ -400,7 +445,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                           <label for="">รุ่น</label>
                                              <select name="plate_province" id="car_model" disabled="disabled" class="form-control" onchange="">
                                                <?php foreach($carinfo as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->model;?></option>
+                                               <?php $selected = '';
+                                                     if($model->plate_province == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->model;?></option>
                                              <?php endforeach;?>
                                              </select>
                                   <?php //echo $form->field($model, 'car_model')->widget(Select2::className(),
@@ -417,7 +467,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                            <label for="">ปีรถ</label>
                                              <select name="car_year" id="car_year" disabled="disabled" class="form-control" onchange="alert();">
                                                <?php foreach($caryear as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->year_text;?></option>
+                                               <?php $selected = '';
+                                                     if($model->car_year == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->year_text;?></option>
                                              <?php endforeach;?>
                                           </select>
                              <?php //echo $form->field($model, 'car_year')->widget(Select2::className(),
@@ -438,7 +493,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                            <label for="">จังหวัด</label>
                                              <select name="plate_province" class="form-control" onchange="alert();">
                                                <?php foreach($prov as $value):?>
-                                               <option value="<?=$value->PROVINCE_ID?>"><?=$value->PROVINCE_NAME;?></option>
+                                               <?php $selected = '';
+                                                     if($model->plate_province == $value->PROVINCE_ID){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->PROVINCE_ID?>" <?=$selected?>><?=$value->PROVINCE_NAME;?></option>
                                              <?php endforeach;?>
                                              </select>
                             <?php //echo $form->field($model, 'plate_province')->widget(Select2::className(),
@@ -557,7 +617,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                           <label for="">รหัสตัวแทน</label>
                                              <select name="member_id" id="member_id" class="form-control" onchange="">
                                                <?php foreach($member as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->member_code;?></option>
+                                               <?php $selected = '';
+                                                     if($model->member_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->member_code;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'member_id')->widget(Select2::className(),
@@ -588,7 +653,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <select name="level_id" id="level_id" disabled="disabled" class="form-control" onchange="alert();">
                                               <?php $lev = \backend\models\Memberlevel::find()->all(); ?>
                                                <?php foreach($lev as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->level_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'level_id')->widget(Select2::className(),
@@ -603,7 +673,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <select name="intro_id"  id="intro_id" disabled="disabled" class="form-control" onchange="alert();">
                                               <?php $intro = \backend\models\Introduce::find()->all();?>
                                                <?php foreach($intro as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->intro_code." ".$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->intro_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->intro_code." ".$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'intro_id')->widget(Select2::className(),
@@ -621,7 +696,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <select name="line_id"  id="line_id" disabled="disabled" class="form-control" onchange="alert();">
                                               <?php $line = \backend\models\Line::find()->all(); ?>
                                                <?php foreach($line as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->line_code." ".$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->line_id == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->line_code." ".$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                    <?php //echo $form->field($model, 'line_id')->widget(Select2::className(),
@@ -646,7 +726,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                            <label for="">โปรโมชั่น</label>
                                              <select name="promotion" id="promotion" class="form-control" onchange="alert();">
                                                <?php foreach($promotion as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->promotion == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                     <?php //echo $form->field($model, 'promotion')->widget(Select2::className(),
@@ -668,7 +753,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <select name="payment_method" class="form-control" onchange="alert();">
                                               <?php $pay = \backend\models\Paymentchannel::find()->all();?>
                                                <?php foreach($pay as $value):?>
-                                               <option value="<?=$value->id?>"><?=$value->name;?></option>
+                                               <?php $selected = '';
+                                                     if($model->payment_method == $value->id){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$value->id?>" <?=$selected?>><?=$value->name;?></option>
                                              <?php endforeach;?>
                                              </select>
                                     <?php //echo $form->field($model, 'payment_method')->widget(Select2::className(),
@@ -702,7 +792,12 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                              <select name="insure_driver" id="insure_driver" class="form-control" onchange="alert();">
                                               <?php $insure_type = \backend\helpers\InsureType::asArrayObject();?>
                                                <?php for($i=0;$i<=count($insure_type)-1;$i++):?>
-                                               <option value="<?=$insure_type[$i]['id']?>"><?=$insure_type[$i]['name'];?></option>
+                                               <?php $selected = '';
+                                                     if($model->insure_driver == $insure_type[$i]['id']){
+                                                      $selected = "selected";
+                                                     }
+                                               ?>
+                                               <option value="<?=$insure_type[$i]['id']?>" <?=$selected?>><?=$insure_type[$i]['name'];?></option>
                                              <?php endfor;?>
                                              </select>
                                    <?php //echo $form->field($model, 'insure_driver')->widget(Select2::className(),
@@ -1166,9 +1261,7 @@ $url_to_payment_id = Yii::$app->getUrlManager()->createUrl('/payment/setpaymenti
 $this->registerJs('
     $(function(){
 
-     $("#member_id").trigger("change");
-
-
+      $("#member_id").trigger("change");
       $("#tab_installment").hide();
 
       if($.inArray($("#payment_type_id").val(),["5","6","7"])!= -1){
@@ -1247,36 +1340,111 @@ $this->registerJs('
 
       $("#period").change(function(){
 
-      var peri = $(this).val();
+          var peri = $(this).val();
 
-      var total = $("#alltotal").val();
-      var for_first = parseFloat((total)*(35+2)/100).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-      $("#first_period").val(for_first);
+          var total = $("#alltotal").val();
+          var for_first = parseFloat((total)*(35+2)/100).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+          $("#first_period").val(for_first);
 
-      var first = $("#first_period").val();
-     
-      var rem = 0;
-      if(first == 0){
-        rem = peri;
-      }else{
-        rem = peri - 1;
-      }
+          var first = $("#first_period").val();
+         
+          var rem = 0;
+          if(first == 0){
+            rem = peri;
+          }else{
+            rem = peri - 1;
+          }
 
-      $("#remain").val(rem);
-      var remain = $("#remain").val();
-      var per_per = parseFloat((total)*(((100 - 35)/remain)/100)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-      $("#period_per").val(per_per);
+          $("#remain").val(rem);
+          var remain = $("#remain").val();
+          var per_per = parseFloat((total)*(((100 - 35)/remain)/100)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+          $("#period_per").val(per_per);
 
     });
 
     $("select#province").change(function(){
-        alert();
          $.post("index.php?r=insurance/showcity&id=' . '"+$(this).val(),function(data){
          $("select#city").html(data);
          $("select#city").prop("disabled","");
       });
+     });
+    $("select#city").change(function(){
+                $.post("index.php?r=insurance/showdistrict&id=' . '"+$(this).val(),function(data){
+                      $("select#district").html(data);
+                      $("select#district").prop("disabled","");
 
+                });
+
+                $.post("index.php?r=member/showzipcode&id=' . '"+$(this).val(),function(data){
+                        $("#zipcode").val(data);
+                        $("#zipcode").prop("disabled","");
+                });
+     });
+
+    $("select#insure_company_id").change(function(){
+        $.post("index.php?r=insurance/showproduct&id=' . '"+$(this).val(),function(data){
+          $("select#product_id").html(data);
+        });
     });
+
+   $("select#insure_type_id").change(function(){
+        if($(this).val()==1){
+            $("#product_id").prop("disabled","");
+            $("#car_code").prop("disabled","");
+            $("#car_brand").prop("disabled","");
+            $.post("index.php?r=insurance/showcarcode&id=1",function(data){
+                      $("select#car_code").html(data);
+            });
+        }else if($(this).val()==3){
+            $("#product_id").prop("disabled","disabled").empty();
+            $("#car_code").prop("disabled","");
+            $("#car_brand").prop("disabled","disabled");
+
+            $.post("index.php?r=insurance/showcarcode&id=2",function(data){
+                  $("select#car_code").html(data);
+            });
+
+        }else{
+            $("#product_id").prop("disabled","disabled");
+            $("#car_code").prop("disabled","disabled").empty();
+            $("#car_brand").prop("disabled","disabled");
+        }
+   });
+   
+   $("select#car_code").change(function(){
+          $.post("index.php?r=insurance/showcaract&id=' . '"+$(this).val(),function(data){
+                 var value = data.split(",");
+                 $("#car_usage").val(value[0]);
+                 $("#total").val(value[1]);
+                 $("#grand_total").val(value[2]);
+          });
+   });
+  $("select#car_brand").change(function(){
+      $.post("index.php?r=insurance/showmodel&id=' . '"+$(this).val(),function(data){
+        $("select#car_model").html(data);
+        $("select#car_model").prop("disabled","");
+      });
+  });
+
+  $("select#member_id").change(function(){
+     $.post("index.php?r=insurance/getlevel&id=' . '"+$(this).val(),function(data){
+          $("select#level_id").empty();
+          $("select#level_id").append(data);
+      });
+      $.post("index.php?r=insurance/getintro&id=' . '"+$(this).val(),function(data){
+          $("select#intro_id").empty();
+          $("select#intro_id").append(data);
+      });
+      $.post("index.php?r=insurance/getline&id=' . '"+$(this).val(),function(data){
+          $("select#line_id").empty();
+          $("select#line_id").append(data);
+      });
+  });
+
+
+
+
+    }); /// end function 
 
         function removeDocref(e){
               if(confirm("ต้องการลบรายการนี้ใช่หรือไม่ ?")){
@@ -1295,4 +1463,5 @@ $this->registerJs('
               }
               
             }
+
 ',static::POS_END);?>
