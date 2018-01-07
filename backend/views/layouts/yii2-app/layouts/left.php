@@ -1,4 +1,4 @@
-<aside class="main-sidebar">
+ <aside class="main-sidebar">
 
     <section class="sidebar">
 
@@ -42,8 +42,21 @@
                        array_push($submenuid, $value->menu_id);
                     }
                 }
-            }
-            echo count($menuid);
+            }else{
+                $aut_menu = \backend\models\Permission::find()->all();
+                if($aut_menu){
+                    foreach ($aut_menu as $value) {
+                       array_push($menuid, $value->menu_id);
+                    }
+                }
+                $aut_sub_menu = \backend\models\Permission::find()->all();
+                if($aut_sub_menu){
+                    foreach ($aut_sub_menu as $value) {
+                       array_push($submenuid, $value->menu_id);
+                    }
+                }
+            } 
+            //echo count($menuid);
             $menulist = \backend\models\Menu::find()->where(['IS','parent_id',null])->andFilterWhere(['id'=>$menuid])->orderby(['number'=>SORT_ASC])->all();
             $menu_item = [];
             if(count($menulist)>0){

@@ -204,6 +204,7 @@ class CapitalrangeController extends Controller
    		$searchModel = new \backend\models\VunioncapSearch();
     	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     	$dataProvider->query->where(['insure_company_id'=>$company_id]);
+    	$dataProvider->query->pageSize = 50;
 
    		return $this->render('view',[
 	   			'company_id' => $company_id,
